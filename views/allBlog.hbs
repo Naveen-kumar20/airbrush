@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    <title>Blog Posts</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/desktop-menu.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+    {{>desktop-menu}}
+    
+    <div class="page-wrapper">
+        <div class="blogs-grid-container">
+            {{#each blogs}}
+                <div class="blog-preview-card">
+                    <div class="blog-image">
+                        <img src="{{this.image}}" alt="{{this.title}}">
+                    </div>
+                    <div class="blog-preview-content">
+                        <h2 class="blog-preview-title">{{this.title}}</h2>
+                        <p class="blog-preview-excerpt">{{this.content}}</p>
+                        <a href="/blog/{{this._id}}" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    {{>footer}}
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #3803a4 0%, #350a98 50%, #031b39 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+        }
+
+        .blogs-grid-container {
+          margin-top: 75px;
+            max-width: 1300px;
+            margin-inline: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 3rem;
+            padding: 1rem;
+        }
+
+        .blog-preview-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-preview-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+
+        .blog-preview-content {
+            padding: 1.5rem;
+        }
+
+        .blog-preview-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #2d3748;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-preview-excerpt {
+            color: #718096;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more {
+            color: #4a90e2;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #2d69b3;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 2rem 1rem;
+            }
+
+            .blogs-grid-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        async function fetchAndRenderBlogContent() {
+            try {
+                const response = await fetch(`/api/blog`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch blog content');
+                }
+
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error('API returned unsuccessful response');
+                }
+
+                const blogPosts = result.data;
+                const blogsContainer = document.querySelector('.blogs-grid-container');
+                blogsContainer.innerHTML = ''; // Clear existing content
+
+                // Render each blog post
+                blogPosts.reverse().forEach(blog => {
+                    const blogElement = createBlogPreviewElement(blog);
+                    blogsContainer.appendChild(blogElement);
+                });
+
+            } catch (error) {
+                console.error('Error fetching blog content:', error);
+            }
+        }
+
+        function createBlogPreviewElement(blog) {
+            const blogContainer = document.createElement('div');
+            blogContainer.className = 'blog-preview-card';
+            blogContainer.onclick = () => window.location.href = `/blog/${blog.url}`;
+
+            // Create a text-only version of the content by removing HTML tags
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = blog.content;
+            const textContent = tempDiv.textContent || tempDiv.innerText;
+            const excerpt = textContent.slice(0, 100) + '...'; // Get first 100 characters
+
+            const content = `
+                <div class="blog-image">
+                    <img src="${blog.imageUrl || '/images/blog-place.png'}" alt="${blog.title}">
+                </div>
+                <div class="blog-preview-content">
+                    <h2 class="blog-preview-title">${blog.title}</h2>
+                    <p class="blog-preview-excerpt">${excerpt}</p>
+                    <a href="/blog/${blog.url}" class="read-more">Read More →</a>
+                </div>
+            `;
+
+            blogContainer.innerHTML = content;
+            return blogContainer;
+        }
+
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', fetchAndRenderBlogContent);
+    </script>
+</body>
+</html> 

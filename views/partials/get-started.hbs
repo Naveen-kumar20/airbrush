@@ -1,0 +1,750 @@
+<style>
+    .img-container img:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .img-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .img-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .get-started-btn:hover {
+        background-color: #4526B1 !important;
+        border-color: white !important;
+        color: white !important;
+    }
+    
+    .boxes-container {
+        display: flex;
+        align-items: flex-end;
+        gap: 15px;
+        width: 94%;
+        margin: 0 auto;
+        padding: 0;
+    }
+    
+    .inspiration-box {
+        background-color: #222222;
+        border-radius: 10px;
+        flex-shrink: 0;
+        width: 13.4% !important;
+    }
+    
+    .top-slider-container, .bottom-slider-container {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 100% !important;
+    }
+    
+    .top-slider-container {
+        height: 241px;
+        margin-bottom: 40px;
+    }
+    
+    .bottom-slider-container {
+        height: 337px;
+    }
+    
+    .slider-image-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .slider-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+        z-index: 2;
+        gap: 8px;
+    }
+
+    .slider-image-container:hover .image-overlay {
+        opacity: 1;
+    }
+
+     
+    .top-image-1 { animation: fadeIn 16s 0s infinite; }
+    .top-image-2 { animation: fadeIn 16s 2s infinite; }
+    .top-image-3 { animation: fadeIn 16s 4s infinite; }
+    .top-image-4 { animation: fadeIn 16s 6s infinite; }
+    .top-image-5 { animation: fadeIn 16s 8s infinite; }
+    .top-image-6 { animation: fadeIn 16s 10s infinite; }
+    .top-image-7 { animation: fadeIn 16s 12s infinite; }
+    .top-image-8 { animation: fadeIn 16s 14s infinite; }
+    
+    .bottom-image-1 { animation: fadeIn 16s 1s infinite; }
+    .bottom-image-2 { animation: fadeIn 16s 3s infinite; }
+    .bottom-image-3 { animation: fadeIn 16s 5s infinite; }
+    .bottom-image-4 { animation: fadeIn 16s 7s infinite; }
+    .bottom-image-5 { animation: fadeIn 16s 9s infinite; }
+    .bottom-image-6 { animation: fadeIn 16s 11s infinite; }
+    .bottom-image-7 { animation: fadeIn 16s 13s infinite; }
+    .bottom-image-8 { animation: fadeIn 16s 15s infinite; }
+    
+    @keyframes fadeIn {
+        0%, 87.5% {
+            opacity: 0;
+        }
+        12.5%, 25% {
+            opacity: 1;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .boxes-container {
+            width: 100%;
+            padding: 0 20px;
+            justify-content: flex-start;
+        }
+        
+        h2.get-started-heading {
+            font-size: 4rem !important;
+        }
+        
+        p.get-started-description {
+            font-size: 1.5rem !important;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .boxes-container {
+            gap: 10px;
+            height: 500px !important;
+            margin-left: 10px !important;
+        }
+
+        .get-started-container{
+            min-height: 900px !important;
+        }
+
+        .inspiration-box:nth-child(1) .top-slider-container{
+            height: 200px !important;
+            width: 100% !important;
+        }
+
+        .inspiration-box:nth-child(2) .top-slider-container{
+            height: 120px !important;
+            width: 100% !important;
+        }
+        .inspiration-box:nth-child(3) .top-slider-container{
+            height: 200px !important;
+            width: 100% !important;
+        }
+
+        .inspiration-box:nth-child(1) .bottom-slider-container{
+            height: 250px !important;
+            width: 100% !important;
+        }
+        .inspiration-box:nth-child(2) .bottom-slider-container{
+            height: 200px !important;
+            width: 100% !important;
+        }
+        .inspiration-box:nth-child(3) .bottom-slider-container{  
+            height: 250px !important;
+            width: 100% !important;
+        }
+
+        .top-slider-container{
+            width: 120px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .slider-image{
+            transform: translateY(0px) !important;
+        }
+
+        .slider-image{
+            
+        }
+
+        .bottom-slider-container{
+            width: 120px !important;
+        }
+        
+        .inspiration-box {
+            transform: scale(1);
+            width: 30% !important;
+        }
+        
+        .inspiration-box.hidden-mobile {
+            display: none !important;
+        }
+        
+        h2.get-started-heading {
+            font-size: 2.2rem !important;
+            width: 85% !important;
+            margin-top: 10px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        
+        p.get-started-description {
+            font-size: 1.2rem !important;
+            width: 90% !important;
+            margin: auto !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .boxes-container {
+            justify-content: flex-start;
+            padding: 0 10px;
+        }
+        
+        
+        .top-slider-container, .bottom-slider-container {
+            width: 160px;
+        }
+        
+        h2.get-started-heading {
+            font-size: 2.5rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        p.get-started-description {
+            font-size: 1rem !important;
+        }
+        
+        .get-started-btn {
+            width: 200px !important;
+            font-size: 18px !important;
+        }
+    }
+
+    .use-prompt-btn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+    }
+
+    .use-prompt-btn:hover .icon-circle {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="rts-case-area bg-smooth-2 get-started-container" style="background-color: #000000; overflow: hidden; min-height: 1200px; padding-bottom: 40px;">
+    <div class="container-fluid" style="margin: 0; padding: 0;">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center mb-4" style="background: transparent; margin: 0; padding: 0;">
+                <div style="
+    width: 190px; 
+                     height: 56px; 
+    border-radius: 28px; 
+    border: 1px solid #FFFFFF;
+    padding: 8px 18px 8px 6px;
+    margin: 0 auto;
+    margin-top: 82px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+">
+                    <div style="
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4526B1 0%, #F86635 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+                        <img src="/images/inspirations/Star.png" alt="star" style="width: 24px; height: 24px;" />
+                    </div>
+                    <span style="
+        color: #000000; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 22px;
+        letter-spacing: 0;
+        display: flex;
+        align-items: center;
+    ">Inspirations</span>
+                </div>
+
+                <h2 class="get-started-heading animate-up" style="font-size: 5rem; font-weight: 600; color: white; margin: 0; margin-bottom: 20px; margin-top: 54px; opacity: 0; transform: translateY(50px);">
+                    Find your inspiration in a sea<br> of creativity
+                </h2>
+                <p class="get-started-description animate-up" style="margin: 0; font-size: 2rem; color: white; line-height: 1.5; opacity: 0; transform: translateY(50px);">Explore Unlimited inspiration alongside other Dreamina users. Let creativity be inspired<br class="d-none d-md-block">
+                by shared excitement and collaborative genius.</p>
+                
+                <div class="button-container animate-up" style="margin: 0; padding: 20px 0; opacity: 0; transform: translateY(50px);">
+                   <a href="https://app.airbrush.ai/signup" class="get-started-btn" style="
+                       background-color: #000000;
+                       color: white;
+                       border: 2px solid white;
+                       padding: 14px 0;
+                       width: 250px;
+                       font-size: 22px;
+                       font-weight: 500;
+                       border-radius: 8px;
+                       text-decoration: none;
+                       display: inline-block;
+                       transition: background-color 0.3s ease;">Get Started</a>
+                </div>
+
+                <script>
+                    // Initialize GSAP ScrollTrigger
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // Animate elements when they come into view
+                    const animateElements = gsap.utils.toArray('.animate-up');
+                    animateElements.forEach((element, index) => {
+                        gsap.to(element, {
+                            scrollTrigger: {
+                                trigger: element,
+                                start: "top 80%",
+                                toggleActions: "play none none reverse"
+                            },
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: "power3.out",
+                            delay: index * 0.2
+                        });
+                    });
+                </script>
+
+            </div>
+            <div class="col-12" style="margin: 0; padding: 0; width: 100vw; margin-top: 40px;">
+                <div class="boxes-container">
+                    <!-- First box with images that change every 2 seconds -->
+                    <div class="inspiration-box" style="width: 187px; height: 580px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- First set of images -->
+                        <div class="top-slider-container" style="width: 187px; height: 241px; margin-bottom: 10px;">
+                            <img src="/images/get-started/generated_1748519215615.webp" alt="AI Image" class="slider-image top-image-1" 
+                                data-prompt="Create a hyper-realistic 3D render of swirling liquid metal with chrome and gold textures, featuring dynamic flowing patterns and intricate ripples, rendered with ultra-detailed reflections and a polished metallic sheen.">
+                            <img src="/images/get-started/generated_1748519067092.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design a surreal mountain landscape at dusk with floating crystalline islands, cascading waterfalls, and bioluminescent vegetation, rendered in rich purples and deep blues with volumetric fog and god rays.">
+                            <img src="/images/get-started/generated_1748518857006.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate a cyberpunk cityscape at night with massive holographic advertisements, neon-lit streets, and flying vehicles weaving between towering skyscrapers, featuring a dramatic mix of deep blues and vibrant pink lighting.">
+                            <img src="/images/get-started/generated_1748518727133.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create an underwater fantasy scene with giant translucent jellyfish, schools of bioluminescent fish, and swaying alien coral formations in deep ocean blues and purples, with shafts of light piercing through crystal-clear waters.">
+                            <img src="/images/get-started/generated_1748518697592.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design a futuristic bio-architecture with flowing organic curves, living plant walls, and crystalline windows that seamlessly blend nature with modern design, featuring a harmonious mix of glass, greenery, and geometric patterns.">
+                            <img src="/images/get-started/generated_1748518667803.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate an epic fantasy landscape with a massive storm system, featuring swirling dark clouds, multiple lightning strikes, and floating islands with ancient stone ruins, rendered in dramatic cinematic style with volumetric lighting.">
+                            <img src="/images/get-started/generated_1748518603691.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create a magical library interior with floating ancient books, spiral wooden staircases, and warm lantern light casting golden shadows through dust motes, featuring rich mahogany textures and hidden mystical symbols.">
+                            <img src="/images/get-started/generated_1748518552018.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a mystical crystal cave with geometric quartz formations, ethereal mist, and floating light particles, using a color palette of deep purples and blues with luminescent crystal highlights and ray-traced reflections.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 187px; height: 337px;">
+                            <img src="/images/get-started/generated_1748518432545.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create a mesmerizing abstract digital artwork with fluid metallic forms and dynamic color transitions, featuring iridescent surfaces and complex layered patterns rendered in ultra-high detail with realistic metallic reflections.">
+                            <img src="/images/get-started/generated_1748518299330.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Design a surreal floating archipelago with crystalline islands connected by streams of energy, featuring mystical ruins and swirling aurora effects in a harmonious blend of cool teals and warm amber accents.">
+                            <img src="/images/get-started/generated_1748518173596.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Generate a futuristic transportation hub with sleek magnetic trains, holographic information displays, and geometric architecture, featuring dramatic lighting and a cyberpunk aesthetic with neon accents.">
+                            <img src="/images/get-started/generated_1748517844205.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Create an enchanted forest clearing with giant bioluminescent mushrooms, floating spirit orbs, and ethereal mist, featuring rich organic textures and magical particle effects in deep blues and soft purples.">
+                            <img src="/images/get-started/generated_1748517503262.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Design an ethereal portrait emerging from cosmic clouds, with flowing hair made of starlight and nebula patterns, rendered in a dreamy celestial style with swirling galaxy elements and stellar formations.">
+                            <img src="/images/get-started/generated_1748517171639.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Generate a mystical garden sanctuary with floating crystal formations, cascading light beams, and ethereal butterflies, featuring a harmonious blend of natural and magical elements with volumetric lighting.">
+                            <img src="/images/get-started/generated_1748517119932.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Create a dynamic abstract composition with flowing energy streams and geometric fragments, combining sacred geometry with cosmic elements in rich, vibrant colors and ultra-detailed metallic textures.">
+                            <img src="/images/get-started/generated_1748516525500.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Design a dreamlike dimensional portal with fractal patterns, swirling energy vortexes, and floating geometric shapes, using a harmonious color palette of deep purples and electric blues with ray-traced lighting.">
+                        </div>
+                    </div>
+                    
+                    <!-- Second box -->
+                    <div class="inspiration-box" style="width: 196px; height: 500px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Top image container -->
+                        <div class="top-slider-container" style="width: 196px; height: 312px; margin-bottom: 10px;">
+                            <img src="/images/get-started/generated_1748516301678.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create a stunning abstract digital artwork with flowing liquid metal forms, featuring dynamic color transitions from deep chrome to molten gold, rendered with ultra-realistic metallic reflections and complex layered patterns.">
+                            <img src="/images/get-started/generated_1748516114633.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design an otherworldly landscape with floating crystal islands, connected by bridges of pure energy, featuring mystical ruins and swirling aurora effects in a harmonious blend of ethereal blues and golden light.">
+                            <img src="/images/get-started/generated_1748515963163.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate a high-tech quantum core chamber with pulsing energy rings, holographic displays, and geometric light patterns, rendered in deep space colors with brilliant energy effects and ray-traced reflections.">
+                            <img src="/images/get-started/generated_1748515845500.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create a mystical energy nexus with swirling particles, geometric mandalas, and flowing light streams, featuring sacred geometry patterns and ethereal atmospheric effects in rich purples and electric blues.">
+                            <img src="/images/get-started/generated_1748515741801.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design a fantasy crystal cavern with massive geometric formations, floating light orbs, and ethereal mist, using dramatic lighting and ray-traced reflections to highlight the crystalline structures.">
+                            <img src="/images/get-started/generated_1748515539972.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate an abstract dimensional portal with fractal patterns, energy vortexes, and flowing light streams, combining cosmic elements with sacred geometry in rich, vibrant colors and metallic accents.">
+                            <img src="/images/get-started/generated_1748515443979.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create a celestial sanctuary with floating crystal platforms, energy bridges, and swirling nebula clouds, featuring a dramatic mix of deep space colors and brilliant light effects.">
+                            <img src="/images/get-started/generated_1748515361598.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a surreal dreamscape with liquid metal forms, iridescent color shifts, and complex flow patterns, rendered in ultra-high detail with realistic material properties and dynamic lighting.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 196px; height: 200px;">
+                            <img src="/images/get-started/generated_1748515289587.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create an enchanted forest sanctuary with giant bioluminescent mushrooms, ethereal floating spores, and mystical fog, featuring rich organic textures and magical particle effects in deep teals and purples.">
+                            <img src="/images/get-started/generated_1748515212161.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Design a vibrant underwater paradise with exotic coral formations, schools of iridescent fish, and swaying bioluminescent plants, rendered with realistic caustics and volumetric light rays.">
+                            <img src="/images/get-started/generated_1748515102820.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Generate a futuristic metropolis with towering crystal spires, flying vehicles, and massive holographic displays, featuring dramatic atmospheric lighting and cyberpunk color gradients.">
+                            <img src="/images/get-started/generated_1748514939989.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Create an abstract fluid art composition with metallic liquid forms, complex flow patterns, and iridescent color shifts, rendered in ultra-high detail with realistic material properties.">
+                            <img src="/images/get-started/generated_1748519091285_6.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Design a surreal floating sanctuary with crystalline islands, energy bridges, and swirling aurora effects, using a harmonious blend of cool blues and warm golden accents with volumetric lighting.">
+                            <img src="/images/get-started/generated_1748519090674_10.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Generate an ethereal portrait dissolving into cosmic particles, with flowing energy streams and geometric fragments, using a dramatic color palette of deep purples and electric blue highlights.">
+                            <img src="/images/get-started/generated_1748519091240_2.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Create a cosmic nebula scene with swirling gas clouds, star clusters, and energy formations, featuring dynamic light sources and deep space colors with brilliant accents.">
+                            <img src="/images/get-started/generated_1748519090870_4.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Design a magical crystal chamber with geometric formations, cascading light beams, and ethereal mist, using dramatic lighting and ray-traced reflections to highlight the crystalline structures.">
+                        </div>
+                    </div>
+                    
+                    <!-- Third box -->
+                    <div class="inspiration-box" style="width: 196px; height: 500px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Top image container -->
+                        <div class="top-slider-container" style="width: 196px; height: 118px; margin-bottom: 10px;">
+                            <img src="/images/get-started/generated_1748519091782_5.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create a dynamic abstract composition with flowing forms and vibrant energy.">
+                            <img src="/images/get-started/generated_1748519091600_7.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design a futuristic scene with holographic elements and neon accents.">
+                            <img src="/images/get-started/generated_1748519090937_0.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate an artistic landscape with surreal elements and dramatic lighting.">
+                            <img src="/images/get-started/generated_1748519092281_11.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create a mystical environment with floating particles and ethereal atmosphere.">
+                            <img src="/images/get-started/generated_1748519091434_9.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design an otherworldly scene with cosmic elements and magical effects.">
+                            <img src="/images/get-started/generated_1748519091354_8.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate a fantasy portrait with ethereal lighting and mystical elements.">
+                            <img src="/images/get-started/generated_1748519092787_3.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create a sci-fi inspired scene with futuristic technology and dynamic composition.">
+                            <img src="/images/get-started/generated_1748519091541_1.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a modern abstract artwork with geometric patterns and bold colors.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 196px; height: 312px;">
+                            <img src="/images/get-started/generated_1748518945561_2.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create a dreamlike landscape with floating elements and soft color transitions.">
+                            <img src="/images/get-started/generated_1748518946168_10.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Create a mystical forest sanctuary with giant bioluminescent mushrooms, floating light orbs, and ethereal mist, featuring rich organic textures and magical particle effects.">
+                            <img src="/images/get-started/generated_1748518945919_11.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Design a surreal floating island landscape with ancient ruins, energy bridges, and swirling aurora effects, using a harmonious blend of cool blues and warm amber accents.">
+                            <img src="/images/get-started/generated_1748518945609_6.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Generate an abstract dimensional portal with fractal patterns, flowing energy streams, and geometric fragments, combining sacred geometry with cosmic elements in rich, vibrant colors.">
+                            <img src="/images/get-started/generated_1748518945778_8.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Create an otherworldly crystal cave with geometric formations, floating light particles, and ethereal fog, featuring dramatic lighting and ray-traced reflections in jewel tones.">
+                            <img src="/images/get-started/generated_1748518946407_1.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Design a cosmic energy core with pulsing holographic rings, plasma streams, and dynamic light patterns, rendered in deep space colors with brilliant energy effects.">
+                            <img src="/images/get-started/generated_1748518946029_7.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Generate a futuristic cityscape with crystal spires, flying vehicles, and holographic billboards, featuring dramatic atmospheric lighting and cyberpunk color gradients.">
+                            <img src="/images/get-started/generated_1748518946428_0.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Create an abstract fluid art composition with metallic liquid forms, complex flow patterns, and iridescent color shifts, rendered in ultra-high detail with realistic material properties.">
+                        </div>
+                    </div>
+                    
+                    <!-- Fourth box -->
+                    <div class="inspiration-box" style="width: 196px; height: 450px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Abstract and landscape images -->
+                        <div class="top-slider-container" style="width: 196px; height: 150px; margin-bottom: 10px;">
+                            <img src="/images/get-started/generated_1748518769072_2.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create a dynamic abstract composition with flowing liquid metal forms, featuring iridescent color shifts and complex layered patterns, rendered in ultra-high detail with realistic metallic reflections and dramatic lighting.">
+                            <img src="/images/get-started/generated_1748518769271_3.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design a surreal floating world with fragments of landscapes suspended in space, connected by streams of luminous energy, featuring a mix of natural elements and geometric structures with atmospheric fog effects.">
+                            <img src="/images/get-started/generated_1748518768802_0.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate an ethereal fantasy environment with giant crystalline structures, bioluminescent plants, and floating light orbs, using a color palette of deep teals and soft purples with volumetric lighting.">
+                            <img src="/images/get-started/generated_1748518522776.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create a mystical forest scene at twilight with giant glowing mushrooms, swirling fireflies, and ethereal mist, featuring rich organic textures and magical particle effects.">
+                            <img src="/images/get-started/generated_1748518260507.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design an abstract dimensional portal with fractal patterns, energy vortexes, and flowing light streams, combining sacred geometry with cosmic elements in a rich, vibrant color scheme.">
+                            <img src="/images/get-started/generated_1748518191623.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate a futuristic cityscape at sunset with holographic billboards, flying vehicles, and towering crystal spires, featuring dramatic atmospheric lighting and cyberpunk color gradients.">
+                            <img src="/images/get-started/generated_1748518171687.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create an ethereal portrait emerging from swirling cosmic clouds, with flowing hair made of starlight and nebula patterns, rendered in a dreamy, celestial art style.">
+                            <img src="/images/get-started/generated_1748518084212.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a magical crystal cavern with geometric light beams, floating crystals, and ethereal fog, using a harmonious blend of cool blues and warm golden accents with volumetric lighting effects.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 196px; height: 256px;">
+                            <img src="/images/get-started/generated_1748517859869.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create a cosmic scene with swirling nebulae and star clusters, featuring dynamic energy flows, iridescent gas clouds, and brilliant light sources, rendered in deep space colors with dramatic celestial lighting.">
+                            <img src="/images/get-started/generated_1748517699646.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Design an abstract dimensional landscape with floating geometric islands, connected by streams of luminous energy, featuring crystalline structures and atmospheric fog in rich purples and teals.">
+                            <img src="/images/get-started/generated_1748517539409.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Generate a fantasy realm with ancient floating ruins, mystical portals, and ethereal light beams, surrounded by swirling magical particles and atmospheric clouds in golden hour lighting.">
+                            <img src="/images/get-started/generated_1748517251943.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Create a mystical scene with bioluminescent plants, floating crystal formations, and ethereal mist, using a color palette of deep blues and glowing aqua accents with volumetric god rays.">
+                            <img src="/images/get-started/generated_1748516837463.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Design a futuristic energy core with pulsing holographic rings, plasma streams, and geometric patterns, featuring high-tech elements and dynamic lighting effects in neon blues and purples.">
+                            <img src="/images/get-started/generated_1748515049053.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Generate an abstract fluid art composition with metallic liquid forms, iridescent color shifts, and complex flow patterns, rendered in ultra-high detail with realistic material properties.">
+                            <img src="/images/get-started/generated_1748514965062.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Create a surreal portrait dissolving into particles, with flowing energy streams and geometric fragments, using a dramatic color palette of deep blues and golden highlights.">
+                            <img src="/images/get-started/generated_1748514753758.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Design an enchanted crystal cave with geometric formations, floating light orbs, and mystical fog, featuring rich jewel tones and dramatic lighting effects with ray-traced reflections.">
+                        </div>
+                    </div>
+                    
+                    <!-- Fifth box -->
+                    <div class="inspiration-box" style="width: 186.63px; height: 450px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Single image container -->
+                        <div class="bottom-slider-container" style="width: 187px; height: 337px;">
+                            <img src="/images/get-started/generated_1748514548826.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create an innovative digital artwork with dynamic patterns and modern aesthetics.">
+                            <img src="/images/get-started/generated_1748514413505.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design a surreal landscape with floating elements and ethereal effects.">
+                            <img src="/images/get-started/generated_1748514272650.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate a fantasy scene with magical creatures and enchanted atmosphere.">
+                            <img src="/images/get-started/generated_1748513957111.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create a mystical environment with glowing elements and soft lighting.">
+                            <img src="/images/get-started/generated_1748513354618.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design an abstract world with geometric shapes and flowing energy.">
+                            <img src="/images/get-started/generated_1748513279843.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate a futuristic cityscape with neon lights and advanced technology.">
+                            <img src="/images/get-started/generated_1748512875083.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create a dreamlike portrait with ethereal elements and soft colors.">
+                            <img src="/images/get-started/women with spex.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Create a stylish portrait of a woman wearing modern geometric glasses, with abstract patterns, clean lines, and a minimalist aesthetic, rendered in a contemporary fashion illustration style with bold colors and sharp contrasts.">
+                        </div>
+                    </div>
+                    
+                    <!-- Sixth box -->
+                    <div class="inspiration-box" style="width: 196px; height: 600px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Top image container -->
+                        <div class="top-slider-container" style="width: 196px; height: 256px; margin-bottom: 10px;">
+                            <img src="/images/get-started/women with flowers.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create a dreamy portrait of a young woman surrounded by delicate cherry blossoms and ethereal flowers, with soft bokeh lighting effects and a painterly artistic style that blends photorealism with fantasy elements.">
+                            <img src="/images/get-started/women on mountain.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design an epic portrait of a woman standing triumphantly on a misty mountain peak at sunrise, wearing flowing garments that catch the wind, with dramatic lighting and a majestic backdrop of snow-capped peaks.">
+                            <img src="/images/get-started/women on boat.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Create a serene scene of a woman in a traditional wooden boat drifting among lotus flowers and morning mist, with soft diffused lighting and reflections in still water, inspired by classical Asian paintings.">
+                            <img src="/images/get-started/women and dawn.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Generate a mystical portrait of a woman at dawn with golden sunlight streaming through her flowing hair, surrounded by floating particles of light and a dreamy atmosphere in warm golds and soft purples.">
+                            <img src="/images/get-started/tiger meditating.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design a spiritual scene of a majestic tiger in meditation pose, surrounded by glowing orbs and sacred geometry patterns, with zen garden elements and a mystical atmosphere in rich, warm tones.">
+                            <img src="/images/get-started/teddy.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Create a hyper-realistic 3D render of a vintage teddy bear with intricate fur texture, soft shadows, and warm ambient lighting, capturing the worn, loved appearance with subtle details and nostalgic charm.">
+                            <img src="/images/get-started/man and woman.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Generate a romantic fantasy portrait of a couple in an enchanted forest, with magical light particles, flowing fabrics, and ethereal atmosphere, using a dreamy color palette of deep blues and soft golden highlights.">
+                            <img src="/images/get-started/man and drops.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a creative portrait of a man with suspended water droplet effects, featuring liquid spheres, refraction effects, and a modern artistic style with dramatic lighting and a cool color scheme of blues and silvers.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 196px; height: 118px;">
+                            <img src="/images/get-started/happy dragon.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create a charming illustration of a friendly baby dragon with iridescent scales, playful expression, and cute features, surrounded by magical sparkles and floating elements in a vibrant, whimsical style.">
+                            <img src="/images/get-started/fish.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Generate a stunning underwater scene with exotic, bioluminescent fish with flowing fins, surrounded by delicate coral formations and shimmering particles in rich deep sea blues and vibrant neon colors.">
+                            <img src="/images/get-started/chef.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Design a professional portrait of a confident chef in a modern kitchen, with dramatic lighting, steam effects, and flying ingredients, rendered in a photorealistic style with detailed textures in the chef's uniform.">
+                            <img src="/images/get-started/blue man.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Create an artistic portrait using electric blue tones, featuring a man's face emerging from swirling energy patterns, with geometric elements and flowing lines in a contemporary digital art style.">
+                            <img src="/images/get-started/ai tiger.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Generate a futuristic tiger portrait with cybernetic elements, glowing circuit patterns, and holographic details, combining organic and technological elements with deep blues and electric accents.">
+                            <img src="/images/get-started/ai couple.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Design a cyberpunk couple portrait with neon lighting, holographic overlays, and futuristic fashion elements, set against a backdrop of digital particles and energy flows in vibrant neon colors.">
+                            <img src="/images/get-started/women with spex.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Create a stylish portrait of a woman wearing modern geometric glasses, with abstract patterns, clean lines, and a minimalist aesthetic in a contemporary fashion illustration style with bold colors.">
+                            <img src="/images/get-started/generated_1748519067092.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Design a surreal landscape with floating crystalline islands, ethereal mist, and bioluminescent vegetation, using a dreamy color palette of deep purples and soft blues with cinematic lighting.">
+                        </div>
+                    </div>
+                    
+                    <!-- Seventh box -->
+                    <div class="inspiration-box" style="width: 187px; height: 600px; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; background: transparent;">
+                        <!-- Top image container -->
+                        <div class="top-slider-container" style="width: 187px; height: 337px; margin-bottom: 10px;">
+                            <img src="/images/get-started/generated_1748518857006.webp" alt="AI Image" class="slider-image top-image-1"
+                                data-prompt="Create a futuristic urban scene with dramatic lighting and innovative architecture, featuring towering crystal spires, holographic billboards, and flying vehicles, rendered in a photorealistic style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518727133.webp" alt="AI Image" class="slider-image top-image-2"
+                                data-prompt="Design an underwater fantasy with bioluminescent elements and ethereal sea life, featuring exotic fish with flowing fins, delicate coral formations, and shimmering particles, rendered in rich deep sea blues and vibrant neon colors.">
+                            <img src="/images/get-started/generated_1748518697592.webp" alt="AI Image" class="slider-image top-image-3"
+                                data-prompt="Generate a whimsical architectural concept with organic forms and natural elements, featuring floating islands, ethereal mist, and bioluminescent vegetation, rendered in a dreamy color palette of deep purples and soft blues with cinematic lighting.">
+                            <img src="/images/get-started/generated_1748518667803.webp" alt="AI Image" class="slider-image top-image-4"
+                                data-prompt="Create an epic fantasy scene with dramatic weather effects and mystical elements, featuring swirling aurora effects, floating light orbs, and enchanted landscapes, rendered in a contemporary digital art style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518603691.webp" alt="AI Image" class="slider-image top-image-5"
+                                data-prompt="Design a cozy interior with warm lighting and vintage atmospheric details, featuring a romantic setting with soft bokeh lighting, flowing fabrics, and ethereal atmosphere, rendered in a dreamy color palette of deep blues and soft golden highlights.">
+                            <img src="/images/get-started/generated_1748518552018.webp" alt="AI Image" class="slider-image top-image-6"
+                                data-prompt="Generate a magical library with floating books and enchanted artifacts, featuring a mystical sanctuary with giant bioluminescent mushrooms, floating light orbs, and ethereal mist, rendered in rich organic textures and magical particle effects.">
+                            <img src="/images/get-started/generated_1748518432545.webp" alt="AI Image" class="slider-image top-image-7"
+                                data-prompt="Create an abstract digital composition with dynamic color transitions, featuring swirling metallic liquid forms, complex flow patterns, and iridescent color shifts, rendered in ultra-high detail with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518299330.webp" alt="AI Image" class="slider-image top-image-8"
+                                data-prompt="Design a surreal landscape with floating islands and mystical effects, featuring a magical sanctuary with floating crystals, energy beams, and swirling mist, using a harmonious blend of cool blues and warm golden accents with volumetric lighting.">
+                        </div>
+                        
+                        <!-- Bottom image container -->
+                        <div class="bottom-slider-container" style="width: 187px; height: 241px;">
+                            <img src="/images/get-started/generated_1748518946168_10.webp" alt="AI Image" class="slider-image bottom-image-1"
+                                data-prompt="Create a mystical forest sanctuary with giant bioluminescent mushrooms, floating light orbs, and ethereal mist, featuring rich organic textures and magical particle effects, rendered in a dreamy color palette of deep purples and soft blues with cinematic lighting.">
+                            <img src="/images/get-started/generated_1748518945919_11.webp" alt="AI Image" class="slider-image bottom-image-2"
+                                data-prompt="Design a surreal floating island landscape with ancient ruins, energy bridges, and swirling aurora effects, using a harmonious blend of cool blues and warm amber accents, rendered in a contemporary digital art style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518945609_6.webp" alt="AI Image" class="slider-image bottom-image-3"
+                                data-prompt="Generate an abstract dimensional portal with fractal patterns, flowing energy streams, and geometric fragments, combining sacred geometry with cosmic elements in rich, vibrant colors, rendered in a photorealistic style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518945778_8.webp" alt="AI Image" class="slider-image bottom-image-4"
+                                data-prompt="Create an otherworldly crystal cave with geometric formations, floating light particles, and ethereal fog, featuring dramatic lighting and ray-traced reflections in jewel tones, rendered in a photorealistic style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518946407_1.webp" alt="AI Image" class="slider-image bottom-image-5"
+                                data-prompt="Design a cosmic energy core with pulsing holographic rings, plasma streams, and dynamic light patterns, rendered in deep space colors with brilliant energy effects, using a contemporary digital art style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518946029_7.webp" alt="AI Image" class="slider-image bottom-image-6"
+                                data-prompt="Generate a futuristic cityscape with crystal spires, flying vehicles, and holographic billboards, featuring dramatic atmospheric lighting and cyberpunk color gradients, rendered in a photorealistic style with realistic material properties.">
+                            <img src="/images/get-started/generated_1748518946428_0.webp" alt="AI Image" class="slider-image bottom-image-7"
+                                data-prompt="Create an abstract fluid art composition with metallic liquid forms, complex flow patterns, and iridescent color shifts, rendered in ultra-high detail with realistic material properties, using a contemporary digital art style.">
+                            <img src="/images/get-started/generated_1748519091782_5.webp" alt="AI Image" class="slider-image bottom-image-8"
+                                data-prompt="Design a magical sanctuary with floating crystals, energy beams, and swirling mist, using a harmonious blend of cool blues and warm golden accents with volumetric lighting, rendered in a photorealistic style with realistic material properties.">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle inspiration boxes on mobile
+        function handleMobileBoxes() {
+            const boxes = document.querySelectorAll('.inspiration-box');
+            if (window.innerWidth <= 768) {
+                boxes.forEach((box, index) => {
+                    if (index >= 3) {
+                        box.classList.add('hidden-mobile');
+                    } else {
+                        box.classList.remove('hidden-mobile');
+                    }
+                });
+            } else {
+                boxes.forEach(box => {
+                    box.classList.remove('hidden-mobile');
+                });
+            }
+        }
+
+        // Call on load
+        handleMobileBoxes();
+
+        // Call on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(handleMobileBoxes, 250);
+        });
+
+        // Get all slider containers
+        const sliderContainers = document.querySelectorAll('.top-slider-container, .bottom-slider-container');
+        
+        sliderContainers.forEach(container => {
+            const images = container.querySelectorAll('.slider-image');
+            
+            images.forEach(img => {
+                // Skip if already wrapped
+                if (img.parentElement.classList.contains('slider-image-container')) return;
+                
+                // Get the animation class from the image
+                const animationClass = Array.from(img.classList)
+                    .find(className => className.includes('-image-'));
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'slider-image-container';
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'image-overlay';
+                overlay.innerHTML = `
+                    <button class="use-prompt-btn">
+                        <div class="icon-circle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 3H21V9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 14L21 3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        Use Prompt
+                    </button>
+                `;
+                
+                // Insert wrapper before the image
+                container.insertBefore(wrapper, img);
+                // Move the image into the wrapper
+                wrapper.appendChild(img);
+                // Add the overlay
+                wrapper.appendChild(overlay);
+
+                // Add click event listener to the button
+                const usePromptBtn = overlay.querySelector('.use-prompt-btn');
+                usePromptBtn.addEventListener('click', handlePrompt);
+            });
+        });
+    });
+
+    // Function to handle Use Prompt button click
+    function handlePrompt(event) {
+        // Get the prompt from the image's data-prompt attribute
+        const img = event.target.closest('.slider-image-container').querySelector('img');
+        const prompt = img.getAttribute('data-prompt');
+        
+        // Store the prompt in localStorage
+        localStorage.setItem('selectedPrompt', prompt);
+        
+        // Find the text-to-image section and scroll to it
+        const textToImageSection = document.getElementById('text-to-image');
+        if (textToImageSection) {
+            textToImageSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Set the textarea value
+            const textarea = textToImageSection.querySelector('.prompt-input textarea');
+            if (textarea) {
+                textarea.value = prompt;
+                // Trigger input event to ensure any listeners are notified
+                textarea.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+    }
+</script>

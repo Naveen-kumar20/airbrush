@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> favicon}}
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    {{{categoryIdsScript}}}
+    
+    {{#if category.metaTags}}
+        {{{category.metaTags}}}
+    {{else}}
+        <title>Airbrush - Best AI Art, Image & Stock Photo Generator</title>
+        <meta name="description" content="Create amazing 3D images with Airbrush AI">
+        <meta property="og:title" content="Airbrush - Best AI Art, Image & Stock Photo Generator">
+        <meta property="og:description" content="Create amazing 3D images with Airbrush AI">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Airbrush - Best AI Art, Image & Stock Photo Generator">
+        <meta name="twitter:description" content="Create amazing 3D images with Airbrush AI">
+        <meta name="twitter:image" content="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    {{/if}}
+    
+    <!-- bootstrap min css -->
+    <link rel="stylesheet preload" href="/css/plugins/fontawesome-6.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/unicons.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/swiper.min.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/metismenu.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/bootstrap.min.css" as="style">
+    <!-- custom css style -->
+    <link rel="stylesheet preload" href="/css/style.css" as="style">
+    
+    <script src="/js/config.js"></script>
+</head>
+<body class="dark-version">
+{{{body}}}
+
+<script src="/js/vendor/jquery.min.js" defer></script>
+<script src="/js/vendor/metismenu.js" defer></script>
+<script src="/js/plugins/bootstrap.min.js" defer></script>
+<script src="/js/plugins/swiper.js" defer></script>
+<script src="/js/plugins/contact.form.js" defer></script>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<style>
+    @media (max-width: 576px) {
+        .mobile-counter-section {
+            width: 100%;
+            margin: 0;
+        }
+
+        .mobile-padding {
+            padding: 2rem 1rem;
+        }
+
+        .number-container{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px !important;
+        }
+    }
+</style>
+
+<section class="counter-section" style="padding: 40px 0; width: 100%;">
+  <div class="container">
+    <h2 class="counter-title mb-5" style="font-weight:700; width: fit-content; padding: 10px 20px; border-radius: 10px; font-size: 3.5rem; margin: 0 auto; color: white;">Our Numbers</h2>
+    <div class="row justify-content-center number-container" style="gap: 30px;">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2 mobile-counter-section">
+        <div class="counter-box text-center shadow-sm mobile-padding" style="background:#f5f6fa; border-radius:20px; padding:3rem 1rem;">
+          <div class="counter-value" style="font-size:3.2rem; font-weight:800; color:#222;">
+            <span class="counter-animate" data-target="2">0</span><span style="color:#0c2d99;">M+</span>
+          </div>
+          <div class="counter-label text-muted mt-3" style="font-size:1.2rem;">Active Users</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2 mobile-counter-section">
+        <div class="counter-box text-center shadow-sm mobile-padding" style="background:#f5f6fa; border-radius:20px; padding:3rem 1rem;">
+          <div class="counter-value" style="font-size:3.2rem; font-weight:800; color:#222;">
+            <span class="counter-animate" data-target="4">0</span><span style="color:#1238b6;">M+</span>
+          </div>
+          <div class="counter-label text-muted mt-3" style="font-size:1.2rem;">No. of Generations</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2 mobile-counter-section">
+        <div class="counter-box text-center shadow-sm mobile-padding" style="background:#f5f6fa; border-radius:20px; padding:3rem 1rem;">
+          <div class="counter-value" style="font-size:3.2rem; font-weight:800; color:#222;">
+            <span class="counter-animate" data-target="500">0</span><span style="color:#1238b6;">+</span>
+          </div>
+          <div class="counter-label text-muted mt-3" style="font-size:1.2rem;">Categories</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-2 mobile-counter-section">
+        <div class="counter-box text-center shadow-sm mobile-padding" style="background:#f5f6fa; border-radius:20px; padding:3rem 1rem;">
+          <div class="counter-value" style="font-size:3.2rem; font-weight:800; color:#222;">
+            <span class="counter-animate" data-target="80">0</span><span style="color:#1238b6;">K+</span>
+          </div>
+          <div class="counter-label text-muted mt-3" style="font-size:1.2rem;">No. of downloads</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function startCounters() {
+    function animateCounter(el, target, duration = 800) {
+      let start = 0;
+      let startTimestamp = null;
+      const decimal = target % 1 !== 0;
+      
+      function step(timestamp) {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = decimal
+          ? (progress * (target - start) + start).toFixed(1)
+          : Math.floor(progress * (target - start) + start);
+        el.textContent = value;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    // Start all counters when they come into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.counter-animate');
+          counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            animateCounter(counter, target);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    // Observe the counter section
+    const counterSection = document.querySelector('.counter-section');
+    observer.observe(counterSection);
+  }
+
+  // Start the counters immediately
+  startCounters();
+});
+</script>

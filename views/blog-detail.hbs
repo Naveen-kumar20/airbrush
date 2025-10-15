@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    <title>{{article.title}} - Airbrush</title>
+		<meta name="description" content="{{article.metaDescription}}">
+		<meta name="robots" content="index, follow">
+		
+		<!-- FB meta tags -->
+		<meta property="og:title" content="{{article.title}} - Airbrush AI">
+		<meta property="og:description" content="{{article.metaDescription}}">
+		<meta property="og:image" content="{{article.imageUrl}}">
+		<meta property="og:url" content="https://www.airbrush.ai/blog/{{article.url}}">
+		
+		<!-- Twitter meta tags -->
+		<meta name="twitter:title" content="{{article.title}} - Airbrush AI">
+		<meta name="twitter:description" content="{{article.metaDescription}}">
+		<meta name="twitter:image" content="{{article.imageUrl}}">
+
+
+
+    <!-- bootstrap min css -->
+    <link rel="stylesheet preload" href="/css/plugins/fontawesome-6.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/unicons.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/swiper.min.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/metismenu.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/bootstrap.min.css" as="style">
+    <!-- custom css style -->
+    <link rel="stylesheet preload" href="/css/style.css" as="style">
+</head>
+
+<body class="dark-version">
+
+    <!-- rts header area start -->
+    {{!-- <header class="header-one header--sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="header-main-wrapper">
+                        <a href="/" class="logo">
+                            <img src="/images/logo/ai2.png" alt="logo" style="max-width: 111px">
+                        </a>
+                        <!-- nav -->
+                        <div class="nav-area-main d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                            <nav>
+                                <ul>
+																
+																		<li><a class="links-main" href="use-cases">Use Cases</a></li>
+																		<li><a class="links-main" href="features">Features</a></li>
+																		<li><a class="links-main" href="pricing">Pricing</a></li>
+																		<li><a class="links-main" href="tutorials">Tutorials</a></li>
+																		<li><a class="links-main" href="faq">FAQ</a></li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- nav end -->
+                        <div class="button-area">
+                            <a href="https://app.airbrush.ai/login" class="rts-btn btn-lonly mr--30">Sign in</a>
+                            <a href="https://app.airbrush.ai/register" class="rts-btn btn-blur">Get Started</a>
+                        </div>
+
+                        <div class="menu-btn d-xl-none d-lg-none d-md-block d-sm-block" id="menu-btn">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="14" width="20" height="2" fill="#1F1F25"></rect>
+                                <rect y="7" width="20" height="2" fill="#1F1F25"></rect>
+                                <rect width="20" height="2" fill="#1F1F25"></rect>
+                            </svg>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> --}}
+{{>desktop-menu}}
+    <!-- rts header area end -->
+
+<!-- rts breadcrumb area start-->
+    {{!-- <div class="rts-bread-crumb-area bg_image">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inne">
+                        <div class="title-area">
+                            <h1 class="bread-title">Blog</h1>
+                            <div class="inner-wrapper">
+                                <a href="https://www.airbrush.ai">Home</a>/
+                                <a href="#" class="active">Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+    <!-- rts breadcrumb area end -->
+<style>
+.flex-app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.app-btn {
+  width: 45%;
+  max-width: 220px;
+  color: #fff;
+  margin: 20px 10px;
+  text-align: left;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: "Lucida Grande", sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: 1px #3996fb solid;
+  padding: 10px 10px;
+}
+
+.app-btn.blu {
+  background-color: #101010;
+  transition: background-color 0.25s linear;
+}
+
+.app-btn.blu:hover {
+  background-color: #454545;
+}
+
+.app-btn i {
+  width: 20%;
+  text-align: center;
+  font-size: 36px;
+  margin-right: 7px;
+}
+
+.app-btn .big-txt {
+  font-size: 25px;
+  text-transform: capitalize;
+}
+
+/* Media query for screens below 768 pixels */
+@media screen and (max-width: 768px) {
+  .flex-app {
+    flex-direction: column; /* Stack children vertically */
+  }
+
+  .app-btn {
+    width: 90%; /* Adjust the button width to take more space */
+    margin: 7px auto; /* Center the buttons horizontally */
+  }
+  
+  .app-btn i {
+    margin-bottom: 7px; /* Add space below the icon */
+  }
+  
+  .app-btn span {
+    margin-top: 7px; /* Add space above the text */
+  }
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+<!-- blog details bread crumb -->
+    {{!-- <div class="bd-breadcrumb">
+
+    </div> --}}
+    <!-- blog details bread crumb end -->
+
+
+    <!-- rts blog ddetailks area start -->
+    <div class="rts-blog-details-area-top rts-blog-section-gapTop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- top blog details start -->
+                    <div class="row top-blog-details-start align-items-center">
+                        <div class="col-12 mb--30">
+                            <div class="title-area">
+                                <h2 class="title" style="color: white;">
+                                    {{article.title}}
+                                </h2>
+
+                            </div>
+                        </div>
+                        {{!-- <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="authore-bd-area">
+                                <div class="main">
+                                    <img src="/images/blog/11.png" alt="Samuel - Airbrush AI">
+                                    <div class="info">
+                                        <span class="deg" style="color: white;">Author</span>
+                                        <span class="name" style="color: white;">Samuel</span>
+                                    </div>
+                                </div>
+                                <div class="sub-area">
+                                    <p style="color: white;">Category</p>
+                                    <span class="deg" style="color: white;">Blog Content</span>
+                                </div>
+                                <div class="sub-area">
+                                    <p style="color: white;">Updated on</p>
+                                    <span class="deg" style="color: white;">{{article.date}}</span>
+                                </div>
+                            </div>
+                        </div> --}}
+                        <div class="col-lg-12 mt--30">
+                            <div class="main-image-big" style="margin-bottom: 25px;">
+                                <img src="{{article.imageUrl}}" alt="{{article.title}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- top blog details end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- rts blog ddetailks area ends -->
+
+    <!-- blog details inner area start -->
+    <div class="blog-detail-inenr-area pt--45 rts-section-gapBottom plr_sm--15">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="para-area-wrapper">
+                    
+                        {{{article.content}}}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog details inner area end -->
+
+    <!-- related post area start -->
+    <div class="related-post-area-start" style="margin-top: 45px; margin-bottom: 45px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="title">
+                        Related Posts
+                    </h2>
+                </div>
+            </div>
+								    
+            <div class="g-5 mt--10">
+                <div style="display: flex; column-gap: 2rem;">
+                    <!-- single blog area start -->
+                    {{#each relatedArticles}}
+                    <div class="related-single-blog-area-wrapper">
+                            <a href="/blog/{{this.url}}" class="thumbnail">
+                                <img src="{{this.imageUrl}}" alt="{{this.title}}">
+                            </a>
+                            
+                        {{!-- <div class="inner-content">
+                            <div class="head">
+                                <span class="tag">Blog Content</span>
+                                <span class="time">{{this.timeToRead}} minute read</span>
+                            </div>
+                            <div class="body">
+                                <a href="#">
+                                    <h5 class="title">{{this.title}}</h5>
+                                </a>
+                                <div class="author-area">
+                                    <div class="author">
+                                        <img src="/images/blog/04.png" alt="Samuel - Airbrush AI">
+                                        <div class="info">
+                                            <p>Samuel</p>
+                                            <span>Author</span>
+                                        </div>
+                                    </div>
+                                    <a href="/blog/{{this.url}}">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+                    {{/each}}
+                    <!-- single blog area end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- related post area end -->
+
+{{>footer}}
+		
+
+
+    <!-- rts backto top start -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;"></path>
+        </svg>
+    </div>
+    <!-- rts backto top end -->
+
+
+    <script src="/js/vendor/jquery.min.js" defer></script>
+    <script src="/js/vendor/metismenu.js" defer></script>
+    <script src="/js/plugins/bootstrap.min.js" defer></script>
+    <script src="/js/plugins/swiper.js" defer></script>
+    <script src="/js/plugins/contact.form.js" defer></script>
+    <script src="/js/main.js" defer></script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,77 @@
+<!-- header style two -->
+<div
+  id="side-bar"
+  class="side-bar header-two"
+  style="background-color: #151f39;"
+>
+  <button class="close-icon-menu"><i class="far fa-times"></i></button>
+
+  <!-- mobile menu area start -->
+  <div class="mobile-menu-main">
+    <nav class="nav-main mainmenu-nav mt--30">
+      <ul class="mainmenu metismenu" id="mobile-menu-active">
+        <li class="parent"><a
+            class="main"
+            href="free-tool"
+            style="color: #f3f3f3; border-bottom: 1px solid #f3f3f3"
+          >Free Tools</a></li>
+        <li class="parent"><a
+            class="main"
+            href="pricing"
+            style="color: #f3f3f3; border-bottom: 1px solid #f3f3f3"
+          >Pricing</a></li>
+        <li class="parent"><a
+            class="main"
+            href="blog"
+            style="color: #f3f3f3; border-bottom: 1px solid #f3f3f3"
+          >Blog</a></li>
+        <li class="parent"><a
+            class="main"
+            href="faq"
+            style="color: #f3f3f3; border-bottom: 1px solid #f3f3f3"
+          >FAQ</a></li>
+          <li class="parent"><a
+            class="main"
+            href="https://app.airbrush.ai/login"
+            style="color: #f3f3f3; border-bottom: 1px solid #f3f3f3"
+          >Login</a></li>
+      </ul>
+    </nav>
+
+    {{#if url}}
+      <div
+        class="button-area"
+        style="margin: 25px auto 30px auto; font-size: 20px;"
+      >
+        <a
+          href="https://app.airbrush.ai/signup"
+          class="rts-btn btn-primary"
+        >Get Started For Free</a>
+      </div>
+    {{else}}
+      <div
+        class="button-area"
+        style="margin: 25px auto 30px auto; font-size: 20px;"
+      >
+        <a
+          id="GetStartedMobileMenu"
+          href="https://app.airbrush.ai/signup"
+          class="rts-btn btn-primary"
+        >Get Started For Free</a>
+      </div>
+    {{/if}}
+        {{!-- <li><a href="https://twitter.com/ai4chatco"><i
+              class="fa-brands fa-twitter"
+            ></i></a></li>
+        <li><a href="https://www.linkedin.com/company/ai4chatco"><i
+              class="fa-brands fa-linkedin-in"
+            ></i></a></li>
+        <li><a href="https://www.youtube.com/@ai4chatco"><i
+              class="fa-brands fa-youtube"
+            ></i></a></li> --}}
+       {{> apps}}
+    </div>
+  </div>
+  <!-- mobile menu area end -->
+</div>
+<!-- header style two End -->

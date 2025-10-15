@@ -1,0 +1,139 @@
+<!-- Video Section -->
+<div class="video-section" style="padding: 80px 0; display: none;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title" style="margin-bottom: 15px; color: #1C2539; font-size: 36px; font-weight: 700;" id="videoTitle">Hop Into The Future of AI</h2>
+                <p class="section-subtitle" style="color: #666; font-size: 18px; margin-bottom: 40px; font-weight: 400; display: none;" id="videoDescription">Where Creativity Leaps Beyond Boundaries</p>
+                <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: none;">
+                    <video id="mainVideo" controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <source src="/videos/frog.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('mainVideo');
+    const titleElement = document.getElementById('videoTitle');
+    const descriptionElement = document.getElementById('videoDescription');
+    const videoSection = document.querySelector('.video-section');
+    const videoContainer = document.querySelector('.video-container');
+    
+    // Function to wait for categories to be initialized
+    function ensureCategoriesInitialized() {
+        if (window.categoriesInitialized) {
+            return Promise.resolve();
+        }
+        
+        return new Promise(resolve => {
+            window.addEventListener('categoriesReady', () => {
+                console.log('Categories ready event received in video section component');
+                resolve();
+            });
+        });
+    }
+
+    // Function to fetch video content
+    async function fetchVideoContent() {
+        console.log('Video section component initializing');
+        
+        // Wait for categories to be initialized
+        await ensureCategoriesInitialized();
+        console.log('Categories are ready, proceeding with video section fetch');
+        
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-./g, (match) => {
+                return match[1].toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`];
+            
+            // Use the category-video slug
+            const slug = 'category-video';
+            
+            const response = await fetch(`/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch video content');
+            }
+
+            const data = await response.json();
+
+            // Check if we have any content to display
+            if (data && (data.title || data.subtitle || (data.images && data.images.length > 0))) {
+                // Show the section since we have some content
+                if (videoSection) {
+                    videoSection.style.display = 'block';
+                }
+
+                // Update title if it exists
+                if (data.title) {
+                    titleElement.textContent = data.title;
+                }
+
+                // Handle subtitle/description
+                if (data.subtitle) {
+                    descriptionElement.textContent = data.subtitle;
+                    descriptionElement.style.display = 'block';
+                } else {
+                    // Hide description element if no subtitle
+                    descriptionElement.style.display = 'none';
+                }
+
+                // Handle video content
+                if (data.images && data.images.length > 0 && data.images[0].url) {
+                    const videoSource = video.querySelector('source');
+                    videoSource.src = data.images[0].url;
+                    video.load(); // Reload the video with new source
+                    videoContainer.style.display = 'block';
+                } else {
+                    // Hide video container if no video URL
+                    videoContainer.style.display = 'none';
+                }
+
+                // If we have no title and no video, hide the entire section
+                if (!data.title && (!data.images || data.images.length === 0)) {
+                    videoSection.style.display = 'none';
+                }
+            } else {
+                // Hide the entire section if no content
+                videoSection.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error fetching video content:', error);
+            // Keep the section hidden when there's an error
+            videoSection.style.display = 'none';
+        }
+    }
+
+    // Add loading state
+    video.addEventListener('loadstart', function() {
+        video.style.backgroundColor = '#000';
+    });
+    
+    // Remove loading state once video can play
+    video.addEventListener('canplay', function() {
+        video.style.backgroundColor = 'transparent';
+    });
+    
+    // Error handling
+    video.addEventListener('error', function() {
+        console.error('Error loading video');
+        videoContainer.style.display = 'none'; // Hide container on video error
+    });
+
+    // Fetch content when page loads
+    fetchVideoContent();
+});
+</script> 

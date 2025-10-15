@@ -1,0 +1,445 @@
+<style>
+    .headshot-section {
+        padding: 60px 20px;
+        color: #000;
+        position: relative;
+        overflow: hidden;
+    }
+
+    ul li{
+        white-space: wrap;
+    }
+
+    .headshot-section::before {
+        content: '';
+        position: absolute;
+        width: 800px;
+        height: 300px;
+        background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 30px rgba(109, 175, 230, 0.2);
+        backdrop-filter: blur(5px);
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+        transform: translate(-50%, -50%) rotate(0deg);
+        border-radius: 20px;
+        pointer-events: none;
+        z-index: 0;
+        animation: rotateRect 20s linear infinite;
+    }
+
+    @keyframes rotateRect {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+        25% {
+            transform: translate(-50%, -50%) rotate(90deg) scale(1.1);
+            opacity: 0.6;
+            background: linear-gradient(225deg, rgba(109, 175, 230, 0.2), rgba(76, 175, 80, 0.2));
+        }
+        50% {
+            transform: translate(-50%, -50%) rotate(180deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(315deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+        75% {
+            transform: translate(-50%, -50%) rotate(270deg) scale(1.1);
+            opacity: 0.6;
+            background: linear-gradient(45deg, rgba(109, 175, 230, 0.2), rgba(76, 175, 80, 0.2));
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+    }
+
+    .headshot-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #2196F3, #4CAF50);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-description {
+        font-size: 18px;
+        color: #dddbdb;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .content-row {
+        display: flex;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .text-content-head {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .image-content {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-content img {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .ai-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #4CAF50;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .description {
+        color: #fff;
+        line-height: 1.9;
+        letter-spacing: 0.5px;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+
+    .generate-button {
+        background: #2196F3;
+        color: white;
+        width: 250px;
+        text-align: center;
+        margin: auto;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .generate-button:hover {
+        background: #1976D2;
+        color: white;
+    }
+
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .profile-image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 16px;
+        color: white;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 32px;
+        }
+
+        .description{
+            line-height: 1.6;
+            font-size: 12px;
+            letter-spacing: 0.6px;
+        }
+
+        .section-description {
+            font-size: 16px;
+            padding: 0 20px;
+        }
+
+        .content-row {
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .content-row.reverse {
+            flex-direction: column-reverse;
+        }
+
+        .feature-image {
+            height: 300px;
+        }
+
+        .image-content img {
+            width: 280px;
+            height: 280px;
+        }
+
+        .headshot-section{
+            padding: 0px 20px;
+        }
+    }
+
+    /* Animation keyframes */
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Add animation classes */
+    .slide-left {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    .slide-right {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    .animate {
+        animation-duration: 0.8s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .slide-left.animate {
+        animation-name: slideInLeft;
+    }
+
+    .slide-right.animate {
+        animation-name: slideInRight;
+    }
+</style>
+
+<section class="headshot-section">
+    <div class="headshot-container">
+        <!-- Header -->
+        <div class="section-header">
+            <h1 class="section-title">Transform Your Photos with AI</h1>
+            <p class="section-description">
+                Experience the next generation of professional headshot creation. Our AI-powered platform helps you generate stunning, professional headshots in seconds, perfect for any business or personal need.
+            </p>
+        </div>
+
+        <!-- First Row -->
+        <div class="content-row">
+            <div class="text-content-head slide-left">
+                <h2>Generate AI Headshot from Image</h2>
+                <p class="description">
+                    With our AI headshot generator you can effortlessly transform your pictures into captivating headshots. By leveraging the power of advanced artificial intelligence, we ensure your photos meet professional standards. Our cutting-edge AI technology analyzes facial features, lighting, and composition to create stunning, natural-looking headshots that capture your best angles. Whether you need a professional LinkedIn photo, company directory picture, or social media profile image, our tool delivers exceptional results every time. Perfect for personalizing your online presence or creating a consistent look across your team. Say goodbye to expensive photo shoots and hello to instant, professional-quality headshots at your fingertips.
+                </p>
+                <button class="generate-button">
+                    <i class="fas fa-magic"></i>
+                    Generate AI Headshot
+                </button>
+            </div>
+            <div class="image-content slide-right">
+                <img src="/images/slider1.png" alt="AI generated headshot example" class="feature-image">
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="content-row reverse">
+            <div class="image-content slide-left">
+                <img src="/images/slider2.png" alt="Team profile example" class="feature-image">
+            </div>
+            <div class="text-content-head slide-right">
+                <h2>Professional AI Headshots for Team Member Profiles</h2>
+                <p class="description">
+                    Our professional AI headshots perfect your team profiles and boost your brand image. With fresh, you can create professional pictures that fit your company's aesthetic at a fraction of the cost. Our AI-powered tool uses advanced algorithms to intelligently analyze facial features, ensuring consistent and professional results at a click. Transform your entire team's photos with consistent lighting, backgrounds, and professional styling - perfect for company websites, LinkedIn profiles, and marketing materials. Save time and resources while maintaining a cohesive, professional image across all your business channels. Ideal for remote teams, startups, and enterprises looking to maintain a polished, unified visual presence without the hassle of coordinating traditional photo shoots.
+                </p>
+                <button class="generate-button">
+                    <i class="fas fa-magic"></i>
+                    Generate AI Headshot
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to wait for categories to be initialized if needed
+    function ensureCategoriesInitialized() {
+        if (window.categoriesInitialized) {
+            return Promise.resolve();
+        }
+        
+        return new Promise(resolve => {
+            window.addEventListener('categoriesReady', () => {
+                console.log('Categories ready event received in headshot generator component');
+                resolve();
+            });
+        });
+    }
+    
+    // Function to fetch content using category ID and slug
+    async function fetchHeadshotContent() {
+        console.log('Headshot generator component initializing');
+        
+        await ensureCategoriesInitialized();
+        console.log('Categories are ready, proceeding with headshot content fetch');
+        
+        try {
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1);
+            
+            const camelCaseKey = pathSlug.replace(/-./g, (match) => {
+                return match[1].toUpperCase();
+            });
+            
+            const categoryId = window[`airbrush${camelCaseKey}`];
+            console.log('Using category ID in headshot generator:', categoryId);
+            
+            let slug = 'transform-grid';
+            console.log(categoryId, slug, 'Using categoryId and slug for API request');
+            
+            const response = await fetch(`/api/content/category/${categoryId}/slug/${slug}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch content by slug: ${response.status} ${response.statusText}`);
+            }
+            
+            const content = await response.json();
+            console.log('Headshot generator content loaded:', content);
+            
+            updateHeadshotContent(content);
+        } catch (error) {
+            console.error('Error fetching headshot generator content:', error);
+        }
+    }
+    
+    function updateHeadshotContent(content) {
+        if (!content || !content.fields || !Array.isArray(content.fields)) return;
+        console.log('Updating content with:', content);
+
+        // Get the container
+        const container = document.querySelector('.headshot-container');
+        if (!container) return;
+
+        // Keep the header section as is
+        const headerSection = container.querySelector('.section-header');
+
+        // Clear existing content except header
+        container.innerHTML = '';
+        container.appendChild(headerSection);
+
+        // Create and append each content row
+        content.fields.forEach((field, index) => {
+            const rowHTML = `
+                <div class="content-row ${index % 2 !== 0 ? 'reverse' : ''}">
+                    ${index % 2 === 0 ? `
+                        <div class="text-content-head slide-left">
+                            <h2>${field.value.title || `Row ${index + 1} Title`}</h2>
+                            <p class="description">${field.value.content || ''}</p>
+                            <a style="text-decoration: none;" href="https://app.airbrush.ai/signup" class="generate-button">
+                                <i class="fas fa-magic"></i>
+                                Generate AI Headshot
+                            </a>
+                        </div>
+                        <div class="image-content slide-right">
+                            <img src="${field.value.url || `/images/slider${index + 1}.png`}" alt="${field.value.title || 'AI generated headshot example'}" class="feature-image">
+                        </div>
+                    ` : `
+                        <div class="image-content slide-left">
+                            <img src="${field.value.url || `/images/slider${index + 1}.png`}" alt="${field.value.title || 'Team profile example'}" class="feature-image">
+                        </div>
+                        <div class="text-content-head slide-right">
+                            <h2>${field.value.title || `Row ${index + 1} Title`}</h2>
+                            <p class="description">${field.value.content || ''}</p>
+                            <a style="text-decoration: none;" href="https://app.airbrush.ai/signup" class="generate-button">
+                                <i class="fas fa-magic"></i>
+                                Generate AI Headshot
+                            </a>
+                        </div>
+                    `}
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', rowHTML);
+        });
+
+        // Reinitialize animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '50px'
+        });
+
+        // Observe all animated elements
+        document.querySelectorAll('.slide-left, .slide-right').forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchHeadshotContent);
+</script> 

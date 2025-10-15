@@ -1,0 +1,629 @@
+<!-- Image Gallery Component -->
+<div class="image-gallery-component">
+  <!-- AI Image Generation Section -->
+  <div class="mb-3">
+    <div class="d-flex align-items-center gap-2">
+      <input type="text" 
+             class="form-control" 
+             id="ai-prompt" 
+             placeholder="Enter a prompt for AI image generation">
+      <button type="button" 
+              class="btn btn-primary" 
+              id="generate-ai-image">
+        <i class="fas fa-magic me-2"></i>Generate AI Image
+      </button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap gap-2 mb-2" id="imageGalleryContainer">
+    <!-- Images will appear here -->
+  </div>
+  
+  <div class="d-flex gap-2">
+    <!-- Add Image Button -->
+    <button type="button" class="btn btn-sm btn-outline-primary" id="addImageBtn">
+      <i class="bi bi-plus-circle me-1"></i> Add Image
+    </button>
+    
+    <!-- Hidden File Input -->
+    <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+    
+    <!-- Save Button -->
+    <button type="button" class="btn btn-sm btn-success" id="saveGalleryBtn">
+      <i class="bi bi-check-circle me-1"></i> Save Changes
+    </button>
+  </div>
+</div>
+
+<!-- Add alert container at the end of the body -->
+<div class="alert-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+  <div id="gallerySuccessAlert" class="alert alert-success d-flex align-items-center mb-0 d-none">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <div>
+      <strong>Success!</strong> Your changes have been saved.
+    </div>
+  </div>
+</div>
+
+<script>
+  const showAlert = (message, type = 'success') => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+      <strong>${type === 'success' ? 'Success!' : type === 'danger' ? 'Error!' : 'Note:'}</strong> ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    
+    // Add alert to the top of the card body
+    document.querySelector('.image-gallery-component').prepend(alertDiv);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const imageUpload = document.getElementById('imageUpload');
+    const addImageBtn = document.getElementById('addImageBtn');
+    const saveGalleryBtn = document.getElementById('saveGalleryBtn');
+    const galleryContainer = document.getElementById('imageGalleryContainer');
+    
+    // Array to store gallery images
+    let galleryImages = [];
+    let contentId = null;
+    
+    // Get content ID from the sidebar link
+    const getContentId = () => {
+      // Try to get from URL parameters first
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('id')) {
+        return urlParams.get('id');
+      }
+      
+      // Check for referrer with URL parameters
+      if (document.referrer.includes('/images-gallery')) {
+        const referrerUrl = new URL(document.referrer);
+        const referrerParams = new URLSearchParams(referrerUrl.search);
+        if (referrerParams.has('id')) {
+          return referrerParams.get('id');
+        }
+      }
+      
+      // Then check for the sidebar link
+      const sidebarLink = document.querySelector('a[href="/images-gallery"]');
+      if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
+        return sidebarLink.getAttribute('data-content-id');
+      }
+      
+      return null;
+    };
+    
+    // Fetch images from API
+    const fetchGalleryImages = async () => {
+      contentId = getContentId();
+      
+      if (!contentId) {
+        console.error('No content ID found');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/content/id/${contentId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Clear the gallery
+        galleryContainer.innerHTML = '';
+        galleryImages = [];
+        
+        // Check if we have images in the response
+        if (data && data.images && Array.isArray(data.images) && data.images.length > 0) {
+          // Store images and render them
+          galleryImages = [...data.images];
+          data.images.forEach(image => {
+            if (image && image.url) {
+              addImageToGallery(image.url, image);
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+      }
+    };
+    
+    // Save gallery changes
+    const saveGalleryChanges = async () => {
+      // Get category ID from URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryId = urlParams.get('categoryId');
+      
+      // Show loading state
+      saveGalleryBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      saveGalleryBtn.disabled = true;
+      
+      // JWT Token for authorization
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTMyMDAwMywiZXhwIjoxNzQ1NDA2NDAzfQ.5V9SyTCRvPWGFMzOeIF53PAAyie1XQWurRrBCE09axM';
+      
+      try {
+        if (categoryId && !contentId) {
+          // Create new section first
+          const sectionResponse = await fetch(`/api/sections`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              name: 'Images Gallery',
+              slug: 'images-gallery',
+              description: 'Image Gallery section',
+              category: categoryId,
+              isFolder: false,
+              order: 0,
+              isActive: true
+            })
+          });
+
+          if (!sectionResponse.ok) {
+            throw new Error('Failed to create section');
+          }
+
+          const sectionResult = await sectionResponse.json();
+
+          // Then create new content
+          const contentResponse = await fetch(`/api/content`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              section: sectionResult._id,
+              slug: 'images-gallery',
+              title: 'Images Gallery',
+              images: galleryImages,
+              isActive: true
+            })
+          });
+
+          if (!contentResponse.ok) {
+            throw new Error('Failed to create content');
+          }
+
+          const contentResult = await contentResponse.json();
+          showAlert('Successfully created Image Gallery Section')
+          
+          // Update the contentId and reload the page
+          contentId = contentResult._id;
+          window.location.href = `/images-gallery?id=${contentId}&categoryId=${categoryId}`;
+          
+        } else if (contentId) {
+          // Update existing content
+        const response = await fetch(`/api/content/${contentId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            images: galleryImages
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Update failed: ' + response.statusText);
+        }
+        
+        const result = await response.json();
+        
+        // Show success message in bottom right
+        const successAlert = document.getElementById('gallerySuccessAlert');
+        if (successAlert) {
+          successAlert.classList.remove('d-none');
+          
+          // Hide after 3 seconds
+          setTimeout(() => {
+            successAlert.classList.add('d-none');
+          }, 3000);
+          }
+        } else {
+          throw new Error('Cannot save: Missing content ID or category ID.');
+        }
+      } catch (error) {
+        console.error('Error saving gallery:', error);
+        
+        // Show error message in bottom right
+        const successAlert = document.getElementById('gallerySuccessAlert');
+        if (successAlert) {
+          successAlert.className = 'alert alert-danger d-flex align-items-center mb-0';
+          successAlert.innerHTML = `
+            <i class="bi bi-exclamation-circle-fill me-2"></i>
+            <div>
+              <strong>Error!</strong> Failed to save gallery changes. Please try again.
+            </div>
+          `;
+          successAlert.classList.remove('d-none');
+          
+          // Hide after 3 seconds
+          setTimeout(() => {
+            successAlert.classList.add('d-none');
+            // Reset to success alert for next time
+            successAlert.className = 'alert alert-success d-flex align-items-center mb-0 d-none';
+            successAlert.innerHTML = `
+              <i class="bi bi-check-circle-fill me-2"></i>
+              <div>
+                <strong>Success!</strong> Your changes have been saved.
+              </div>
+            `;
+          }, 3000);
+        }
+      } finally {
+        // Restore button state
+        saveGalleryBtn.innerHTML = '<i class="bi bi-check-circle me-1"></i> Save Changes';
+        saveGalleryBtn.disabled = false;
+      }
+    };
+    
+    // Button click triggers file input
+    addImageBtn.addEventListener('click', () => {
+      // Show loading state
+      const originalBtnText = addImageBtn.innerHTML;
+      addImageBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
+      addImageBtn.disabled = true;
+      
+      // Trigger file input
+      imageUpload.click();
+      
+      // Reset button state after a short delay if no file is selected
+      setTimeout(() => {
+        if (!imageUpload.files || imageUpload.files.length === 0) {
+          addImageBtn.innerHTML = originalBtnText;
+          addImageBtn.disabled = false;
+        }
+      }, 1000);
+    });
+    
+    // Save button click handler
+    saveGalleryBtn.addEventListener('click', saveGalleryChanges);
+    
+    // Handle file selection
+    imageUpload.addEventListener('change', async function(e) {
+      const files = e.target.files;
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.startsWith('image/')) {
+          try {
+            // Show loading state for each image
+            const originalBtnText = addImageBtn.innerHTML;
+            addImageBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading ${i + 1}/${files.length}...`;
+            
+            // Upload to server first
+            const uploadedImage = await uploadImageToServer(file);
+            if (uploadedImage && uploadedImage.url) {
+              // Create image object
+              const newImage = {
+                url: uploadedImage.url,
+                alt: file.name || "Gallery image",
+                width: 1200,
+                height: 800,
+                order: galleryImages.length + 1
+              };
+              
+              // Add to gallery
+              galleryImages.push(newImage);
+              addImageToGallery(newImage.url, newImage);
+            }
+          } catch (error) {
+            console.error('Error uploading image:', error);
+          }
+        }
+      }
+      
+      // Reset button state after all uploads are complete
+      addImageBtn.innerHTML = '<i class="bi bi-plus-circle me-1"></i> Add Image';
+      addImageBtn.disabled = false;
+      
+      // Reset input to allow selecting same file again
+      e.target.value = '';
+    });
+    
+    // Upload image to server
+    async function uploadImageToServer(file) {
+      if (!file) return null;
+      
+      // JWT Token for authorization
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTMyMDAwMywiZXhwIjoxNzQ1NDA2NDAzfQ.5V9SyTCRvPWGFMzOeIF53PAAyie1XQWurRrBCE09axM';
+      
+      // Create FormData
+      const formData = new FormData();
+      formData.append('images', file);
+      
+      try {
+        // Upload the image to Cloudinary via your endpoint
+        const response = await fetch(`/api/images`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error('Upload failed: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Return the Cloudinary URL
+        if (data && data.files && data.files.length > 0) {
+          return {
+            url: data.files[0].url,
+            width: 1200,
+            height: 800
+          };
+        }
+        
+        return null;
+      } catch (error) {
+        console.error('Error uploading to Cloudinary:', error);
+        alert('Failed to upload image. Please try again.');
+        return null;
+      }
+    }
+    
+    // Add image to gallery
+    function addImageToGallery(imageSrc, imageData) {
+      const imageId = 'img-' + Date.now();
+      
+      const imageCard = document.createElement('div');
+      imageCard.className = 'position-relative gallery-image-card';
+      imageCard.style.width = '250px';
+      imageCard.style.height = 'auto';
+      imageCard.dataset.id = imageId;
+      
+      imageCard.innerHTML = `
+        <div class="card h-100">
+          <div class="position-relative" style="height: 200px;">
+            <img src="${imageSrc}" 
+                 class="img-cover rounded-top h-100 w-100" 
+                 alt="${imageData?.alt || 'Gallery image'}">
+            <button class="btn-remove-image btn btn-sm btn-danger position-absolute top-0 end-0 m-1">
+              <img src="/images/svg/delete.svg" alt="Delete" style="width: 28px; height: 28px; padding: 5px;">
+            </button>
+          </div>
+          <div class="card-body p-2">
+            {{!-- <div class="mb-2">
+              <label class="form-label small mb-1">Title</label>
+              <input type="text" 
+                     class="form-control form-control-sm image-title" 
+                     value="${imageData?.title || ''}" 
+                     placeholder="Enter image title"
+                     data-original-title="${imageData?.title || ''}">
+            </div> --}}
+            <div class="mb-2">
+              <label class="form-label small mb-1">Prompt</label>
+              <textarea class="form-control form-control-sm image-prompt" 
+                        rows="2" 
+                        placeholder="Enter image prompt"
+                        data-original-prompt="${imageData?.prompt || ''}">${imageData?.prompt || ''}</textarea>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      galleryContainer.appendChild(imageCard);
+      
+      // Add input change handlers
+      const promptInput = imageCard.querySelector('.image-prompt');
+      
+      promptInput.addEventListener('change', function() {
+        const imageUrl = imageSrc;
+        const index = galleryImages.findIndex(img => img.url === imageUrl);
+        if (index !== -1) {
+          galleryImages[index].prompt = this.value;
+        }
+      });
+      
+      // Add delete handler
+      imageCard.querySelector('.btn-remove-image').addEventListener('click', () => {
+        // Remove from DOM
+        imageCard.remove();
+        
+        // Remove from our array (find by URL)
+        const imageUrl = imageSrc;
+        const index = galleryImages.findIndex(img => img.url === imageUrl);
+        if (index !== -1) {
+          galleryImages.splice(index, 1);
+        }
+      });
+    }
+    
+    // Load images on page load
+    fetchGalleryImages();
+
+    // Add AI image generation function
+    async function generateAIImage(prompt) {
+      if (!prompt) {
+        showAlert('Please enter a prompt for image generation', 'warning');
+        return;
+      }
+
+      const generateButton = document.getElementById('generate-ai-image');
+      const originalButtonText = generateButton.innerHTML;
+      generateButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+      generateButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/images/generate-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            prompt: prompt
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('AI image generation failed');
+        }
+
+        const data = await response.json();
+        
+        if (data.imageData) {
+          // Extract the base64 data - remove the prefix if it exists
+          const base64Data = data.imageData.replace(/^data:image\/\w+;base64,/, '');
+          
+          // Convert base64 to blob
+          const byteCharacters = atob(base64Data);
+          const byteArrays = [];
+          
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteArrays.push(byteCharacters.charCodeAt(i));
+          }
+          
+          const byteArray = new Uint8Array(byteArrays);
+          const blob = new Blob([byteArray], { type: 'image/png' });
+          
+          // Create a file from the blob
+          const file = new File([blob], 'ai-generated-image.png', { type: 'image/png' });
+          
+          // Upload the generated image to your server
+          const uploadResponse = await uploadImageToServer(file);
+          
+          if (uploadResponse) {
+            // Create image object
+            const newImage = {
+              url: uploadResponse.url,
+              alt: prompt,
+              width: 1200,
+              height: 800,
+              order: galleryImages.length + 1,
+              prompt: prompt // Store the prompt for reference
+            };
+            
+            // Add to gallery
+            galleryImages.push(newImage);
+            addImageToGallery(newImage.url, newImage);
+            
+            showAlert('AI image generated and added to gallery!', 'success');
+          } else {
+            throw new Error('Failed to upload generated image');
+          }
+        } else {
+          throw new Error('No image data in response');
+        }
+      } catch (error) {
+        console.error('Error generating AI image:', error);
+        showAlert('Failed to generate AI image. Please try again.', 'danger');
+      } finally {
+        generateButton.innerHTML = originalButtonText;
+        generateButton.disabled = false;
+      }
+    }
+
+    // Add event listener for the AI image generation button
+    const generateButton = document.getElementById('generate-ai-image');
+    if (generateButton) {
+      generateButton.addEventListener('click', function() {
+        const prompt = document.getElementById('ai-prompt').value.trim();
+        generateAIImage(prompt);
+      });
+    }
+  });
+</script>
+
+<style>
+  .gallery-image-card {
+    transition: all 0.2s ease;
+  }
+  
+  .gallery-image-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+  }
+  
+  .img-cover {
+    object-fit: cover;
+  }
+
+  textarea {
+    height: 8rem;
+  }
+  
+  .btn-remove-image {
+    padding: 0.15rem 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .gallery-image-card:hover .btn-remove-image {
+    opacity: 1;
+  }
+
+  .card {
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+  }
+
+  .card:hover {
+    border-color: rgba(0,0,0,0.2);
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .form-control {
+    font-size: 0.8rem;
+  }
+
+  .image-title {
+    height: 28px;
+  }
+
+  .image-prompt {
+    resize: none;
+    min-height: 50px;
+  }
+
+  /* Alert container styles */
+  .alert-container {
+    min-width: 300px;
+    max-width: 500px;
+  }
+
+  .alert-container .alert {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: none;
+    animation: slideIn 0.3s ease-out;
+    margin-bottom: 0;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* AI Generation Section Styles */
+  #ai-prompt {
+    flex-grow: 1;
+  }
+
+  #generate-ai-image {
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,334 @@
+{{!-- Why Use Airbrush 3d Tool Section Styles --}}
+<style>
+    .why-use-airbrush-section {
+        position: relative;
+        width: 100%;
+        background: #130930;
+        padding: 5rem 2rem;
+        color: white;
+        overflow: hidden;
+    }
+
+    .why-use-airbrush-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background-color: black;
+        padding: 2rem;
+        height: 85vh;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .why-use-airbrush-title {
+        position: relative;
+        z-index: 100;
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 4rem;
+        color: white;
+    }
+
+    .airbrush-text {
+        background: linear-gradient(to bottom, #4526B1, #FF6154);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .model-container {
+        width: 100%;
+        height: 450px;
+    }
+
+    .model-image {
+        max-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        top: 10%;
+        left: 20%;
+        z-index: 10;
+    }
+
+    .feature-pill {
+        position: absolute;
+        background: white;
+        padding: 1.1rem 5rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 2.4rem;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feature-pill.fast {
+        top: 20%;
+        left: 10%;
+        background: #E6E1FF;
+        color: #4526B1;
+    }
+
+    .feature-pill.free {
+        bottom: 20%;
+        left: 10%;
+        background: #E1FFED;
+        color: #0D7A4A;
+    }
+
+    .feature-pill.no-skills {
+        top: 20%;
+        right: 5%;
+        background: #FFE8E1;
+        color: #FF3E1D;
+    }
+
+    .feature-pill.styles {
+        bottom: 20%;
+        right: 5%;
+        background: #FFE1FF;
+        color: #A01FCC;
+    }
+
+    .feature-arrow {
+        position: absolute;
+        width: 25px;
+        height: 12px;
+    }
+
+    .fast-arrow {
+        top: 30%;
+        left: 30%;
+    }
+
+    .free-arrow {
+        bottom: 35%;
+        left: 30%;
+    }
+
+    .no-skills-arrow {
+        top: 30%;
+        right: 30%;
+    }
+
+    .styles-arrow {
+        bottom: 35%;
+        right: 30%;
+    }
+
+    @media (max-width: 768px) {
+        .why-use-airbrush-title {
+            font-size: 1.5rem;
+        }
+
+        .why-use-airbrush-container {
+            height: 50vh;
+            padding-top: 1.1rem;
+        }
+
+        .model-image {
+        top: -3%;
+        max-width: 141%;
+        left: 25%;
+        }
+
+        .model-container {
+            height: 400px;
+        }
+
+        .feature-pill {
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        {{!-- .feature-pill.fast {
+            top: 15%;
+            left: 5%;
+        }
+
+        .feature-pill.free {
+            bottom: 35%;
+            left: 5%;
+        }
+
+        .feature-pill.no-skills {
+            top: 15%;
+            right: 5%;
+        }
+
+        .feature-pill.styles {
+            bottom: 35%;
+            right: 5%;
+        } --}}
+    }
+
+    @media (max-width: 448px) {
+        .why-use-airbrush-title {
+            font-size: 2rem;
+        }
+
+        .model-image {
+        top: -3%;
+        max-width: 141%;
+        left: 0%;
+        }
+
+        .why-use-airbrush-container {
+            height: 40vh;
+        }
+
+        .feature-pill {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+{{!-- Why Use Airbrush 3d Tool Section Content --}}
+<section class="why-use-airbrush-section">
+    <div class="why-use-airbrush-container">
+
+        <div class="model-container">
+            <!-- Fast generation pill -->
+            <h2 class="why-use-airbrush-title">Why Use <span class="airbrush-text">Airbrush Ghibli Tool</span> ?</h2>
+            <div class="feature-pill fast">Fast generation</div>
+            {{!-- <img src="/images/triangle-down.svg" alt="" class="feature-arrow fast-arrow"> --}}
+
+            <!-- Free to try pill -->
+            <div class="feature-pill free">Free to try</div>
+            {{!-- <img src="/images/triangle-down.svg" alt="" class="feature-arrow free-arrow"> --}}
+
+            <!-- 3D Model in the center -->
+            <img src="/images/ghibli/ghibli11.png" class="model-image" alt="" class="feature-arrow free-arrow">
+
+
+            <!-- No design skills needed pill -->
+            <div class="feature-pill no-skills">No design skills needed</div>
+            {{!-- <img src="/images/triangle-down.svg" alt="" class="feature-arrow no-skills-arrow"> --}}
+
+            <!-- Multiple 3D styles pill -->
+            <div class="feature-pill styles">Multiple 3D styles</div>
+            {{!-- <img src="/images/triangle-down.svg" alt="" class="feature-arrow styles-arrow"> --}}
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to fetch content for the why-use-ghibli section
+    async function fetchGhibliWhyUseContent() {
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-([a-z])/g, (match, letter) => {
+                return letter.toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`] || window.airbrushghibli || '68054404386a5fc127d44b4a';
+            
+            // Dynamically determine the content slug based on the path
+            let slug;
+            if (pathSlug.includes('ghibli')) {
+                slug = 'ghibli-why-use-tool';
+            } else if (pathSlug.includes('3d')) {
+                slug = '3d-why-use-tool';
+            } else {
+                // Extract the first part of the path for other cases
+                const basePath = pathSlug.split('-')[0];
+                slug = `${basePath}-why-use-tool`;
+            }
+                        
+            const response = await fetch(`/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch ghibli why-use content: ${response.status} ${response.statusText}`);
+            }
+            
+            const content = await response.json();
+            console.log('Why use ghibli content loaded:', content);
+            
+            // Update the section with content
+            updateGhibliWhyUseContent(content);
+        } catch (error) {
+            console.error('Error fetching ghibli why-use content:', error);
+        }
+    }
+    
+    // Function to update the why-use-ghibli section with fetched content
+    function updateGhibliWhyUseContent(content) {
+        console.log('Updating ghibli why-use section with:', content);
+        
+        // Update section title if available
+        if (content.title) {
+            const titleElement = document.querySelector('.why-use-airbrush-title');
+            if (titleElement) {
+                // Keep the styling for "Airbrush Ghibli Tool" by replacing just the beginning part
+                const titleText = content.title.replace(/Why Use/i, '').trim();
+                titleElement.innerHTML = `Why Use <span class="airbrush-text">${titleText}</span> ?`;
+                console.log('Updated title to:', titleElement.innerHTML);
+            }
+        }
+        
+        // Update image if available in images array
+        if (content.images && content.images.length > 0) {
+            const imageElement = document.querySelector('.model-image');
+            if (imageElement && content.images[0].url) {
+                console.log('Setting model image to:', content.images[0].url);
+                imageElement.src = content.images[0].url;
+                
+                // Add onload handler to debug image loading
+                imageElement.onload = function() {
+                    console.log('Ghibli model image loaded successfully:', content.images[0].url);
+                };
+                
+                imageElement.onerror = function() {
+                    console.error('Failed to load Ghibli model image:', content.images[0].url);
+                };
+            } else {
+                console.warn('Image element not found or no image URL in content');
+            }
+        }
+        
+        // Handle fields if available
+        if (content.fields && Array.isArray(content.fields)) {
+            
+            // Map of field positions to pill classes
+            const pillClasses = [
+                'fast',
+                'free',
+                'no-skills',
+                'styles'
+            ];
+            
+            // Update each feature pill with content from fields
+            content.fields.forEach((field, index) => {
+                if (index < pillClasses.length) {
+                    const pillClass = pillClasses[index];
+                    const pillElement = document.querySelector(`.feature-pill.${pillClass}`);
+                    
+                    if (pillElement && field.value) {
+                        console.log(`Updating ${pillClass} pill with: ${field.value}`);
+                        pillElement.textContent = field.value;
+                    }
+                }
+            });
+        }
+        
+        // Force a repaint to ensure everything is updated
+        setTimeout(() => {
+            const container = document.querySelector('.why-use-airbrush-container');
+            if (container) {
+                container.style.opacity = '0.99';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchGhibliWhyUseContent);
+</script>

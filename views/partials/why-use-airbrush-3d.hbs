@@ -1,0 +1,457 @@
+{{!-- Why Use Airbrush 3d Tool Section Styles --}}
+<style>
+    .why-use-airbrush-section {
+        position: relative;
+        width: 100%;
+        background: #130930;
+        padding: 5rem 2rem;
+        color: white;
+        overflow: hidden;
+        display: none; /* Hide by default, will show when content is loaded */
+    }
+
+    .why-use-airbrush-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background-color: black;
+        padding: 2rem;
+        height: 85vh;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .why-use-airbrush-title {
+        position: relative;
+        z-index: 100;
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 4rem;
+        color: white;
+    }
+
+    .airbrush-text {
+        background: linear-gradient(to bottom, #4526B1, #FF6154);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .model-container {
+        width: 100%;
+        height: 450px;
+    }
+
+    .model-video{
+        max-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        z-index: 10;
+    }
+
+    .model-image-container{
+        position: absolute;
+        top: 20%;
+        left: 30%;
+        height: 400px;
+        width: 400px;
+        z-index: 10;
+    }
+
+    .model-image-container img{
+        border-radius: 10px;
+    }
+
+    .model-image {
+        max-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        z-index: 10;
+    }
+
+    .feature-pill {
+        position: absolute;
+        background: white;
+        padding: 1.1rem 2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 1.6rem;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feature-pill.fast {
+        top: 20%;
+        left: 10%;
+        background: #E6E1FF;
+        color: #4526B1;
+    }
+
+    .feature-pill.free {
+        bottom: 20%;
+        left: 10%;
+        background: #E1FFED;
+        color: #0D7A4A;
+    }
+
+    .feature-pill.no-skills {
+        top: 20%;
+        right: 5%;
+        background: #FFE8E1;
+        color: #FF3E1D;
+    }
+
+    .feature-pill.styles {
+        bottom: 20%;
+        right: 5%;
+        background: #FFE1FF;
+        color: #A01FCC;
+    }
+
+    .feature-arrow {
+        position: absolute;
+        width: 25px;
+        height: 12px;
+    }
+
+    .fast-arrow {
+        top: 30%;
+        left: 30%;
+    }
+
+    .free-arrow {
+        bottom: 35%;
+        left: 30%;
+    }
+
+    .no-skills-arrow {
+        top: 30%;
+        right: 30%;
+    }
+
+    .styles-arrow {
+        bottom: 35%;
+        right: 30%;
+    }
+
+    @media (max-width: 768px) {
+        .why-use-airbrush-title {
+            font-size: 1.5rem;
+        }
+
+        .why-use-airbrush-container {
+            height: 50vh;
+            padding-top: 1.1rem;
+        }
+
+        .model-image {
+        top: -3%;
+        max-width: 141%;
+        left: 25%;
+        }
+
+        .model-container {
+            height: 400px;
+        }
+
+        .model-image-container{
+            height: 170px !important;
+            top: 30% !important;
+            left: 30% !important;
+        }
+
+        .feature-pill {
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        {{!-- .feature-pill.fast {
+            top: 15%;
+            left: 5%;
+        }
+
+        .feature-pill.free {
+            bottom: 35%;
+            left: 5%;
+        }
+
+        .feature-pill.no-skills {
+            top: 15%;
+            right: 5%;
+        }
+
+        .feature-pill.styles {
+            bottom: 35%;
+            right: 5%;
+        } --}}
+    }
+
+    @media (max-width: 589px) {
+        .why-use-airbrush-title {
+            font-size: 2rem;
+            white-space: nowrap;
+        }
+
+        .model-image {
+        top: -3%;
+        max-width: 141%;
+        left: 0%;
+        }
+
+        .why-use-airbrush-container {
+            height: 40vh;
+        }
+
+        .feature-pill {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+{{!-- Why Use Airbrush 3d Tool Section Content --}}
+<section class="why-use-airbrush-section">
+    <div class="why-use-airbrush-container">
+
+        <div class="model-container">
+            <!-- Fast generation pill -->
+            <h2 class="why-use-airbrush-title">Why Use <span class="airbrush-text">Airbrush 3d Tool</span> ?</h2>
+            <div class="feature-pill fast">Fast generation</div>
+
+            <!-- Free to try pill -->
+            <div class="feature-pill free">Free to try</div>
+
+            <!-- 3D Model in the center -->
+            <div class="model-media-container">
+                <video autoplay loop muted playsinline class="model-video">
+                    <source src="/videos/tiger.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="model-image-container">
+                    <img src="/images/tiger.png" alt="3D Model" class="model-image">
+                </div>
+                <!-- Image element will be added dynamically if needed -->
+            </div>
+
+            <!-- No design skills needed pill -->
+            <div class="feature-pill no-skills">No design skills needed</div>
+
+            <!-- Multiple 3D styles pill -->
+            <div class="feature-pill styles">Multiple 3D styles</div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to wait for categories to be initialized if needed
+    function ensureCategoriesInitialized() {
+        // If categories are already initialized, return resolved promise
+        if (window.categoriesInitialized) {
+            return Promise.resolve();
+        }
+        
+        // Otherwise, return a promise that resolves when the categories are ready
+        return new Promise(resolve => {
+            window.addEventListener('categoriesReady', () => {
+                console.log('Categories ready event received in why-use-airbrush component');
+                resolve();
+            });
+        });
+    }
+    
+    // Function to fetch content for the why-use-airbrush section
+    async function fetchWhyUseContent() {
+        console.log('Why-use-airbrush component initializing');
+        
+        // Wait for categories to be initialized
+        await ensureCategoriesInitialized();
+        console.log('Categories are ready, proceeding with why-use-airbrush fetch');
+        
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-./g, (match) => {
+                return match[1].toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`];
+            
+            // Dynamically determine the content slug based on the path
+            let slug = 'why-use-tool'
+            
+            const response = await fetch(`/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch why-use content: ${response.status} ${response.statusText}`);
+            }
+            
+            const content = await response.json();
+            
+            // Only show the section and update it if valid content is received
+            if (content && (content.fields?.length > 0 || content.images?.length > 0)) {
+                // Show the section since we have content
+                const section = document.querySelector('.why-use-airbrush-section');
+                if (section) {
+                    section.style.display = 'block';
+                }
+                
+                // Update the section with content
+                updateWhyUseContent(content);
+            } else {
+                console.log('No valid content received for why-use section, keeping it hidden');
+            }
+        } catch (error) {
+            console.error('Error fetching why-use content:', error);
+            // Keep the section hidden when there's an error
+        }
+    }
+    
+    // Function to update the why-use-airbrush section with fetched content
+    function updateWhyUseContent(content) {
+        console.log('Updating why-use section with:', content);
+        
+        // Update section title if available
+        if (content.title) {
+            const titleElement = document.querySelector('.why-use-airbrush-title');
+            if (titleElement) {
+                // Process title to highlight words in square brackets
+                let processedTitle = content.title;
+                
+                // Replace words in square brackets with highlighted spans
+                processedTitle = processedTitle.replace(/\[([^\]]+)\]/g, '<span class="airbrush-text">$1</span>');
+                
+                // Add "Why Use" prefix if not present
+                if (!processedTitle.toLowerCase().includes('why use')) {
+                    processedTitle = `Why Use ${processedTitle}`;
+                }
+                
+                // Add question mark at the end if not present
+                if (!processedTitle.includes('?')) {
+                    processedTitle += ' ?';
+                }
+                
+                titleElement.innerHTML = processedTitle;
+            }
+        }
+        
+        // Update media (video or image) if available in the response
+        if (content.images && content.images.length > 0) {
+            const imageContainer = document.querySelector('.model-image-container');
+            const mediaContainer = document.querySelector('.model-media-container');
+            if (imageContainer) {
+                
+                // Check if there's a video element
+                const videoElement = mediaContainer.querySelector('video');
+                
+                // Get the image URL and video URL from the response
+                const imageUrl = content.images[0].url;
+                const videoUrl = content.images[0].url.endsWith('.mp4') ? content.images[0].url : null;
+                
+                // If we have a video URL in the response, use that
+                if (videoUrl) {
+                    if (videoElement) {
+                        // Update the video source
+                        const sourceElement = videoElement.querySelector('source');
+                        if (sourceElement) {
+                            sourceElement.src = videoUrl;
+                            videoElement.style.display = 'block';
+                            
+                            // Hide any existing image element
+                            const imgElement = imageContainer.querySelector('img.model-image');
+                            if (imgElement) {
+                                imgElement.style.display = 'none';
+                            }
+                            
+                            // Force video reload
+                            videoElement.load();
+                        }
+                    }
+                }
+                // If we have an image URL in the response and no video, show the image
+                else if (imageUrl) {
+                    // If there's already a video element
+                    if (videoElement) {
+                        // Hide the video and create/show an image instead
+                        videoElement.style.display = 'none';
+                        
+                        // Check if we already have an image element
+                        let imgElement = mediaContainer.querySelector('img.model-image');
+                        
+                        // If no image element exists yet, create one
+                        if (!imgElement) {
+                            imgElement = document.createElement('img');
+                            imgElement.className = 'model-image';
+                            mediaContainer.appendChild(imgElement);
+                        }
+                        
+                        // Set the image properties
+                        imgElement.src = imageUrl;
+                        imgElement.alt = content.title || '3D Model';
+                        imgElement.style.display = 'block';
+                        
+                        // Add loading handlers for debugging
+                        imgElement.onload = function() {
+                            console.log('Image loaded successfully:', imageUrl);
+                        };
+                        
+                        imgElement.onerror = function() {
+                            console.error('Failed to load image:', imageUrl);
+                            // If image fails to load, show the video as fallback
+                            if (videoElement) {
+                                videoElement.style.display = 'block';
+                                imgElement.style.display = 'none';
+                            }
+                        };
+                    }
+                }
+            }
+        }
+        
+        // Handle fields if available
+        if (content.fields && Array.isArray(content.fields)) {
+            console.log('Processing fields array:', content.fields);
+            
+            // Map of field positions to pill classes
+            const pillClasses = [
+                'fast',
+                'free',
+                'no-skills',
+                'styles'
+            ];
+            
+            // Update each feature pill with content from fields
+            content.fields.forEach((field, index) => {
+                if (index < pillClasses.length) {
+                    const pillClass = pillClasses[index];
+                    const pillElement = document.querySelector(`.feature-pill.${pillClass}`);
+                    
+                    if (pillElement && field.value) {
+                        console.log(`Updating ${pillClass} pill with: ${field.value}`);
+                        pillElement.textContent = field.value.title.replace(/[\*\s]+/g, ' ').trim();
+                    }
+                }
+            });
+        }
+        
+        // Force a repaint to ensure everything is updated
+        setTimeout(() => {
+            const container = document.querySelector('.why-use-airbrush-container');
+            if (container) {
+                container.style.opacity = '0.99';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchWhyUseContent);
+</script>

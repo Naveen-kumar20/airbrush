@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    <title>{{blog.title}}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/desktop-menu.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+    {{>desktop-menu}}
+
+    <div class="blog-post-wrapper">
+        <div class="blog-post-container">
+            <div class="blog-hero">
+                <img src="{{blog.imageUrl}}" alt="{{blog.title}}" class="blog-hero-image">
+                <div class="blog-hero-overlay"></div>
+            </div>
+            
+            <div class="blog-content">
+                <h1 class="blog-title">{{blog.title}}</h1>
+                <div class="blog-meta">
+                    <span class="blog-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{blog.date}}
+                    </span>
+                </div>
+                <div class="blog-body">
+                    {{{blog.content}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{>footer}}
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #3803a4 0%, #350a98 50%, #031b39 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #e1e1e1;
+        }
+
+        .blog-post-wrapper {
+            padding: 2rem;
+            min-height: 100vh;
+            margin-top: 75px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blog-post-container {
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .blog-hero {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+        }
+
+        .blog-content {
+            padding: 3rem;
+            position: relative;
+        }
+
+        .blog-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            color: #a8b2d1;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .blog-meta i {
+            margin-right: 0.5rem;
+            color: #64ffda;
+        }
+
+        .blog-body {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e1e1e1;
+        }
+
+        .blog-body p {
+            margin-bottom: 1.8rem;
+        }
+
+        .blog-body h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.5rem;
+            color: #64ffda;
+        }
+
+        .blog-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-body a {
+            color: #64ffda;
+            text-decoration: none;
+            border-bottom: 1px dashed #64ffda;
+            transition: all 0.3s ease;
+        }
+
+        .blog-body a:hover {
+            color: #ffffff;
+            border-bottom-style: solid;
+        }
+
+        @media (max-width: 768px) {
+            .blog-post-wrapper {
+                padding: 1rem;
+            }
+
+            .blog-hero {
+                height: 300px;
+            }
+
+            .blog-content {
+                padding: 2rem;
+            }
+
+            .blog-title {
+                font-size: 2rem;
+            }
+
+            .blog-body {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-content {
+                padding: 1.5rem;
+            }
+
+            .blog-hero {
+                height: 200px;
+            }
+
+            .blog-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        async function fetchAndRenderBlogPost() {
+            try {
+                const blogUrl = window.location.pathname.split('/').pop();
+                const response = await fetch(`/api/blog/${blogUrl}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch blog post');
+                }
+
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error('API returned unsuccessful response');
+                }
+
+                const blog = result.data;
+
+                // Update the page content
+                document.querySelector('.blog-hero-image').src = blog.imageUrl || '/images/blog-place.png';
+                document.querySelector('.blog-title').textContent = blog.title;
+                document.querySelector('.blog-date').innerHTML = `
+                    <i class="fas fa-calendar-alt"></i>
+                    ${new Date(blog.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}
+                `;
+                document.querySelector('.blog-body').innerHTML = blog.content;
+
+                // Update page title
+                document.title = blog.title;
+
+            } catch (error) {
+                console.error('Error fetching blog post:', error);
+            }
+        }
+
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', fetchAndRenderBlogPost);
+    </script>
+</body>
+</html> 

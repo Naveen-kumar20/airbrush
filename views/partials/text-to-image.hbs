@@ -1,0 +1,2123 @@
+{{!-- Character Showcase Styles --}}
+<style>
+    .character-section {
+        min-height: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: relative;
+    }
+
+    .character-nav {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .filterSectionContainer {
+        width: fit-content;
+        /* Slightly adjusted width to account for the divider */
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-direction: column;
+        gap: 1rem;
+        flex-shrink: 0;
+    }
+
+    .filter-section {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+        border-radius: 1.5rem;
+    }
+
+    .filter-section .filters {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .filter-section p {
+        color: black;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .filter-dropdown {
+        background-color: #4a2a8a;
+        border: none;
+        width: 150px;
+        border-radius: 0.5rem;
+        padding: 0.8rem 1.2rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        justify-content: space-between;
+    }
+
+    .filter-dropdown-delete {
+        background-color: #FF0000;
+    }
+
+    .clear-history {
+        background-color: #ff3b30;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        cursor: pointer;
+    }
+
+
+    .nav-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .nav-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .grid-item:hover .hover-overlay {
+        opacity: 1;
+    }
+
+    /* Hover content styles */
+    .hover-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .grid-item:hover .hover-content {
+        opacity: 1;
+    }
+
+    .text-content {
+        margin-top: auto;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 1.5rem;
+    }
+
+    .hover-content h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        height: 30px;
+        margin-bottom: 1.2rem;
+    }
+
+    .hover-content p {
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+
+    .hover-buttons {
+        display: flex;
+        gap: 0.75rem;
+        padding: 1rem;
+        align-self: flex-end;
+    }
+
+    .hover-buttons button {
+        background-color: rgba(0, 0, 0, 0.4);
+        border: none;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .hover-buttons button:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hover-buttons img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .expand-btn,
+    .download-btn {
+        padding: 0rem;
+    }
+
+    .character-main {
+        background: linear-gradient(180deg, #6248E2 22.26%, #FF6154 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 40%;
+        margin-bottom: 4rem;
+        position: relative;
+        margin-inline: auto;
+        margin-top: 0;
+        transition: all 0.3s ease;
+    }
+
+    .character-main.show {
+        display: flex;
+        margin-top: 2rem;
+    }
+
+    .character-image {
+        padding-block: 1rem;
+        border-radius: 30px;
+        height: 100%;
+        width: 50%;
+        object-fit: contain;
+    }
+
+    .character-thumbnails {
+        background: linear-gradient(180deg, #6248E2 22.26%, #FF6154 100%);
+        border-radius: 12px;
+        padding: 1rem;
+        width: 90%;
+        margin-inline: auto;
+        display: none;
+        margin-bottom: 4rem;
+        transition: all 0.3s ease;
+    }
+
+    .character-thumbnails.show {
+        display: block;
+        margin-top: 2rem;
+    }
+
+    .thumbnail-container {
+        padding: 1rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .character-model-preview {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border-radius: 12px;
+        gap: 1.8rem;
+    }
+
+    .thumbnail-wrapper {
+        position: relative;
+        aspect-ratio: 1;
+        height: 235px;
+    }
+
+    .thumbnail {
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .hover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 8px;
+    }
+
+    .thumbnail-wrapper:hover .hover-overlay {
+        opacity: 1;
+    }
+
+    .hover-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1rem;
+    }
+
+    .thumbnail-wrapper:hover .hover-content {
+        opacity: 1;
+    }
+
+    .text-content {
+        margin-top: auto;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        margin: 0 -1rem -1rem -1rem;
+    }
+
+    .text-content h3 {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .text-content p {
+        font-size: 1rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .hover-buttons {
+        display: flex;
+        gap: 0.75rem;
+        align-self: flex-end;
+    }
+
+    .hover-buttons button {
+        background-color: rgba(0, 0, 0, 0.4);
+        border: none;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .hover-buttons button:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hover-buttons img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .prompt-and-subscription {
+        width: 70%;
+        margin-inline: auto;
+        position: relative;
+        box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.3);
+        margin-top: 1.5rem;
+        border-radius: 24px;
+    }
+
+    .character-prompt-container {
+        --border-width: 3px;
+        --radius: 24px;
+        --angle: 0turn;
+        
+        position: relative;
+        border-radius: var(--radius);
+        border: var(--border-width) solid transparent;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        padding: 1.5rem;
+        margin: auto;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 150px;
+        isolation: isolate;
+    }
+
+    .character-prompt-container::before {
+        content: " ";
+        position: absolute;
+        overflow: hidden;
+        inset: calc(var(--border-width) * -1);
+        z-index: -1;
+        border: inherit;
+        border-radius: inherit;
+        background-image: conic-gradient(from var(--angle), #381D6A 80%, #E0D1FF 88%, #E0D1FF 92%, #381D6A 100%);
+        background-origin: border-box;
+        -webkit-mask: linear-gradient(black, black) content-box,
+                     linear-gradient(black, black);
+        mask: linear-gradient(black, black),
+              linear-gradient(black, black);
+        -webkit-mask-clip: content-box, border-box;
+        mask-clip: content-box, border-box;
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: spin 3s linear infinite;
+    }
+
+    @property --angle {
+        syntax: "<angle>";
+        inherits: true;
+        initial-value: 0turn;
+    }
+
+    @keyframes spin {
+        to {
+            --angle: 1turn;
+        }
+    }
+
+    .subscription-container {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 24px;
+        top: 150px;
+        width: 180px;
+        height: 60px;
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        position: absolute;
+        right: 0;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .subscription-container:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
+    }
+
+    .subscription-container img {
+        width: 42px;
+        height: 42px;
+        border-radius: 25%;
+    }
+
+    .subscription-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 0.5rem;
+    }
+
+    .subscription-container .title {
+        color: gray;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1;
+        margin-bottom: 0.2rem;
+    }
+
+    .subscription-container .subtitle {
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 500;
+        border-radius: 2rem;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .prompt-input {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .prompt-input img {
+        border-radius: 7px;
+    }
+
+    .ai-icon {
+        width: 28px;
+        height: 28px;
+        background-color: #333;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ffcc;
+        font-weight: bold;
+        margin-left: 0%;
+        font-size: 12px
+    }
+
+    .edit-icon {
+        width: 25px;
+        height: 25px;
+        display: block;
+    }
+
+    .prompt-input textarea {
+        flex: 1;
+        resize: none;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        outline: none;
+        min-height: 2.5rem;
+        max-height: 6rem;
+        overflow-y: auto;
+        width: 100%;
+        line-height: 1.4;
+        transition: all 0.3s ease;
+    }
+
+    .prompt-input textarea:focus {
+        min-height: 8rem;
+    }
+
+    .prompt-input textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .prompt-input::after,
+    .prompt-input::before {
+        content: none;
+    }
+
+    .generate-btn {
+        position: absolute;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        background: linear-gradient(90deg, #1E0A69 0%, #000000 100%);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4rem;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        width: auto;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        z-index: 2;
+    }
+
+    .generate-btn .ai-icon {
+        margin-right: 0.5rem;
+        /* Adds space between the star and the other content */
+    }
+
+    .generate-btn:hover {
+        background-color: #3a1a6a;
+        color: #ffffff;
+    }
+
+    .generate-btn img {
+        display: inline-block;
+        /* Ensures the image aligns with text */
+    }
+
+    .generate-btn .icon {
+        font-size: 1 rem
+    }
+
+    .character-options {
+        gap: 1rem;
+        width: 70%;
+        margin-inline: auto;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        justify-content: space-between;
+    }
+
+    .options-left {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem
+    }
+
+    .control-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0.75rem 1.25rem;
+        white-space: nowrap;
+        min-width: fit-content;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        width: fit-content;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(10px);
+        font-weight: 500;
+    }
+
+    .control-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .control-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: transparent;
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .control-btn .svg-icon {
+        filter: brightness(0) invert(1);
+        width: 20px;
+        height: 20px;
+    }
+
+    .option-btn {
+        background-color: white;
+        color: #4526B1;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem 2.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        font-weight: 500;
+    }
+
+    .option-btn .icon {
+        font-size: 1.2rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+    }
+
+    .option-btn .svg-icon {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+    }
+
+    .option-btn.active .svg-icon {
+        fill: white;
+    }
+
+    .option-btn:not(.active) .svg-icon {
+        fill: white;
+    }
+
+    .option-btn1 {
+        background-color: #4733c1;
+        color: #ffffff;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        font-weight: 500;
+    }
+
+    .option-btn1 .icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .action-button {
+        background: #ff3b3b;
+        color: white;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .download-button {
+        background: #4a90e2;
+    }
+
+    .thumbnail {
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        object-fit: contain;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail.active {
+        box-shadow: 0 0 0 2px #6b46c1;
+    }
+
+    @media (max-width: 768px) {
+        .character-section {
+            padding: 0.5rem;
+        }
+
+        .character-model-preview {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail-wrapper {
+            height: 100%;
+        }
+
+        .hover-buttons button {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .hover-buttons img {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .text-content {
+            padding: 0.75rem;
+        }
+
+        .text-content h3 {
+            font-size: 1.2rem;
+        }
+
+        .text-content p {
+            font-size: 0.9rem;
+            -webkit-line-clamp: 2;
+        }
+
+        .character-image {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .thumbnail-container {
+            flex-direction: column;
+        }
+
+        .imagination-content {
+            margin-block: 3rem;
+            bottom: 0;
+            left: 0;
+        }
+
+        .frog-content {
+            width: 90% !important;
+            margin-inline: auto;
+        }
+
+        .filterSectionContainer {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .character-main {
+            height: 65%;
+        }
+
+        .thumbnail-wrapper {
+            width: 100%;
+        }
+
+        .generating-text{
+            font-size: 1.4rem !important;
+        }
+
+        .prompt-and-subscription {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .subscription-container {
+            position: static;
+            width: 100%;
+            height: auto;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Fix button overlapping on mobile */
+        .character-prompt-container {
+            height: 200px !important;
+            padding: 1rem !important;
+        }
+
+        .generate-btn {
+            right: 1rem !important;
+            bottom: 1rem !important;
+            padding: 0.4rem 1rem !important;
+            font-size: 0.9rem !important;
+            min-width: auto !important;
+        }
+
+        #add-text-to-image-btn {
+            right: 1rem !important;
+            bottom: 3.5rem !important;
+            padding: 0.4rem 1rem !important;
+            font-size: 0.9rem !important;
+            min-width: auto !important;
+        }
+
+        .prompt-input {
+            margin-bottom: 1rem !important;
+            padding: 0.5rem !important;
+        }
+
+        .prompt-input textarea {
+            font-size: 1.2rem !important;
+            min-height: 2rem !important;
+            max-height: 4rem !important;
+        }
+    }
+
+    /* Extra small mobile devices */
+    @media (max-width: 480px) {
+        .character-prompt-container {
+            height: 180px !important;
+            padding: 0.8rem !important;
+        }
+
+        .generate-btn {
+            right: 0.8rem !important;
+            bottom: 0.8rem !important;
+            padding: 0.3rem 0.8rem !important;
+            font-size: 0.8rem !important;
+        }
+
+        #add-text-to-image-btn {
+            right: 0.8rem !important;
+            bottom: 3rem !important;
+            padding: 0.3rem 0.8rem !important;
+            font-size: 0.8rem !important;
+        }
+
+        .prompt-input textarea {
+            font-size: 1rem !important;
+            min-height: 1.8rem !important;
+            max-height: 3.5rem !important;
+        }
+    }
+
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 2rem;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+    }
+
+    .loading-text {
+        text-align: center;
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1.2rem;
+        border-radius: 12px;
+        width: 100%;
+        font-size: 1.2rem;
+        max-width: 400px;
+    }
+
+    .generating-text {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+        letter-spacing: 0.5px;
+        background: linear-gradient(90deg, #fff, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .wait-text {
+        font-size: 1.6rem;
+        opacity: 0.9;
+        margin: 0.5rem 0 0 0;
+        font-weight: 400;
+        color: #e2e8f0;
+    }
+
+    /* Preview image styles */
+    .preview-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+    }
+
+    .preview-image-generate {
+        width: 256px;
+        height: 256px;
+        border-radius: 12px;
+        object-fit: contain;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .character-image {
+        width: 256px;
+        height: 256px;
+        border-radius: 12px;
+        object-fit: contain;
+    }
+
+    .download-button {
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        border: none;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    .download-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .download-button img {
+        width: 24px;
+        height: 24px;
+    }
+
+    @media (max-width: 768px) {
+        .character-image {
+            width: 200px;
+            height: 200px;
+        }
+
+        .options-left{
+            align-items: center;
+            width: 100%;
+            padding-inline: 12px !important;
+        }
+
+        .character-options{
+            margin-inline: 0 !important;
+            margin-top: 0rem !important;
+            justify-content: center !important;
+            width: 100% !important;
+        }
+
+        .subscription-container{
+            min-width: fit-content !important;
+            padding: 0.8rem !important;
+        }
+
+        .subscription-container img{
+            height: 30px !important;
+            width: 30px !important;
+        }
+
+        .subtitle{
+            font-size: 1.2rem !important;
+        }
+
+        .preview-image-generate{
+            height: 180px;
+            border-radius: 10px;
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+        }  
+
+        .prompt-and-subscription{
+            width: 100% !important;
+        }
+
+        .character-prompt-container{
+            height: 180px !important;
+        }
+
+        .prompt-input textarea{
+            max-height: 8rem !important;
+        }
+        .generating-text {
+            font-size: 1.8rem;
+        }
+
+        .wait-text {
+            font-size: 1.4rem;
+        }
+
+        .download-button {
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 36px;
+            height: 36px;
+        }
+
+        .download-button img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    /* Category dropdown styles */
+    .category-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .category-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0.75rem 1.25rem;
+        white-space: nowrap;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(10px);
+        font-weight: 500;
+    }
+
+    .category-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .category-btn .icon {
+        align-items: center;
+    }
+
+    .category-btn .arrow {
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease;
+        padding-left: 0px !important;
+    }
+
+    .category-btn.active .arrow {
+        transform: rotate(180deg);
+    }
+
+    .category-dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(30, 30, 30, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        min-width: 200px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        display: none;
+        z-index: 1000;
+        margin-top: 0.5rem;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .category-dropdown-content.show {
+        display: block;
+    }
+
+    .category-item {
+        padding: 1rem 1.5rem;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .category-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .category-item.active {
+        background: rgba(98, 72, 226, 0.3);
+    }
+
+    .category-item img {
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .white-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 768px) {
+        .category-btn {
+            font-size: 1.4rem;
+            padding: 0.6rem 1rem;
+        }
+
+        .loading-container{
+            padding: 1rem;
+        }
+
+        .loading-container img{
+            height: 150px !important;
+        }
+
+        .category-item {
+            font-size: 1.2rem;
+            padding: 0.8rem 1.2rem;
+        }
+    }
+
+    /* Add these new styles */
+    .subscription-container.web-only {
+        display: flex;
+    }
+
+    .subscription-container.mobile-only {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .subscription-container.web-only {
+            display: none;
+        }
+
+        .subscription-container.mobile-only {
+            display: flex;
+        }
+    }
+
+    /* Skeleton Loading Styles */
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    .skeleton {
+        background: linear-gradient(90deg, #2a1c4f 25%, #3a2a5f 50%, #2a1c4f 75%);
+        background-size: 1000px 100%;
+        animation: shimmer 2s infinite linear;
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .thumbnail {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .thumbnail.loaded {
+        opacity: 1;
+    }
+
+    .thumbnail-wrapper .hover-overlay {
+        display: none;
+    }
+
+    .thumbnail-wrapper.loaded .hover-overlay {
+        display: block;
+    }
+
+    .thumbnail-wrapper.loaded .skeleton {
+        display: none;
+    }
+</style>
+
+{{!-- Character Showcase Content --}}
+<section id="text-to-image" class="character-section">
+    <div class="prompt-and-subscription">
+        <div class="character-prompt-container">
+            <div class="prompt-input">
+                <div class="ai-icon"><img src="/images/aiicon.png" alt="AI" width="28" height="28"></div>
+                <textarea
+                    id="text-to-image-textarea"
+                    placeholder="A modern and sleek banner design for UX/UI design, featuring a minimalist layout with ample negative space........."
+                    rows="5"></textarea>
+                <input type="file" id="text-to-image-image-input" accept="image" style="display:none;">
+                <div id="text-to-image-container" style="display:none;position:relative;margin-left:0.5rem;align-self:flex-start;">
+                    <img id="text-to-image-image-preview" src="" alt="Image Preview" style="max-width:60px;max-height:60px;border-radius:8px;">
+                    <button type="button" id="text-to-image-remove-image" style="position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:#ff4444;color:white;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
+                </div>
+            </div>
+            <button type="button" id="add-text-to-image-btn" class="option-btn1" style="position:absolute;right:15%;bottom:1.5rem;background:linear-gradient(90deg,#1E0A69 0%,#000000 100%);border-radius:50px;padding:7px 15px;z-index:2;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.2 9L12 6.8L9.8 9H7L12 4L17 9H14.2Z" fill="currentColor"/>
+                        <path d="M7 14H17V16H7V14Z" fill="currentColor"/>
+                        <path d="M12 18L7 13H9.8L12 15.2L14.2 13H17L12 18Z" fill="currentColor"/>
+                        <path d="M5 3H19C20.1 3 21 3.9 21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3ZM5 19H19V5H5V19Z" fill="currentColor"/>
+                    </svg>
+                 Add Image
+            </button>
+            <button class="generate-btn" id="generateTextToImageButton">
+                <img src="/images/svg/generateIcon.svg" alt="AI" width="24" height="24">
+                Generate
+            </button>
+        </div>
+        <div class="subscription-container web-only">
+            <img src="/images/generator-images/Subscription Get Pro.png" alt="Golden Crown">
+            <div class="subscription-text">
+                <p class="title">Subscription</p>
+                <p class="subtitle">Get Pro</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="character-options">
+        <div class="options-left">
+            <div class="subscription-container mobile-only">
+            <img src="/images/generator-images/Subscription Get Pro.png" alt="Golden Crown">
+            <div class="subscription-text">
+                <p class="title">Subscription</p>
+                <p class="subtitle">Get Pro</p>
+            </div>
+            </div>
+            <div class="category-dropdown" id="categoryDropdown">
+                <button class="category-btn" id="categoryBtn" type="button">
+                    <span class="icon"><img src="/images/svg/threeDIconBlue.svg" alt="Category" class="svg-icon white-icon"></span>
+                    <span class="category-text" data-current-category-id="{{category._id}}">Category</span>
+                    <span class="arrow">▼</span>
+            </button>
+                <div class="category-dropdown-content" id="categoryDropdownContent">
+                     {{!-- Categories will be populated here  --}}
+                </div>
+            </div>
+            <button class="control-btn">
+                <span class="icon"><img src="/images/svg/screenSizeBlue.svg" alt="Screen Size" class="svg-icon white-icon"></span>
+                1:1
+            </button>
+        </div>
+    </div>
+    <main class="character-main">
+        <div class="loading-container">
+            <img src="/images/ai-images-generator/generating.gif" alt="Generating" class="character-image" id="mainTextToImagePreview">
+            <div class="loading-text">
+                <p class="generating-text">Creating your masterpiece...</p>
+                <p class="wait-text">Just a moment while we work our magic</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="character-thumbnails">
+        <div class="thumbnail-container">
+            <div class="filterSectionContainer">
+                <div class="filter-section">
+                    <div class="filters">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="filter-dropdown filter-dropdown-delete">
+                                <p style="color: white; font-size: 1.4rem;">Clear History</p>&nbsp;
+                                <img style="width: 1.8rem; height: 1.8rem;" src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="character-model-preview">
+                <div class="thumbnail-wrapper grid-item">
+                    <img src="/images/dragon.png" alt="Thumbnail 2" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Expand">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="thumbnail-wrapper grid-item">
+                    <img src="/images/dragon.png" alt="Thumbnail 2" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Expand">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="thumbnail-wrapper grid-item">
+                    <img src="/images/dragon.png" alt="Thumbnail 3" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Delete">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Encryption functions
+    function generateKey() {
+        const timestamp = new Date().getTime();
+        const randomStr = Math.random().toString(36).substring(7);
+        return btoa(`${timestamp}-${randomStr}`);
+    }
+
+    function encrypt(text, key) {
+        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+        const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
+        const applySaltToChar = code => textToChars(key).reduce((a,b) => a ^ b, code);
+
+        return text
+            .split('')
+            .map(textToChars)
+            .map(applySaltToChar)
+            .map(byteHex)
+            .join('');
+    }
+
+    function decrypt(encoded, key) {
+        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+        const applySaltToChar = code => textToChars(key).reduce((a,b) => a ^ b, code);
+        
+        return encoded
+            .match(/.{1,2}/g)
+            .map(hex => parseInt(hex, 16))
+            .map(applySaltToChar)
+            .map(charCode => String.fromCharCode(charCode))
+            .join('');
+    }
+
+    // Secure storage functions
+    function secureSet(key, value) {
+        try {
+            const encryptionKey = generateKey();
+            const encryptedValue = encrypt(value.toString(), encryptionKey);
+            const timestamp = new Date().getTime();
+            
+            const data = {
+                value: encryptedValue,
+                key: encryptionKey,
+                timestamp: timestamp,
+                hash: encrypt(`${value}-${timestamp}`, encryptionKey)
+            };
+            
+            localStorage.setItem(key, JSON.stringify(data));
+        } catch (error) {
+            console.error('Error in secureSet:', error);
+        }
+    }
+
+    function secureGet(key) {
+        try {
+            const data = JSON.parse(localStorage.getItem(key) || '{}');
+            if (!data.value || !data.key || !data.timestamp || !data.hash) {
+                return null;
+            }
+
+            const decryptedValue = decrypt(data.value, data.key);
+            const verificationHash = encrypt(`${decryptedValue}-${data.timestamp}`, data.key);
+            
+            // Verify data hasn't been tampered with
+            if (verificationHash !== data.hash) {
+                return null;
+            }
+
+            return decryptedValue;
+        } catch (error) {
+            console.error('Error in secureGet:', error);
+            return null;
+        }
+    }
+
+    // Generation count functions
+    const generationKey = 'airbr_img_gen_count';
+
+    function checkGenerationLimit() {
+        const MAX_FREE_GENERATIONS = 7;
+        const currentCount = parseInt(secureGet(generationKey) || '0');
+        console.log(currentCount, 'currentCount');
+        return currentCount >= MAX_FREE_GENERATIONS;
+    }
+
+    function incrementGenerationCount() {
+        const currentCount = parseInt(secureGet(generationKey) || '0');
+        secureSet(generationKey, (currentCount + 1).toString());
+    }
+
+    function showSignupPrompt() {
+        const mainContainer = document.querySelector('.character-main');
+        if (mainContainer) {
+            mainContainer.innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-text">
+                        <p class="generating-text">Free Trial Limit Reached</p>
+                        <p class="wait-text">Sign up to continue generating amazing images! 🎨</p>
+                        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                            <a href="https://app.airbrush.ai/signup" class="generate-btn" style="text-decoration: none;">
+                                Sign Up Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            mainContainer.classList.add('show');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const generateBtn = document.getElementById('generateTextToImageButton');
+        const textarea = document.getElementById('text-to-image-textarea');
+        
+        // Initialize generation count if not exists
+        if (!secureGet(generationKey)) {
+            secureSet(generationKey, '0');
+        }
+
+        function scrollToMainContainer() {
+            const mainContainer = document.querySelector('.character-main');
+            if (mainContainer) {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: mainContainer.offsetTop + 500,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        }
+
+        // Add textarea animation
+        if (textarea) {
+            textarea.addEventListener('focus', function() {
+                this.style.minHeight = '8rem';
+            });
+
+            textarea.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.minHeight = '2.5rem';
+                }
+            });
+
+            // Add Enter key handler for generation
+            textarea.addEventListener('keydown', async function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    
+                    if (checkGenerationLimit()) {
+                        scrollToMainContainer();
+                        showSignupPrompt();
+                        return;
+                    }
+
+                    try {
+                        scrollToMainContainer();
+                        await handleGenerateTextToImage();
+                    } catch (error) {
+                        console.error('Error in handleGenerateTextToImage:', error);
+                    }
+                }
+            });
+
+            // Check for stored prompt
+            const savedPrompt = localStorage.getItem('selectedPrompt');
+            if (savedPrompt) {
+                textarea.value = savedPrompt;
+                localStorage.removeItem('selectedPrompt');
+            }
+        }
+
+        // Add generate button functionality
+        if (generateBtn) {
+            generateBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                if (checkGenerationLimit()) {
+                    scrollToMainContainer();
+                    showSignupPrompt();
+                    return;
+                }
+
+                try {
+                    scrollToMainContainer();
+                    await handleGenerateTextToImage();
+                } catch (error) {
+                    console.error('Error in handleGenerateTextToImage:', error);
+                }
+            });
+        }
+
+        // Add image upload logic for text-to-image
+        const addImageBtn = document.getElementById('add-text-to-image-btn');
+        const imageInput = document.getElementById('text-to-image-image-input');
+        const imagePreviewContainer = document.getElementById('text-to-image-container');
+        const removeImageBtn = document.getElementById('text-to-image-remove-image');
+
+       if (addImageBtn && imageInput && imagePreviewContainer && removeImageBtn) {
+            addImageBtn.addEventListener('click', function() {
+                imageInput.click();
+            });
+
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imagePreview = imagePreviewContainer.querySelector('img');
+                        imagePreview.src = e.target.result;
+                        imagePreviewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    const imagePreview = imagePreviewContainer.querySelector('img');
+                    imagePreview.src = '';
+                    imagePreviewContainer.style.display = 'none';
+                }
+            });
+
+            removeImageBtn.addEventListener('click', function() {
+                const imagePreview = imagePreviewContainer.querySelector('img');
+                imagePreview.src = '';
+                imagePreviewContainer.style.display = 'none';
+                imageInput.value = ''; // Clear the file input
+            });
+        }
+    });
+
+    async function handleGenerateTextToImage() {
+        try {
+            const textarea = document.getElementById('text-to-image-textarea');
+            if (!textarea) {
+                throw new Error('Textarea not found');
+            }
+
+            const prompt = textarea.value.trim();
+            console.log('Prompt value:', prompt);
+
+            // Check if an image is uploaded for validation
+            const imageInput = document.getElementById('text-to-image-image-input');
+            const hasImageForValidation = imageInput && imageInput.files && imageInput.files.length > 0;
+
+            // Require prompt only if no image is attached
+            if (prompt !== '' || hasImageForValidation) {
+                const mainContainer = document.querySelector('.character-main');
+                if (!mainContainer) {
+                    throw new Error('Main container not found');
+                }
+
+                // Show loading state with improved UI
+                mainContainer.innerHTML = `
+                    <div class="loading-container">
+                        <img src="/images/ai-images-generator/generating.gif" alt="Generating" class="character-image" id="mainTextToImagePreview">
+                        <div class="loading-text">
+                            <p class="generating-text">Creating your masterpiece...</p>
+                            <p class="wait-text">Just a moment while we work our magic ✨</p>
+                        </div>
+                    </div>
+                `;
+                mainContainer.classList.add('show');
+
+                // Check if an image is uploaded
+                const imageInput = document.getElementById('text-to-image-image-input');
+                const hasImage = imageInput && imageInput.files && imageInput.files.length > 0;
+                
+                let imageResponse;
+                
+                if (hasImage) {
+                    // Use our new API for image-to-image generation with FormData
+                    const file = imageInput.files[0];
+                    const formData = new FormData();
+                    formData.append('subject_reference', file);
+                    formData.append('prompt', prompt || "Craete a variation of this image");
+                    formData.append('aspect_ratio', '1:1');
+                    formData.append('format', 'webp');
+                    formData.append('quality', '80');
+                    
+                    imageResponse = await fetch('/api/images/generate-image-with-reference', {
+                        method: 'POST',
+                        body: formData // Don't set Content-Type header, let browser set it
+                    });
+                } else {
+                    // Use the original API for text-to-image generation
+                    imageResponse = await fetch('/api/images/generate-image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            prompt: `Generate an image for ${document.querySelector('.category-text').textContent} category with the following prompt: ${prompt}`
+                        })
+                    });
+                }
+
+                if (!imageResponse.ok) {
+                    throw new Error(`Image generation failed with status: ${imageResponse.status}`);
+                }
+
+                const responseData = await imageResponse.json();
+                let imageUrl;
+
+                if (hasImage) {
+                    // Handle our new API response - it returns imageData like the text-to-image API
+                    if (responseData.imageData) {
+                        // Extract the base64 data - remove the prefix if it exists
+                        const base64Data = responseData.imageData.replace(/^data:image\/\w+;base64,/, '');
+                        const byteCharacters = atob(base64Data);
+                        const byteArrays = [];
+
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteArrays.push(byteCharacters.charCodeAt(i));
+                        }
+
+                        const byteArray = new Uint8Array(byteArrays);
+                        const blob = new Blob([byteArray], { type: 'image/webp' });
+                        const file = new File([blob], 'generated-image.webp', { type: 'image/webp' });
+
+                        // Upload to your server to get a permanent URL
+                        const formData = new FormData();
+                        formData.append('images', file);
+
+                        const uploadResponse = await fetch('/api/images', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI5ODM4MCwiZXhwIjoxNzQ1Mzg0NzgwfQ._XjN76nKvPZcxOT8TLWvfdfA-0KzqGjHwnZWX5YdntA'
+                            },
+                            body: formData
+                        });
+
+                        if (uploadResponse.ok) {
+                            const uploadData = await uploadResponse.json();
+                            if (uploadData.files && uploadData.files.length > 0) {
+                                imageUrl = uploadData.files[0].url;
+                            }
+                        }
+
+                        if (!imageUrl) {
+                            // Fallback to using the base64 data URL directly
+                            imageUrl = responseData.imageData;
+                        }
+
+                        
+                        // Increment generation count securely
+                        incrementGenerationCount();
+                        
+                        // Save to history
+                        await saveImageToHistory(imageUrl, prompt);
+                        
+                        // Update the container with the generated image
+                        mainContainer.innerHTML = `
+                            <div class="preview-container">
+                                <button class="download-button" data-image-url="${imageUrl}">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <img src="${imageUrl}" alt="Generated Image" class="preview-image-generate" id="mainTextToImagePreview">
+                            </div>
+                        `;
+
+                        // Show the history section
+                        const thumbnailsContainer = document.querySelector('.character-thumbnails');
+                        if (thumbnailsContainer) {
+                            thumbnailsContainer.style.display = 'block';
+                        }
+                    } else {
+                        throw new Error('Invalid response from image generation API');
+                    }
+                } else {
+                    // Handle original API response for text-to-image
+                    const base64Data = responseData.imageData.replace(/^data:image\/\w+;base64,/, '');
+                    const byteCharacters = atob(base64Data);
+                    const byteArrays = [];
+
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteArrays.push(byteCharacters.charCodeAt(i));
+                    }
+
+                    const byteArray = new Uint8Array(byteArrays);
+                    const blob = new Blob([byteArray], { type: 'image/png' });
+                    const file = new File([blob], 'generated-image.png', { type: 'image/png' });
+
+                    // Upload the generated image
+                    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI5ODM4MCwiZXhwIjoxNzQ1Mzg0NzgwfQ._XjN76nKvPZcxOT8TLWvfdfA-0KzqGjHwnZWX5YdntA";
+                    const formData = new FormData();
+                    formData.append('images', file);
+
+                    const uploadResponse = await fetch(`/api/images`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: formData
+                    });
+
+                    if (!uploadResponse.ok) {
+                        throw new Error('Failed to upload generated image');
+                    }
+
+                    const uploadResult = await uploadResponse.json();
+                    
+                    if (uploadResult && uploadResult.files && uploadResult.files.length > 0) {
+                        imageUrl = uploadResult.files[0].url;
+                        console.log('Generated image URL:', imageUrl);
+                        
+                        // Increment generation count securely
+                        incrementGenerationCount();
+                        
+                        // Save to history
+                        await saveImageToHistory(imageUrl, prompt);
+                        
+                        // Update the container with the generated image
+                        mainContainer.innerHTML = `
+                            <div class="preview-container">
+                                <button class="download-button" data-image-url="${imageUrl}">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <img src="${imageUrl}" alt="Generated Image" class="preview-image-generate" id="mainTextToImagePreview">
+                            </div>
+                        `;
+
+                        // Show the history section
+                        const thumbnailsContainer = document.querySelector('.character-thumbnails');
+                        if (thumbnailsContainer) {
+                            thumbnailsContainer.style.display = 'block';
+                        }
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error in handleGenerateTextToImage:', error);
+            const mainContainer = document.querySelector('.character-main');
+            if (mainContainer) {
+                mainContainer.innerHTML = `
+                    <div class="loading-container">
+                        <div class="loading-text">
+                            <p class="generating-text">Oops! Something went wrong</p>
+                            <p class="wait-text">Please try again later 🔄</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // Add download functionality
+    async function downloadImage(imageUrl) {
+        try {
+            // Extract the filename from the URL
+            const filename = imageUrl.split('/').pop() || 'generated-image.png';
+            
+            // Use our backend as a proxy to handle the download
+            const response = await fetch('/api/images/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ imageUrl })
+            });
+
+            if (!response.ok) {
+                throw new Error('Download failed');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    }
+
+    // Function to save image to history
+    async function saveImageToHistory(imageUrl, prompt) {
+        const currentCategoryId = document.querySelector('.category-text').getAttribute('data-current-category-id');
+        const categories = await fetchCategories()
+        const category = categories.find(cat => cat._id === currentCategoryId);
+        let history = JSON.parse(localStorage.getItem('textToImageHistory') || '[]');
+        const newImage = {
+            url: imageUrl,
+            category: category,
+            prompt: prompt,
+            timestamp: new Date().toISOString()
+        };
+        history.unshift(newImage); // Add new image to the start
+        localStorage.setItem('textToImageHistory', JSON.stringify(history));
+        updateHistoryDisplay();
+    }
+
+    // Function to update history display
+    function updateHistoryDisplay() {
+        const history = JSON.parse(localStorage.getItem('textToImageHistory') || '[]');
+        const thumbnailsContainer = document.querySelector('.character-thumbnails');
+        
+        if (!history.length) {
+            if (thumbnailsContainer) {
+                thumbnailsContainer.style.display = 'none';
+            }
+            return;
+        }
+
+        if (thumbnailsContainer) {
+            thumbnailsContainer.style.display = 'block';
+        }
+
+        const previewContainer = document.querySelector('.character-model-preview');
+        if (!previewContainer) return;
+
+        previewContainer.innerHTML = history.map(image => {
+            return `
+            <div class="thumbnail-wrapper">
+                <div class="skeleton"></div>
+                <img src="${image.url}" 
+                     alt="Generated Image" 
+                     class="thumbnail"
+                     onload="this.classList.add('loaded'); this.parentElement.classList.add('loaded')"
+                     onerror="this.parentElement.querySelector('.skeleton').style.backgroundColor = '#ff6b6b'">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                            <button class="expand-btn">
+                                <img src="/images/delete.svg" alt="Delete">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <p>${image.prompt}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `}).join('');
+
+        addHistoryEventListeners();
+    }
+
+    // Function to handle history actions
+    function addHistoryEventListeners() {
+        // Download button handler
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                const imageUrl = this.closest('.thumbnail-wrapper').querySelector('.thumbnail').src;
+                if (imageUrl) {
+                    await downloadImage(imageUrl);
+                }
+            });
+        });
+
+        // Delete button handler
+        document.querySelectorAll('.expand-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const imageUrl = this.closest('.thumbnail-wrapper').querySelector('.thumbnail').src;
+                if (imageUrl) {
+                    let history = JSON.parse(localStorage.getItem('textToImageHistory') || '[]');
+                    history = history.filter(img => img.url !== imageUrl);
+                    localStorage.setItem('textToImageHistory', JSON.stringify(history));
+                    updateHistoryDisplay();
+                }
+            });
+        });
+
+        // Clear history button handler
+        const clearHistoryBtn = document.querySelector('.filter-dropdown-delete');
+        if (clearHistoryBtn) {
+            clearHistoryBtn.addEventListener('click', function() {
+                localStorage.removeItem('textToImageHistory');
+                const thumbnailsContainer = document.querySelector('.character-thumbnails');
+                if (thumbnailsContainer) {
+                    thumbnailsContainer.style.display = 'none';
+                }
+            });
+        }
+    }
+
+    // Initialize history display on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateHistoryDisplay();
+    });
+
+    // Add download button click handler
+    document.addEventListener('click', async function(e) {
+        if (e.target.closest('.download-button')) {
+            e.preventDefault();
+            const button = e.target.closest('.download-button');
+            const imageUrl = button.getAttribute('data-image-url');
+            if (imageUrl) {
+                await downloadImage(imageUrl);
+            }
+        }
+    });
+
+    // Add category functionality
+    async function fetchCategories() {
+        try {
+            const response = await fetch(`/api/categories`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch categories');
+            }
+            const data = await response.json();
+            return data || [];
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            return [];
+        }
+    }
+
+    function createCategoryItem(category, currentCategoryId) {
+        const item = document.createElement('div');
+        item.className = 'category-item';
+        if (category._id === currentCategoryId) {
+            item.classList.add('active');
+        }
+        item.setAttribute('data-category-id', category._id);
+        item.setAttribute('data-category-slug', category.slug);
+        item.innerHTML = `
+            ${category.image ? `<img src="${category.image}" alt="${category.name}">` : ''}
+            ${category.name}
+        `;
+        return item;
+    }
+
+    // Initialize category dropdown
+    document.addEventListener('DOMContentLoaded', async function() {
+        const categoryBtn = document.getElementById('categoryBtn');
+        const dropdownContent = document.getElementById('categoryDropdownContent');
+        const categoryText = categoryBtn.querySelector('.category-text');
+        
+        // Get current category ID from the data attribute
+        const currentCategoryId = categoryText.getAttribute('data-current-category-id');
+        console.log('Current category ID:', currentCategoryId);
+
+        try {
+            // Fetch categories
+            const response = await fetch(`/api/categories`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch categories');
+            }
+            const categories = await response.json();
+
+            // Filter categories based on content count
+            const validCategories = [];
+            for (const category of categories) {
+                try {
+                    const contentResponse = await fetch(`/api/content/category/${category._id}`);
+                    if (contentResponse.ok) {
+                        const contents = await contentResponse.json();
+                        if (contents.length === 6) {
+                            validCategories.push(category);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error fetching contents for category ${category._id}:`, error);
+                }
+            }
+
+
+            if (validCategories.length > 0) {
+                // Clear existing content
+                dropdownContent.innerHTML = '';
+                
+                // Find current category in the list
+                const currentCategory = validCategories.find(cat => cat._id === currentCategoryId);
+                
+                // Set initial text if we have a current category
+                if (currentCategory) {
+                    categoryText.textContent = currentCategory.name;
+                } else {
+                    categoryText.textContent = 'Category';
+                }
+
+                // Add all valid categories to dropdown
+                validCategories.forEach(category => {
+                    const item = createCategoryItem(category, currentCategoryId);
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Store the prompt before redirecting
+                        const textarea = document.getElementById('text-to-image-textarea');
+                        if (textarea && textarea.value.trim()) {
+                            localStorage.setItem('selectedPrompt', textarea.value.trim());
+                        }
+                        
+                        // Update button text
+                        categoryText.textContent = category.name;
+                        
+                        // Update active state
+                        dropdownContent.querySelectorAll('.category-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // Close dropdown
+                        dropdownContent.classList.remove('show');
+                        categoryBtn.classList.remove('active');
+
+                        // Redirect to the selected category
+                        const categorySlug = this.getAttribute('data-category-slug');
+                        if (categorySlug) {
+                            window.location.href = `/${categorySlug}`;
+                        }
+                    });
+                    dropdownContent.appendChild(item);
+                });
+            }
+        } catch (error) {
+            console.error('Error initializing categories:', error);
+            categoryText.textContent = 'Error loading categories';
+        }
+
+        // Toggle dropdown
+        categoryBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Category button clicked');
+            this.classList.toggle('active');
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.category-dropdown')) {
+                dropdownContent.classList.remove('show');
+                categoryBtn.classList.remove('active');
+            }
+        });
+    });
+
+    // Add subscription container click handler
+    document.addEventListener('DOMContentLoaded', function() {
+        const subscriptionContainer = document.querySelector('.subscription-container');
+        if (subscriptionContainer) {
+            subscriptionContainer.addEventListener('click', function() {
+                const pricingSection = document.getElementById('pricing');
+                if (pricingSection) {
+                    pricingSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+    });
+</script>

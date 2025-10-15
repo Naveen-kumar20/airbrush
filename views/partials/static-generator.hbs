@@ -1,0 +1,435 @@
+{{!-- Static Generator Styles --}}
+<style>
+    .static-section {
+        padding: 60px 20px;
+        color: #000;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .static-section::before {
+        content: '';
+        position: absolute;
+        width: 800px;
+        height: 300px;
+        background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 30px rgba(109, 175, 230, 0.2);
+        backdrop-filter: blur(5px);
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+        transform: translate(-50%, -50%) rotate(0deg);
+        border-radius: 20px;
+        pointer-events: none;
+        z-index: -1;
+        animation: rotateRect 20s linear infinite;
+    }
+
+    @keyframes rotateRect {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+        25% {
+            transform: translate(-50%, -50%) rotate(90deg) scale(1.1);
+            opacity: 0.6;
+            background: linear-gradient(225deg, rgba(109, 175, 230, 0.2), rgba(76, 175, 80, 0.2));
+        }
+        50% {
+            transform: translate(-50%, -50%) rotate(180deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(315deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+        75% {
+            transform: translate(-50%, -50%) rotate(270deg) scale(1.1);
+            opacity: 0.6;
+            background: linear-gradient(45deg, rgba(109, 175, 230, 0.2), rgba(76, 175, 80, 0.2));
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg) scale(1);
+            opacity: 0.5;
+            background: linear-gradient(135deg, rgba(109, 175, 230, 0.15), rgba(76, 175, 80, 0.15));
+        }
+    }
+
+    .static-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #2196F3, #4CAF50);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-description {
+        font-size: 18px;
+        color: #dddbdb;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .content-row {
+        display: flex;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .text-content-static {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .image-content {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-content img {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .description {
+        color: #fff;
+        line-height: 1.9;
+        letter-spacing: 0.5px;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+
+    .generate-button {
+        background: #2196F3;
+        color: white;
+        width: 250px;
+        text-align: center;
+        margin: auto;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .generate-button:hover {
+        background: #1976D2;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 32px;
+        }
+
+        .section-description {
+            font-size: 16px;
+            padding: 0 20px;
+        }
+
+        .content-row {
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .content-row.reverse {
+            flex-direction: column-reverse;
+        }
+
+        .feature-image {
+            height: 300px;
+        }
+
+        .image-content img {
+            width: 280px;
+            height: 280px;
+        }
+    }
+</style>
+
+<section class="static-section">
+    <div class="static-container">
+        <!-- Header -->
+        <div class="section-header">
+            <h1 class="section-title">Create Stunning Static Designs with AI</h1>
+            <p class="section-description">
+                Transform your ideas into beautiful static designs using our AI-powered platform. Create stunning visuals for social media, marketing materials, and more in seconds.
+            </p>
+        </div>
+
+        <!-- First Row -->
+        <div class="content-row">
+            <div class="text-content-static slide-left">
+                <h2>Generate AI Static Designs</h2>
+                <p class="description">
+                    Our AI static design generator helps you create eye-catching visuals effortlessly. Perfect for social media posts, marketing materials, presentations, and more. With advanced AI technology, we analyze design principles, color theory, and composition to deliver stunning results that match your vision. Whether you need modern, minimalist designs or bold, creative artwork, our tool adapts to your style preferences and delivers professional-quality results instantly.
+                </p>
+                <button class="generate-button">
+                    <i class="fas fa-magic"></i>
+                    Generate Design
+                </button>
+            </div>
+            <div class="image-content slide-right">
+                <img src="/images/get-started/generated_1748519215615.webp" alt="AI generated static design example" class="feature-image">
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="content-row reverse">
+            <div class="image-content slide-left">
+                <img src="/images/get-started/generated_1748519067092.webp" alt="Creative design example" class="feature-image">
+            </div>
+            <div class="text-content-static slide-right">
+                <h2>Professional Static Designs for Every Need</h2>
+                <p class="description">
+                    Create professional static designs that elevate your brand and capture attention. Our AI-powered tool understands design principles and current trends to generate visuals that resonate with your audience. From social media posts to marketing materials, create consistent and engaging content that stands out. Save time and resources while maintaining high-quality design standards across all your channels. Perfect for businesses, creators, and marketers looking to streamline their design process.
+                </p>
+                <button class="generate-button">
+                    <i class="fas fa-magic"></i>
+                    Generate Design
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const staticTextarea = document.querySelector('#static-prompt-textarea');
+        const generateStaticBtn = document.getElementById('generateStaticButton');
+        const staticCategoryBtn = document.getElementById('staticCategoryBtn');
+        const staticDropdownContent = document.getElementById('staticCategoryDropdownContent');
+
+        // Add textarea animation
+        if (staticTextarea) {
+            staticTextarea.addEventListener('focus', function() {
+                this.style.minHeight = '8rem';
+            });
+
+            staticTextarea.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.minHeight = '2.5rem';
+                }
+            });
+        }
+
+        // Example click handlers
+        document.querySelectorAll('.example-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.example-title').textContent;
+                const description = this.querySelector('.example-description').textContent;
+                const prompt = `Create a ${title.toLowerCase()} with ${description.toLowerCase()}. Use modern design principles and incorporate creative elements.`;
+                
+                if (staticTextarea) {
+                    staticTextarea.value = prompt;
+                }
+            });
+        });
+
+        // Generate button click handler
+        if (generateStaticBtn) {
+            generateStaticBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                try {
+                    await handleGenerateStatic();
+                } catch (error) {
+                    console.error('Error in handleGenerateStatic:', error);
+                }
+            });
+        }
+
+        // Category dropdown functionality
+        if (staticCategoryBtn && staticDropdownContent) {
+            staticCategoryBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.toggle('active');
+                staticDropdownContent.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.category-dropdown')) {
+                    staticDropdownContent.classList.remove('show');
+                    staticCategoryBtn.classList.remove('active');
+                }
+            });
+        }
+
+        const generateButtons = document.querySelectorAll('.generate-button');
+        
+        generateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Store a default prompt
+                const defaultPrompt = "Create a stunning and creative image that captures the essence of modern design, incorporating vibrant colors and dynamic elements. The composition should be balanced and visually engaging, with attention to detail and artistic flair.";
+                localStorage.setItem('selectedPrompt', defaultPrompt);
+                
+                // Find and scroll to the text-to-image section
+                const textToImageSection = document.getElementById('text-to-image');
+                if (textToImageSection) {
+                    textToImageSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Set the textarea value if it exists
+                    const textarea = textToImageSection.querySelector('.prompt-input textarea');
+                    if (textarea) {
+                        textarea.value = defaultPrompt;
+                    }
+                }
+            });
+        });
+    });
+
+    async function handleGenerateStatic() {
+        try {
+            const textarea = document.querySelector('#static-prompt-textarea');
+            if (!textarea) {
+                throw new Error('Textarea not found');
+            }
+
+            const prompt = textarea.value.trim();
+            console.log('Static prompt value:', prompt);
+
+            // Get the currently selected category
+            const selectedCategoryItem = document.querySelector('.category-item.active');
+            const currentCategoryText = document.querySelector('.category-text');
+            const currentCategoryId = currentCategoryText.getAttribute('data-current-category-id');
+
+            if (prompt !== '') {
+                // If a different category is selected, redirect with the prompt
+                if (selectedCategoryItem) {
+                    const selectedCategorySlug = selectedCategoryItem.getAttribute('data-category-slug');
+                    const selectedCategoryId = selectedCategoryItem.getAttribute('data-category-id');
+
+                    if (selectedCategoryId !== currentCategoryId) {
+                        console.log('Redirecting to new category with prompt...');
+                        localStorage.setItem('selectedPrompt', prompt);
+                        window.location.href = `/${selectedCategorySlug}`;
+                        return;
+                    }
+                }
+
+                const mainContainer = document.querySelector('.static-main');
+                if (!mainContainer) {
+                    throw new Error('Main container not found');
+                }
+
+                // Show loading state
+                mainContainer.innerHTML = `
+                    <div class="loading-container">
+                        <img src="/images/ai-images-generator/generating .gif" alt="Generating" class="static-image" id="mainStaticPreviewImage">
+                        <div class="loading-text">
+                            <p class="generating-text">Creating your masterpiece...</p>
+                            <p class="wait-text">Just a moment while we work our magic</p>
+                        </div>
+                    </div>
+                `;
+                mainContainer.classList.add('show');
+
+                // Make API request
+                const imageResponse = await fetch('/api/images/generate-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!imageResponse.ok) {
+                    throw new Error(`Image generation failed with status: ${imageResponse.status}`);
+                }
+
+                const imageData = await imageResponse.json();
+                const base64Data = imageData.imageData.replace(/^data:image\/\w+;base64,/, '');
+                const byteCharacters = atob(base64Data);
+                const byteArrays = [];
+
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteArrays.push(byteCharacters.charCodeAt(i));
+                }
+
+                const byteArray = new Uint8Array(byteArrays);
+                const blob = new Blob([byteArray], { type: 'image/png' });
+                const file = new File([blob], 'generated-image.webp', { type: 'image/png' });
+
+                // Upload the generated image
+                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI5ODM4MCwiZXhwIjoxNzQ1Mzg0NzgwfQ._XjN76nKvPZcxOT8TLWvfdfA-0KzqGjHwnZWX5YdntA";
+                const formData = new FormData();
+                formData.append('images', file);
+
+                const uploadResponse = await fetch(`/api/images`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) {
+                    throw new Error('Failed to upload generated image');
+                }
+
+                const uploadResult = await uploadResponse.json();
+                
+                if (uploadResult && uploadResult.files && uploadResult.files.length > 0) {
+                    const imageUrl = uploadResult.files[0].url;
+                    
+                    // Update preview container
+                    mainContainer.innerHTML = `
+                        <div class="preview-container">
+                            <img src="${imageUrl}" alt="Generated Image" class="preview-image-generate" id="mainStaticPreviewImage">
+                            <button class="download-button" data-image-url="${imageUrl}">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                    `;
+                }
+
+            }
+        } catch (error) {
+            console.error('Error in handleGenerateStatic:', error);
+            const mainContainer = document.querySelector('.static-main');
+            if (mainContainer) {
+                mainContainer.innerHTML = `
+                    <div class="loading-container">
+                        <div class="loading-text">
+                            <p class="generating-text">Oops! Something went wrong</p>
+                            <p class="wait-text">Please try again</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    }
+</script> 

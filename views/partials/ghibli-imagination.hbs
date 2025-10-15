@@ -1,0 +1,385 @@
+{{!-- Imagination Section Styles --}}
+<style>
+    .imagination-section {
+        background-size: cover;
+        margin-top: 12rem;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #ffffff;
+        height: 55vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+                transition: all 0.2s ease-in;
+
+    }
+
+    .imagination-container {
+        width: 85%;
+        height: 50vh;
+        display: flex;
+        margin-inline: auto;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        justify-content: space-between;
+        gap: 4rem;
+        padding-left: 6rem;
+        background: rgb(0, 0, 0);
+        border-radius: 16px;
+        backdrop-filter: blur(5px);
+        transition: transform 0.8s ease;
+    }
+
+    .imagination-container-white {
+        width: 80%;
+        height: 50vh;
+        display: flex;
+        margin-inline: auto;
+        align-items: center;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 10%;
+        color: black;
+        justify-content: space-between;
+        gap: 4rem;
+        padding-bottom: 3rem;
+        background: linear-gradient(to bottom, #f5f5f3, #f7f4f4);
+        border-radius: 16px;
+        backdrop-filter: blur(5px);
+        transition: transform 0.8s ease;
+        pointer-events: none;
+        transition: all 0.2s ease-in;
+    }
+
+    .imagination-container-white.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .imagination-content {
+        left: 5%;
+        top: 10%;
+        flex: 2.5;
+        z-index: 100;
+    }
+
+    .imagination-title {
+        font-size: 3.5rem;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .imagination-title-white {
+        font-size: 4rem;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+        color: black;
+    }
+
+
+    .imagination-title .highlight {
+        background: linear-gradient(45deg, #6b46c1, #f56565, #ed8936);
+        !important -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .imagination-title-white .highlight {
+        background: linear-gradient(45deg, #6b46c1, #f56565, #ed8936);
+        !important -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .imagination-subtitle {
+        font-size: 1.6rem;
+        color: #a0aec0;
+        margin-bottom: 2rem;
+        max-width: 400px;
+    }
+
+    .imagination-start-button {
+        background: #4526B1;
+        color: white;
+        padding: 1rem 5rem;
+        border-radius: 8px;
+        font-size: 2.2rem;
+        width: fit-content;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .imagination-start-button:hover {
+        background: #553c9a;
+    }
+
+    .imagination-model-preview {
+        flex: 1;
+        display: flex;
+        top: 0%;
+        right: 0%;
+        margin-left: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .imagination-model-preview-white {
+        flex: 1;
+        display: flex;
+        position: absolute;
+        top: 0%;
+        right: 0%;
+        margin-left: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .imagination-model-preview img {
+        height: 320px;
+    }
+
+    @media (max-width: 380px){
+        .imagination-section {
+            height: fit-content;
+        }
+
+        .imagination-container {
+            flex-direction: column;
+            height: 100vh;
+        }
+
+    }
+
+    @media (max-width: 768px) {
+        .imagination-section {
+            margin-bottom: 2rem;
+            height: fit-content;
+        }
+
+        .imagination-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 2rem;
+            padding-left: 0;
+            height: fit-content;
+            width: 100%;
+            border-radius: 0;
+        }
+
+        .imagination-content{
+            top: 0%;
+            padding: 1rem;
+        }
+
+        .imagination-model-preview{
+            margin-bottom: 4rem;
+            margin-inline: auto;
+        }
+
+        .imagination-model-preview video {
+            height: 350px;
+        }
+
+        .imagination-title {
+            font-size: 3rem;
+        }
+
+        .imagination-subtitle {
+            margin: 1rem auto 2rem;
+        }
+    }
+
+    .slider-controls {
+        display: none;
+    }
+
+    .containers-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+{{!-- Imagination Section Content --}}
+<section class="imagination-section">
+    <div class="containers-wrapper">
+        <div class="imagination-container" id="container1">
+            <div class="imagination-content">
+                <h1 class="imagination-title">
+                    Create <span class="highlight">Ghibli-Style</span><br>
+                    Worlds with <span class="highlight">AI</span>.
+                </h1>
+                <p class="imagination-subtitle">
+                    Transform your ideas into magical landscapes and characters inspired by Studio Ghibli's artistic style in just a few clicks.
+                </p>
+                <button class="imagination-start-button">Create Now</button>
+            </div>
+            <div class="imagination-model-preview">
+                <img src="/images/ghibli/ghibli2.webp" alt="">
+            </div>
+        </div>
+
+        {{!-- <div class="imagination-container-white" id="container2">
+            <div class="imagination-content">
+                <h1 class="imagination-title-white">
+                    Create <span class="highlight">Ghibli-Style</span><br>
+                    Worlds with <span class="highlight">AI</span>.
+                </h1>
+                <p class="imagination-subtitle">
+                    Transform your ideas into magical landscapes and characters inspired by Studio Ghibli's artistic style in just a few clicks.
+                </p>
+                <button class="imagination-start-button">Create Now</button>
+            </div>
+            <div class="imagination-model-preview-white">
+                <video autoplay loop muted playsinline>
+                    <source src="/videos/pencil.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div> --}}
+    </div>
+</section>
+
+<script>
+    // Function to fetch content using category ID and slug
+    async function fetchGhibliContentBySlug() {
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-([a-z])/g, (match, letter) => {
+                return letter.toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`] || window.airbrushghibli || '68054404386a5fc127d44b4a';
+            
+            // Dynamically determine the content slug based on the path
+            let slug;
+            if (pathSlug.includes('ghibli')) {
+                slug = 'ghibli-hero-section';
+            } else if (pathSlug.includes('3d')) {
+                slug = '3d-hero-section';
+            } else {
+                // Extract the first part of the path for other cases
+                const basePath = pathSlug.split('-')[0];
+                slug = `${basePath}-hero-section`;
+            }
+            
+            console.log(`Fetching Ghibli hero content with categoryId: ${categoryId} and slug: ${slug}`);
+            
+            const response = await fetch(`http://localhost:4009/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch content by slug');
+            }
+            
+            const content = await response.json();
+            console.log('Ghibli hero section content loaded:', content);
+            
+            // Update the imagination section with the content
+            updateGhibliContent(content);
+        } catch (error) {
+            console.error('Error fetching Ghibli content:', error);
+        }
+    }
+    
+    // Function to update the ghibli section with the fetched content
+    function updateGhibliContent(content) {
+        if (!content) {
+            console.warn('No content received to update Ghibli section');
+            return;
+        }
+        
+        console.log('Updating Ghibli section with content:', content);
+        
+        // Update title
+        const titleElement = document.querySelector('.imagination-title');
+        if (titleElement && content.title) {
+            // Process title to add highlight spans if they don't exist
+            let processedTitle = content.title;
+            
+            // Check if the title already has spans
+            if (!processedTitle.includes('<span')) {
+                // Add highlight spans to specific keywords
+                ['Ghibli', 'Ghibli-Style', 'AI'].forEach(word => {
+                    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                    processedTitle = processedTitle.replace(regex, `<span class="highlight">${word}</span>`);
+                });
+                
+                // Add line break if not present and title is long enough
+                if (!processedTitle.includes('<br>') && processedTitle.length > 20) {
+                    const middleIndex = Math.floor(processedTitle.length / 2);
+                    const spaceAfterMiddle = processedTitle.indexOf(' ', middleIndex);
+                    if (spaceAfterMiddle !== -1) {
+                        processedTitle = 
+                            processedTitle.substring(0, spaceAfterMiddle) + 
+                            '<br>' + 
+                            processedTitle.substring(spaceAfterMiddle + 1);
+                    }
+                }
+            }
+            
+            console.log('Setting title to:', processedTitle);
+            titleElement.innerHTML = processedTitle;
+        }
+        
+        // Update subtitle
+        const subtitleElement = document.querySelector('.imagination-subtitle');
+        if (subtitleElement && content.subtitle) {
+            console.log('Setting subtitle to:', content.subtitle);
+            subtitleElement.textContent = content.subtitle;
+        }
+        
+        // Update image if it exists
+        if (content.images && content.images.length > 0) {
+            const imageElement = document.querySelector('.imagination-model-preview img');
+            if (imageElement && content.images[0].url) {
+                console.log('Setting image src to:', content.images[0].url);
+                imageElement.src = content.images[0].url;
+                imageElement.alt = content.title || 'Ghibli Image';
+                
+                // Add onload handler to debug image loading
+                imageElement.onload = function() {
+                    console.log('Ghibli image loaded successfully:', content.images[0].url);
+                };
+                
+                imageElement.onerror = function() {
+                    console.error('Failed to load Ghibli image:', content.images[0].url);
+                };
+            } else {
+                console.warn('Image element not found or no image URL in content');
+            }
+        }
+        
+        // Update button text if provided
+        const buttonElement = document.querySelector('.imagination-start-button');
+        if (buttonElement && content.buttonText) {
+            console.log('Setting button text to:', content.buttonText);
+            buttonElement.textContent = content.buttonText;
+        }
+        
+        // Force a repaint to ensure everything is updated
+        setTimeout(() => {
+            const container = document.querySelector('.imagination-container');
+            if (container) {
+                container.style.opacity = '0.99';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchGhibliContentBySlug);
+</script>

@@ -1,0 +1,78 @@
+<!-- rts header area start -->
+<header class="header-one">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="header-main-wrapper">
+          <a href="/" class="logo">
+            <img src="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737727435986.jpg" alt="logo"
+              style="max-width: 200px" />
+          </a>
+          <!-- nav -->
+          <div class="nav-area-main d-xl-block d-lg-block d-md-none d-sm-none d-none">
+            <nav>
+              <ul>
+
+                {{! <li class="dropdown">
+                  <a class="links-main">Use Cases</a>
+                  <ul class="dropdown-content">
+                    <div class="hover: bg">
+                      <a class="py-2px" href="/use-cases">
+                        Use Cases</a>
+                    </div>
+                    <div class="m-0 p-40"><a href="/gpts">GPTs</a></div>
+                    <div class="m-0"><a href="/characters">AI Characters</a></div>
+                  </ul>
+                </li> }}
+                <li><a class="links-main" href="/pricing">Pricing</a></li>
+                <li><a class="links-main" href="/free-tool">Free Tools</a></li>
+                <li><a class="links-main" href="/blog">Blog</a></li>
+                {{! <li><a class="links-main" href="faq">FAQ</a></li> }}
+
+              </ul>
+            </nav>
+          </div>
+          <!-- nav end -->
+          <div class="button-area">
+            <a target="_blank" href="https://app.airbrush.ai/login" class="rts-btn btn-lonly mr--30">Sign in</a>
+            <a target="_blank" href="https://app.airbrush.ai/signup" class="rts-btn btn-blur">Get Started</a>
+          </div>
+
+          {{#if url}}
+          <div class="menu-btn d-xl-none d-lg-none" id="menu-btn"
+            style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="margin: 5px 20px 5px auto; font-size: 12px;">
+              <a href="https://app.airbrush.ai/signup" class="rts-btn btn-primary"
+                style="color: white; background-color: #007bff; padding: 7px 10px; border-radius: 5px; text-decoration: none; display: inline-block;">Get
+                Started For Free</a>
+            </div>
+            <svg width="20" height="16" style="align-self: center;" viewBox="0 0 20 16" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect y="14" width="20" height="2" fill="#1F1F25"></rect>
+              <rect y="7" width="20" height="2" fill="#1F1F25"></rect>
+              <rect width="20" height="2" fill="#1F1F25"></rect>
+            </svg>
+          </div>
+          {{else}}
+          <div class="menu-btn d-xl-none d-lg-none" id="menu-btn"
+            style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="margin: 5px 20px 5px auto; font-size: 12px;">
+              <a id="GetStartedTop" href="https://app.airbrush.ai/signup" class="rts-btn btn-primary btn-free"
+                style="color: white; background-color: #007bff; padding: 7px 10px; border-radius: 5px; text-decoration: none;">Get
+                Started For Free</a>
+            </div>
+            <svg width="20" height="16" style="align-self: center;" viewBox="0 0 20 16" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect y="14" width="20" height="2" fill="#1F1F25"></rect>
+              <rect y="7" width="20" height="2" fill="#1F1F25"></rect>
+              <rect width="20" height="2" fill="#1F1F25"></rect>
+            </svg>
+          </div>
+          {{/if}}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- rts header area end -->

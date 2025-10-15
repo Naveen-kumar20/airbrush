@@ -1,0 +1,606 @@
+<div class="section-content">
+  <h2 class="h4 mb-3">Text to anything Section</h2>
+
+  <div class="card border-0 shadow-lg overflow-hidden">
+  <div class="card-body p-4">
+    <!-- Header with subtle accent -->
+    <div class="mb-4 pb-2 border-bottom">
+      <h5 class="fw-semibold mb-0 text-primary">Image Management</h5>
+      <p class="small text-muted mb-0">Upload and manage your image collection</p>
+    </div>
+
+    <form class="needs-validation" novalidate id="textToImageForm">
+      <!-- Title/Subtitle Group (Improved spacing + floating labels) -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input style="width: 100%;" type="text" 
+                   class="form-control" 
+                   id="banner-title" 
+                   placeholder="Title"
+                   required>
+            <label for="banner-title" class="text-muted">Title</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input style="width: 100%;" type="text" 
+                   class="form-control" 
+                   id="banner-subtitle" 
+                   placeholder="Subtitle">
+            <label for="banner-subtitle" class="text-muted">Subtitle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Image Generation Section -->
+      <div class="mb-4">
+        <div class="d-flex align-items-center gap-2">
+          <div class="form-floating flex-grow-1">
+            <input style="width: 100%;" type="text" 
+                   class="form-control" 
+                   id="ai-prompt" 
+                   placeholder="Enter a prompt for AI image generation">
+            <label for="ai-prompt" class="text-muted">AI Image Prompt</label>
+          </div>
+          <button type="button" 
+                  class="btn btn-primary" 
+                  id="generate-ai-image">
+            <i class="fas fa-magic me-2"></i>Generate AI Image
+          </button>
+        </div>
+      </div>
+
+      <!-- Image Gallery (Modern masonry grid + hover effects) -->
+      <div class="mb-4">
+        <label class="form-label small text-uppercase fw-semibold text-muted mb-2">Image Gallery</label>
+        <div class="row g-3" id="image-preview-container">
+          <!-- Images will be inserted here -->
+          
+          <!-- Add Image Card (Button) -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="ratio ratio-1x1 rounded-3 bg-light border-2 border-dashed hover-shadow-lg cursor-pointer d-flex align-items-center justify-content-center transition-all" id="add-image-btn">
+              <div class="text-center p-2">
+                <i class="bi bi-plus-lg fs-5 text-primary"></i>
+                <p class="small text-muted mb-0">Upload Image</p>
+              </div>
+              <input type="file" id="image-upload" accept="image/*" class="d-none">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons (Sticky bottom with gradient) -->
+      <div class="pt-4 mt-4 border-top">
+        <div class="d-flex justify-content-end gap-3">
+          <button type="button" class="btn btn-outline-secondary px-4 rounded-pill">Cancel</button>
+          <button type="button" id="save-btn" class="btn btn-primary px-4 rounded-pill shadow-sm">
+            <i class="bi bi-check-lg me-2"></i>Save Changes
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .compact-form .form-control-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  .img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hover-zoom:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  .border-dashed {
+    border-style: dashed !important;
+  }
+  .transition-all {
+    transition: all 0.2s ease;
+  }
+  .hover-shadow-lg:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+  }
+  
+  /* Override Bootstrap's ratio positioning for buttons */
+  .ratio .btn-remove-image,
+  .ratio .remove-media-btn {
+    position: absolute;
+    left: auto !important; 
+    top: 0;
+    right: 0;
+    width: 26px;
+    height: 26px;
+    z-index: 10;
+  }
+  
+  /* Loading indicator styles */
+  .loading-indicator .ratio {
+    border: 2px dashed #e9ecef;
+    background-color: #f8f9fa;
+  }
+  
+  .loading-indicator .spinner-border {
+    width: 2rem;
+    height: 2rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const form = document.getElementById('textToImageForm');
+    const titleInput = document.getElementById('banner-title');
+    const subtitleInput = document.getElementById('banner-subtitle');
+    const saveBtn = document.getElementById('save-btn');
+    const imagePreviewContainer = document.getElementById('image-preview-container');
+    const addImageBtn = document.getElementById('add-image-btn');
+    const imageUpload = document.getElementById('image-upload');
+    
+    // Data storage
+    let contentId = new URLSearchParams(window.location.search).get('id');
+    let categoryId = new URLSearchParams(window.location.search).get('categoryId');
+    let generatedImages = [];
+    
+    // JWT Token for authorization
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTIyNTEyMSwiZXhwIjoxNzQ1MzExNTIxfQ.O1xfunWURBxt7tqcgXH_yWEyq-7VOA61LX6qrmEHXoA';
+
+    // Helper function to show alerts
+    const showAlert = (message, type = 'success') => {
+      // Create alert container if it doesn't exist
+      let alertContainer = document.querySelector('.alert-container');
+      if (!alertContainer) {
+        alertContainer = document.createElement('div');
+        alertContainer.className = 'alert-container position-fixed bottom-0 end-0 p-3';
+        alertContainer.style.zIndex = '1050';
+        document.body.appendChild(alertContainer);
+      }
+
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible fade show py-2 px-3 mb-2`;
+      alertDiv.style.fontSize = '0.875rem';
+      alertDiv.style.maxWidth = '500px';
+      alertDiv.style.minWidth = '300px';
+      alertDiv.innerHTML = `
+        <strong>${type === 'success' ? 'Success!' : type === 'danger' ? 'Error!' : 'Note:'}</strong> ${message}
+        <button style="padding-block: 10px;" type="button" class="btn-close btn-close-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      
+      // Add alert to the container
+      alertContainer.appendChild(alertDiv);
+      
+      // Remove alert after 4 seconds
+      setTimeout(() => {
+        alertDiv.classList.add('fade');
+        setTimeout(() => {
+          alertDiv.remove();
+          // Remove container if it's empty
+          if (alertContainer.children.length === 0) {
+            alertContainer.remove();
+          }
+        }, 300);
+      }, 4000);
+    };
+
+    // Create new section and content
+    const createNewTextToImageSection = async () => {
+      if (!categoryId) return;
+
+      try {
+        // First create a new section
+        const sectionResponse = await fetch(`/api/sections`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: 'Text to Image',
+            slug: 'text-to-anything',
+            description: 'Text to Image section',
+            category: categoryId,
+            isFolder: false,
+            order: 0,
+            isActive: true
+          })
+        });
+
+        if (!sectionResponse.ok) {
+          throw new Error('Failed to create section');
+        }
+
+        const sectionResult = await sectionResponse.json();
+
+        // Then create new content for the section
+        const contentData = {
+          section: sectionResult._id,
+          slug: 'text-to-anything',
+          title: titleInput.value.trim(),
+          subtitle: subtitleInput.value.trim(),
+          images: generatedImages,
+          fields: [
+            { value: titleInput.value.trim() },
+            { value: subtitleInput.value.trim() }
+          ],
+          isActive: true
+        };
+
+        const contentResponse = await fetch(`/api/content`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(contentData)
+        });
+
+        if (!contentResponse.ok) {
+          throw new Error('Failed to create content');
+        }
+
+        const contentResult = await contentResponse.json();
+        
+        // Update the contentId and reload the page
+        contentId = contentResult._id;
+        window.location.href = `/text-to-anything?id=${contentId}&categoryId=${categoryId}`;
+        
+      } catch (error) {
+        console.error('Error creating new text to image section:', error);
+        showAlert('Failed to create new section. Please try again.', 'danger');
+      }
+    };
+    
+    // Fetch content from API
+    const fetchContent = async () => {
+      if (!contentId) {
+        console.error('No content ID found');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/content/id/${contentId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch content: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Populate form fields
+        if (data.title) titleInput.value = data.title;
+        if (data.subtitle) subtitleInput.value = data.subtitle;
+        
+        // Clear image container but keep the add button
+        clearImageContainer();
+        
+        // Load images
+        if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+          generatedImages = [...data.images];
+          generatedImages.forEach(image => {
+            if (image && image.url) {
+              addImageToGallery(image.url, image);
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      }
+    };
+    
+    // Clear image container but keep the add button
+    const clearImageContainer = () => {
+      // Find all elements except the add button
+      const images = Array.from(imagePreviewContainer.querySelectorAll('.col-6')).filter(
+        el => !el.contains(addImageBtn)
+      );
+      
+      // Remove all images
+      images.forEach(img => img.remove());
+    };
+    
+    // Add image to gallery
+    const addImageToGallery = (url, imageData = {}) => {
+      
+      // Clear existing images first
+      clearImageContainer();
+      
+      const imageCard = document.createElement('div');
+      imageCard.className = 'col-6 col-md-4 col-lg-3';
+      
+      imageCard.innerHTML = `
+        <div class="ratio ratio-1x1 rounded-3 overflow-hidden position-relative hover-zoom">
+          <img src="${url}" class="object-fit-cover" alt="${imageData.alt || 'Generated image'}">
+          <button class="remove-media-btn btn btn-sm btn-danger position-absolute top-0 m-1 d-flex align-items-center justify-content-center">
+            <img src="/images/svg/delete.svg" alt="Delete" style="width: 28px; height: 28px; padding: 5px;">
+          </button>
+        </div>
+      `;
+      
+      // Insert before the add button
+      const addImageElement = document.getElementById('add-image-btn')?.closest('.col-6');
+      if (addImageElement) {
+        imagePreviewContainer.insertBefore(imageCard, addImageElement);
+      } else {
+        imagePreviewContainer.appendChild(imageCard);
+      }
+      
+      // Add delete handler
+      const deleteBtn = imageCard.querySelector('.remove-media-btn');
+      deleteBtn.addEventListener('click', () => {
+        // Remove from DOM
+        imageCard.remove();
+        
+        // Clear the generatedImages array
+        generatedImages = [];
+        
+        console.log('Image removed, remaining images:', generatedImages);
+      });
+    };
+    
+    // Upload image to server
+    const uploadImage = async (file) => {
+      if (!file) return null;
+      
+      
+      // Create a loading indicator
+      const loadingCard = document.createElement('div');
+      loadingCard.className = 'col-6 col-md-4 col-lg-3 loading-indicator';
+      loadingCard.innerHTML = `
+        <div class="ratio ratio-1x1 rounded-3 bg-light d-flex align-items-center justify-content-center">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-2" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="small text-muted mb-0">Uploading...</p>
+          </div>
+        </div>
+      `;
+      
+      // Add the loading indicator before the add button
+      const addImageElement = document.getElementById('add-image-btn')?.closest('.col-6');
+      if (addImageElement) {
+        imagePreviewContainer.insertBefore(loadingCard, addImageElement);
+      } else {
+        imagePreviewContainer.appendChild(loadingCard);
+      }
+      
+      try {
+        // Create FormData
+        const formData = new FormData();
+        formData.append('images', file);
+        
+        console.log('Uploading image to server...');
+        
+        // Upload to server
+        const response = await fetch(`/api/images`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Server upload response:', errorText);
+          throw new Error('Failed to upload image: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Remove loading indicator
+        loadingCard.remove();
+        
+        if (data && data.files && data.files.length > 0) {
+          // Create image object
+          const newImage = {
+            url: data.files[0].url,
+            alt: file.name || "Uploaded image",
+            width: 1200,
+            height: 800,
+            order: 1
+          };
+          
+          
+          // Clear existing images and add the new one
+          generatedImages = [newImage];
+          addImageToGallery(newImage.url, newImage);
+          
+          return newImage;
+        }
+        
+        return null;
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        // Remove loading indicator on error
+        loadingCard.remove();
+        showAlert('Failed to upload image. Please try again.', 'danger');
+        return null;
+      }
+    };
+    
+    // Save changes
+    const saveChanges = async () => {
+      if (!contentId) {
+        console.error('No content ID available for update');
+        showAlert('Cannot save: Missing content ID.', 'warning');
+        return;
+      }
+      
+      // Get values from form
+      const title = titleInput.value.trim();
+      const subtitle = subtitleInput.value.trim();
+      
+      // Prepare data for API
+      const updateData = {
+        title,
+        subtitle,
+        images: generatedImages
+      };
+      
+      
+      // Show loading state
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      
+      try {
+        // Send update request
+        const response = await fetch(`/api/content/${contentId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(updateData)
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Server response:', errorText);
+          throw new Error('Failed to save changes: ' + response.statusText);
+        }
+        
+        const result = await response.json();
+        console.log('Changes saved successfully:', result);
+        
+        // Show success message
+        showAlert('Changes saved successfully!', 'success');
+      } catch (error) {
+        console.error('Error saving changes:', error);
+        showAlert('Failed to save changes. Please try again.', 'danger');
+      } finally {
+        // Reset button
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Save Changes';
+      }
+    };
+    
+    // Event Listeners
+    saveBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      if (contentId) {
+        // If we have a contentId, update the existing content
+        saveChanges();
+      } else if (categoryId) {
+        // If we have a categoryId but no contentId, create new section and content
+        createNewTextToImageSection();
+      } else {
+        showAlert('Cannot save: Missing content ID or category ID.', 'warning');
+      }
+    });
+    
+    // Image upload
+    addImageBtn.addEventListener('click', () => imageUpload.click());
+    
+    imageUpload.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files);
+      console.log('Files selected:', files.length);
+      
+      if (files.length > 0) {
+        for (const file of files) {
+          if (file && file.type.startsWith('image/')) {
+            await uploadImage(file);
+          } else {
+            console.warn('Skipping non-image file:', file.name, file.type);
+          }
+        }
+      }
+      
+      // Reset input
+      e.target.value = '';
+    });
+    
+    // Load data on page load if we have a contentId
+    if (contentId) {
+      fetchContent();
+    }
+
+    // Add AI image generation function
+    async function generateAIImage(prompt) {
+      if (!prompt) {
+        showAlert('Please enter a prompt for image generation', 'warning');
+        return;
+      }
+
+      const generateButton = document.getElementById('generate-ai-image');
+      const originalButtonText = generateButton.innerHTML;
+      generateButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+      generateButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/images/generate-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            prompt: prompt
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('AI image generation failed');
+        }
+
+        const data = await response.json();
+        
+        if (data.imageData) {
+          // Extract the base64 data - remove the prefix if it exists
+          const base64Data = data.imageData.replace(/^data:image\/\w+;base64,/, '');
+          
+          // Convert base64 to blob
+          const byteCharacters = atob(base64Data);
+          const byteArrays = [];
+          
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteArrays.push(byteCharacters.charCodeAt(i));
+          }
+          
+          const byteArray = new Uint8Array(byteArrays);
+          const blob = new Blob([byteArray], { type: 'image/png' });
+          
+          // Create a file from the blob
+          const file = new File([blob], 'ai-generated-image.png', { type: 'image/png' });
+          
+          // Upload the generated image
+          const uploadedImage = await uploadImage(file);
+          
+          if (uploadedImage) {
+            showAlert('AI image generated and uploaded successfully!', 'success');
+          } else {
+            throw new Error('Failed to upload generated image');
+          }
+        } else {
+          throw new Error('No image data in response');
+        }
+      } catch (error) {
+        console.error('Error generating AI image:', error);
+        showAlert('Failed to generate AI image. Please try again.', 'danger');
+      } finally {
+        generateButton.innerHTML = originalButtonText;
+        generateButton.disabled = false;
+      }
+    }
+
+    // Add event listener for the AI image generation button
+    const generateButton = document.getElementById('generate-ai-image');
+    if (generateButton) {
+      generateButton.addEventListener('click', function() {
+        const prompt = document.getElementById('ai-prompt').value.trim();
+        generateAIImage(prompt);
+      });
+    }
+  });
+</script>

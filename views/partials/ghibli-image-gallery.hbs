@@ -1,0 +1,928 @@
+{{!-- Characters Grid Styles --}}
+<style>
+    /* Characters Section - Responsive */
+.characters-section {
+    background: linear-gradient(180deg, #1a103f 0%, #0d0829 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.characters-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.characters-title {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 120px;
+    gap: 15px;
+    padding: 10px;
+}
+
+.grid-item {
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.load-more-button {
+    background-color: #4526B1;
+    color: white;
+    width: 100%;
+    border: none;
+    font-size: 1.5rem;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.load-more-button:hover {
+    background-color: #3b2594;
+    transform: translateY(-3px);
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hover overlay styles */
+.hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item:hover .hover-overlay {
+    opacity: 1;
+}
+
+/* Hover content styles */
+.hover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item:hover .hover-content {
+    opacity: 1;
+}
+
+.text-content {
+    margin-top: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+}
+
+.hover-content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 24px;
+    margin-bottom: 0.8rem;
+}
+
+.hover-content p {
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.hover-buttons {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    align-self: flex-end;
+}
+
+.hover-buttons button {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.hover-buttons button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.hover-buttons img {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Reset all grid positions for mobile */
+{{!-- .item1, .item2, .item3, .item4, 
+.item5, .item6, .item7, .item8, 
+.item9, .item10, .item11, .item12, 
+.item13, .item14, .item15, .item16, 
+.item17, .item18 {
+    grid-row: auto;
+    grid-column: auto;
+} --}}
+
+.item1{
+    grid-row: 1 / span 3;
+    grid-column: 1;
+}
+
+.item2{
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.item3{
+    grid-row: 4 / span 2;
+    grid-column: 1;
+}
+
+.item4{
+    grid-row: 2 / span 2;
+    grid-column: 2;
+}
+
+.item5{
+    grid-row: 4;
+    grid-column: 2;
+}
+
+.item6{
+    grid-row: 5 / span 2;
+    grid-column: 2;
+}
+
+.item8{
+    grid-row: 7 / span 2;
+    grid-column: 1;
+}
+
+.item12{
+    grid-row: 9 / span 2;
+    grid-column: 2;
+}
+
+.item13{
+    grid-row: 13 / span 3;
+    grid-column: 2;
+}
+
+.item14{
+    grid-row: 10 / span 3;
+    grid-column: 1;
+}
+
+.item15{
+    grid-row: 11 / span 2;
+    grid-column: 2;
+}
+
+.item16{
+    grid-row: 13 / span 2;
+    grid-column: 1;
+}
+
+.item17{
+    grid-row: 15 / span 2;
+    grid-column: 1;
+}
+
+/* Tablet Styles (768px and up) */
+@media (min-width: 768px) {
+    .characters-section {
+        padding: 3rem 1.5rem;
+    }
+    
+    .characters-title {
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+    
+    /* Set specific positions for some items on tablet */
+    .item1 {
+        grid-row: 1 / span 3;
+        grid-column: 1;
+    }
+    
+    .item2 {
+        grid-row: 1 / span 2;
+        grid-column: 2;
+    }
+    
+    .item3 {
+        grid-row: 1 / span 3;
+        grid-column: 3;
+    }
+    
+    .item4 {
+        grid-row: 3 / span 2;
+        grid-column: 2;
+    }
+    
+    .item5 {
+        grid-row: 4 / span 2;
+        grid-column: 1;
+    }
+    
+    .item6 {
+        grid-row: 5 / span 2;
+        grid-column: 3;
+    }
+}
+
+/* Desktop Styles (1024px and up) */
+@media (min-width: 1024px) {
+    .characters-section {
+        padding: 4rem 2rem;
+    }
+    
+    .characters-title {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    /* Restore all original grid positions for desktop */
+    .item1 {
+        grid-row: 1 / span 3;
+        grid-column: 1;
+    }
+    
+    .item2 {
+        grid-row: 1 / span 2;
+        grid-column: 2;
+    }
+    
+    .item3 {
+        grid-row: 1 / span 3;
+        grid-column: 3;
+    }
+    
+    .item4 {
+        grid-row: 1 / span 2;
+        grid-column: 4;
+    }
+    
+    .item5 {
+        grid-row: 4 / span 2;
+        grid-column: 1;
+    }
+    
+    .item6 {
+        grid-row: 3 / span 2;
+        grid-column: 2;
+    }
+    
+    .item7 {
+        grid-row: 3 / span 2;
+        grid-column: 4;
+    }
+    
+    .item8 {
+        grid-row: 6 / span 3;
+        grid-column: 1;
+    }
+    
+    .item9 {
+        grid-row: 4 / span 3;
+        grid-column: 3;
+    }
+    
+    .item10 {
+        grid-row: 5 / span 2;
+        grid-column: 2;
+    }
+    
+    .item11 {
+        grid-row: 5 / span 3;
+        grid-column: 4;
+    }
+    
+    .item12 {
+        grid-row: 7 / span 2;
+        grid-column: 3;
+    }
+    
+    .item13 {
+        grid-row: 9 / span 3;
+        grid-column: 1;
+    }
+    
+    .item14 {
+        grid-row: 7 / span 3;
+        grid-column: 2;
+    }
+    
+    .item15 {
+        grid-row: 9 / span 3;
+        grid-column: 3;
+    }
+    
+    .item16 {
+        grid-row: 10 / span 2;
+        grid-column: 2;
+    }
+    
+    .item17 {
+        grid-row: 8 / span 2;
+        grid-column: 4;
+    }
+    
+    .item18 {
+        grid-row: 10 / span 2;
+        grid-column: 4;
+    }
+    
+    .hover-content h3 {
+        font-size: 2.3rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hover-content p {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<section class="characters-section">
+    <div class="characters-container">
+        <div class="grid-container">
+            <div class="grid-item item1">
+                <img src="/images/ghibli/ghibli1.webp" alt="Red Monster">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Lorem ipsum</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item2">
+                <img src="/images/ghibli/ghibli2.webp" alt="White Monster">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>White Monster</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item3">
+                <img src="/images/ghibli/ghibli3.webp" alt="Red Devil">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Red Devil</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item4">
+                <img src="/images/ghibli/ghibli4.webp" alt="Plant Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item5">
+                <img src="/images/ghibli/ghibli5.webp" alt="Bird Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Bird Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item6">
+                <img src="/images/ghibli/ghibli6.webp" alt="Snake Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Snake Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item7">
+                <img src="/images/ghibli/ghibli7.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Monster Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item8">
+                <img src="/images/ghibli/ghibli8.webp" alt="Yellow Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Eye Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item9">
+                <img src="/images/ghibli/ghibli8.webp" alt="Snake Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item10">
+                <img src="/images/ghibli/ghibli9.webp" alt="Snake Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Devil Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item11">
+                <img src="/images/ghibli/ghibli10.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant in Pot</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item12">
+                <img src="/images/ghibli/ghibli1.webp" alt="Snake Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Eye Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item13">
+                <img src="/images/ghibli/ghibli2.webp" alt="Red Devil">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Bird Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item14">
+                <img src="/images/ghibli/ghibli3.webp" alt="Plant Character">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant Character</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item15">
+                <img src="/images/ghibli/ghibli4.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant in Pot</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item16">
+                <img src="/images/ghibli/ghibli5.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant in Pot</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item item17">
+                <img src="/images/ghibli/ghibli6.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant in Pot</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="grid-item item18">
+                <img src="/images/ghibli/ghibli7.webp" alt="Plant in Pot">
+                <div class="hover-overlay">
+                    <div class="hover-content">
+                        <div class="hover-buttons">
+                            <button class="expand-btn">
+                                <img src="/images/expand.svg" alt="Expand">
+                            </button>
+                            <button class="download-btn">
+                                <img src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                        <div class="text-content">
+                            <h3>Plant in Pot</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est ultrices
+                                ornare duis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="load-more-button">Load More Generation</button>
+    </div>
+</section>
+
+<script>
+    // Function to fetch content using category ID and slug
+    async function fetchGhibliGalleryContentBySlug() {
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-([a-z])/g, (match, letter) => {
+                return letter.toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`] || window.airbrushghibli || '68054404386a5fc127d44b4a';
+            
+            // Dynamically determine the content slug based on the path
+            let slug;
+            if (pathSlug.includes('ghibli')) {
+                slug = 'ghibli-image-gallery';
+            } else if (pathSlug.includes('3d')) {
+                slug = '3d-image-gallery';
+            } else {
+                // Extract the first part of the path for other cases
+                const basePath = pathSlug.split('-')[0];
+                slug = `${basePath}-image-gallery`;
+            }
+            
+            console.log(`Fetching Ghibli gallery content with categoryId: ${categoryId} and slug: ${slug}`);
+            
+            const response = await fetch(`http://localhost:4009/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch gallery content by slug');
+            }
+            
+            const content = await response.json();
+            console.log('Ghibli gallery content loaded:', content);
+            
+            // Update gallery section with the content
+            if (content && content.images && Array.isArray(content.images)) {
+                updateGhibliGalleryGrid(content.images);
+            } else if (content && Array.isArray(content)) {
+                // If the response is directly an array
+                updateGhibliGalleryGrid(content);
+            } else {
+                console.warn('Ghibli gallery content does not contain images array');
+            }
+        } catch (error) {
+            console.error('Error fetching Ghibli gallery content:', error);
+        }
+    }
+    
+    // Function to update the gallery grid with the fetched content
+    function updateGhibliGalleryGrid(images) {
+        console.log('Updating Ghibli gallery grid with:', images);
+        if (!Array.isArray(images) || images.length === 0) {
+            console.warn('No gallery items to display');
+            return;
+        }
+        
+        const gridContainer = document.querySelector('.grid-container');
+        if (!gridContainer) {
+            console.warn('Grid container not found');
+            return;
+        }
+        
+        // Extract image URLs from the content
+        const imageUrls = [];
+        
+        // Check if images have a direct url property or if they contain nested images array
+        if (images[0] && images[0].url) {
+            // Response is directly an array of image objects
+            console.log('Processing direct URL format');
+            images.forEach((image, idx) => {
+                console.log(`Processing direct image ${idx}:`, image);
+                if (image.url) {
+                    imageUrls.push({
+                        url: image.url,
+                        alt: image.alt || '',
+                        title: image.title || ''
+                    });
+                }
+            });
+        } else {
+            // Standard format with items containing images array
+            console.log('Processing standard format with nested images');
+            images.forEach((item, idx) => {
+                console.log(`Processing item ${idx}:`, item);
+                if (item.images && item.images.length > 0) {
+                    item.images.forEach((image, imgIdx) => {
+                        console.log(`Processing image ${imgIdx} of item ${idx}:`, image);
+                        if (image.url) {
+                            imageUrls.push({
+                                url: image.url,
+                                alt: image.alt || item.title || '',
+                                title: item.title || '',
+                                subtitle: item.subtitle || ''
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        
+        console.log(`Found ${imageUrls.length} images to use in Ghibli gallery:`, imageUrls);
+        
+        // Get all grid items
+        const gridItems = gridContainer.querySelectorAll('.grid-item');
+        console.log(`Found ${gridItems.length} grid items to update`);
+        
+        // Loop through each grid item and update its content
+        gridItems.forEach((gridItem, index) => {
+            // Calculate which image to use, repeating if we run out
+            const imageIndex = index % imageUrls.length;
+            const imageData = imageUrls[imageIndex];
+            
+            if (imageData && imageData.url) {
+                console.log(`Updating grid item ${index} with image ${imageIndex}:`, imageData.url);
+                
+                // Update image source
+                const imgElement = gridItem.querySelector('img');
+                if (imgElement) {
+                    console.log(`Setting src for grid item ${index} to:`, imageData.url);
+                    imgElement.src = imageData.url;
+                    imgElement.alt = imageData.alt || `Ghibli Image ${index + 1}`;
+                    
+                    // Add onload handler to debug image loading
+                    imgElement.onload = function() {
+                        console.log(`Image for grid item ${index} loaded successfully:`, imageData.url);
+                    };
+                    
+                    imgElement.onerror = function() {
+                        console.error(`Failed to load image for grid item ${index}:`, imageData.url);
+                    };
+                } else {
+                    console.warn(`Image element not found for grid item ${index}`);
+                }
+                
+                // Update title if we have one
+                const titleElement = gridItem.querySelector('.text-content h3');
+                if (titleElement && imageData.title) {
+                    titleElement.textContent = imageData.title;
+                }
+                
+                // Update description if we have one
+                const descElement = gridItem.querySelector('.text-content p');
+                if (descElement && imageData.subtitle) {
+                    descElement.textContent = imageData.subtitle;
+                }
+            }
+        });
+        
+        // Force a repaint to ensure images are updated
+        setTimeout(() => {
+            gridContainer.style.opacity = '0.99';
+            setTimeout(() => {
+                gridContainer.style.opacity = '1';
+            }, 50);
+        }, 100);
+        
+        // Update button text if needed
+        const buttonElement = document.querySelector('.load-more-button');
+        if (buttonElement) {
+            buttonElement.addEventListener('click', function() {
+                console.log('Load more button clicked');
+                // You could implement load more functionality here if needed
+            });
+        }
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchGhibliGalleryContentBySlug);
+</script>

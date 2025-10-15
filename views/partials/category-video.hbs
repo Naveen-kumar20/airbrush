@@ -1,0 +1,580 @@
+<div class="section-content">
+  <h2 class="h4 mb-3">Category Video Section</h2>
+
+  <div class="card border-0 shadow-lg overflow-hidden">
+    <div class="card-body p-4">
+      <!-- Header with subtle accent -->
+      <div class="mb-4 pb-2 border-bottom">
+        <h5 class="fw-semibold mb-0 text-primary">Video Management</h5>
+        <p class="small text-muted mb-0">Upload and manage your video content</p>
+      </div>
+
+      <form class="needs-validation" novalidate id="categoryVideoForm">
+        <!-- Title/Description Group -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input style="width: 100%;" type="text" 
+                     class="form-control" 
+                     id="video-title" 
+                     placeholder="Title"
+                     required>
+              <label for="video-title" class="text-muted">Title</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <textarea style="width: 100%; height: 100px;" 
+                        class="form-control" 
+                        id="video-description" 
+                        placeholder="Description"></textarea>
+              <label for="video-description" class="text-muted">Description</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Upload Section -->
+        <div class="mb-4">
+          <label class="form-label small text-uppercase fw-semibold text-muted mb-2">Video Upload</label>
+          <div class="row" id="video-preview-container">
+            <!-- Video preview will be inserted here -->
+            
+            <!-- Add Video Button -->
+            <div class="col-12">
+              <div class="rounded-3 bg-light border-2 border-dashed hover-shadow-lg cursor-pointer align-items-center justify-content-center transition-all p-4" id="add-video-btn">
+                <div class="text-center">
+                  <i class="bi bi-upload fs-3 text-primary"></i>
+                  <p class="small text-muted mb-0 mt-2">Click to upload video or drag and drop</p>
+                  <p class="small text-muted mb-0">MP4, WebM or Ogg (Max. 100MB)</p>
+                </div>
+                <input type="file" id="video-upload" accept="video/*" class="d-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-4 mt-4 border-top">
+          <div class="d-flex justify-content-end gap-3">
+            <button type="button" class="btn btn-outline-secondary px-4 rounded-pill">Cancel</button>
+            <button type="button" id="save-btn" class="btn btn-primary px-4 rounded-pill shadow-sm">
+              <i class="bi bi-check-lg me-2"></i>Save Changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .border-dashed {
+    border-style: dashed !important;
+  }
+  .transition-all {
+    transition: all 0.2s ease;
+  }
+  .hover-shadow-lg:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+  }
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  /* Video preview styles */
+  .video-preview {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+  }
+  
+  /* Loading indicator styles */
+  .loading-indicator {
+    background-color: #f8f9fa;
+    border: 2px dashed #e9ecef;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .loading-indicator .spinner-border {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Video preview styles */
+  .video-preview-wrapper .ratio {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .video-preview-wrapper .object-fit-contain {
+    object-fit: contain !important;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 10px;
+  }
+
+  .video-preview-wrapper .btn-danger {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .btn-remove-video {
+    padding: 0.15rem 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .video-preview-wrapper:hover .btn-remove-video {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const form = document.getElementById('categoryVideoForm');
+    const titleInput = document.getElementById('video-title');
+    const descriptionInput = document.getElementById('video-description');
+    const saveBtn = document.getElementById('save-btn');
+    const videoPreviewContainer = document.getElementById('video-preview-container');
+    const addVideoBtn = document.getElementById('add-video-btn');
+    const videoUpload = document.getElementById('video-upload');
+    
+    // Create hidden file input for replace functionality
+    const replaceInput = document.createElement('input');
+    replaceInput.type = 'file';
+    replaceInput.accept = 'video/*';
+    replaceInput.style.display = 'none';
+    replaceInput.id = 'replace-video-input';
+    document.body.appendChild(replaceInput);
+
+    // Handle replace file selection
+    replaceInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.type.startsWith('video/')) {
+          if (file.size <= 100 * 1024 * 1024) { // 100MB limit
+            await uploadVideo(file);
+          } else {
+            showAlert('Video file size must be less than 100MB', 'warning');
+          }
+        } else {
+          showAlert('Please select a valid video file', 'warning');
+        }
+      }
+      e.target.value = '';
+    });
+    
+    // Data storage
+    let contentId = new URLSearchParams(window.location.search).get('id');
+    let categoryId = new URLSearchParams(window.location.search).get('categoryId');
+    let uploadedVideo = null;
+    
+    // JWT Token for authorization
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTIyNTEyMSwiZXhwIjoxNzQ1MzExNTIxfQ.O1xfunWURBxt7tqcgXH_yWEyq-7VOA61LX6qrmEHXoA';
+
+    // Helper function to show alerts
+    const showAlert = (message, type = 'success') => {
+      let alertContainer = document.querySelector('.alert-container');
+      if (!alertContainer) {
+        alertContainer = document.createElement('div');
+        alertContainer.className = 'alert-container position-fixed bottom-0 end-0 p-3';
+        alertContainer.style.zIndex = '1050';
+        document.body.appendChild(alertContainer);
+      }
+
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible fade show py-2 px-3 mb-2`;
+      alertDiv.style.fontSize = '0.875rem';
+      alertDiv.style.maxWidth = '500px';
+      alertDiv.style.minWidth = '300px';
+      alertDiv.innerHTML = `
+        <strong>${type === 'success' ? 'Success!' : type === 'danger' ? 'Error!' : 'Note:'}</strong> ${message}
+        <button style="padding-block: 10px;" type="button" class="btn-close btn-close-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      
+      alertContainer.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.classList.add('fade');
+        setTimeout(() => {
+          alertDiv.remove();
+          if (alertContainer.children.length === 0) {
+            alertContainer.remove();
+          }
+        }, 300);
+      }, 4000);
+    };
+
+    // Create new section and content
+    const createNewVideoSection = async () => {
+      if (!categoryId) return;
+
+      try {
+        // Create a new section
+        const sectionResponse = await fetch(`/api/sections`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: 'Category Video',
+            slug: 'category-video',
+            description: 'Category video section',
+            category: categoryId,
+            isFolder: false,
+            order: 0,
+            isActive: true
+          })
+        });
+
+        if (!sectionResponse.ok) {
+          throw new Error('Failed to create section');
+        }
+
+        const sectionResult = await sectionResponse.json();
+
+        // Create new content for the section
+        const contentData = {
+          section: sectionResult._id,
+          slug: 'category-video',
+          title: titleInput.value.trim(),
+          subtitle: descriptionInput.value.trim(),
+          images: [{url: uploadedVideo.url}],
+          isActive: true
+        };
+
+        const contentResponse = await fetch(`/api/content`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(contentData)
+        });
+
+        if (!contentResponse.ok) {
+          throw new Error('Failed to create content');
+        }
+
+        const contentResult = await contentResponse.json();
+        
+        contentId = contentResult._id;
+        window.location.href = `/category-video?id=${contentId}&categoryId=${categoryId}`;
+        
+      } catch (error) {
+        console.error('Error creating new video section:', error);
+        showAlert('Failed to create new section. Please try again.', 'danger');
+      }
+    };
+    
+    // Fetch content from API
+    const fetchContent = async () => {
+      if (!contentId) {
+        console.error('No content ID found');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/content/id/${contentId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch content: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Populate form fields
+        if (data.title) titleInput.value = data.title;
+        if (data.subtitle) descriptionInput.value = data.subtitle;
+        
+        // Load video if exists
+        if (data.images && data.images.length > 0 && data.images[0].url) {
+          uploadedVideo = data.images[0];
+          addVideoPreview(data.images[0].url);
+        }
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      }
+    };
+    
+    // Add video preview
+    const addVideoPreview = (url) => {
+      // Remove existing preview if any
+      const existingPreview = videoPreviewContainer.querySelector('.video-preview-wrapper');
+      if (existingPreview) {
+        existingPreview.remove();
+      }
+
+      const previewWrapper = document.createElement('div');
+      previewWrapper.className = 'col-12 mb-3 video-preview-wrapper';
+      previewWrapper.innerHTML = `
+        <div class="d-flex align-items-center gap-3 p-1 bg-light rounded-3">
+          <div class="ratio ratio-1x1" style="width: 300px;">
+            <video class="object-fit-contain rounded" controls>
+              <source src="${url}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <button class="btn-remove-video btn btn-sm btn-danger position-absolute top-0 end-0 m-1">
+              <img src="/images/svg/delete.svg" alt="Delete" style="width: 28px; height: 28px; padding: 5px;">
+            </button>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="mb-1">Current Video</h6>
+            <p class="small text-muted mb-0">Click the delete button to remove the video</p>
+          </div>
+        </div>
+      `;
+
+      // Insert before the upload button
+      const uploadButton = videoPreviewContainer.querySelector('#add-video-btn').closest('.col-12');
+      videoPreviewContainer.insertBefore(previewWrapper, uploadButton);
+
+      // Add delete handler
+      const deleteBtn = previewWrapper.querySelector('.btn-remove-video');
+      deleteBtn.addEventListener('click', async () => {
+        previewWrapper.remove();
+        uploadedVideo = null;
+        document.getElementById('add-video-btn').style.display = 'block';
+
+        // If we have a contentId, update the content immediately
+        if (contentId) {
+          try {
+            const updateData = {
+              title: titleInput.value.trim(),
+              subtitle: descriptionInput.value.trim(),
+              images: []
+            };
+
+            const updateResponse = await fetch(`/api/content/${contentId}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify(updateData)
+            });
+
+            if (!updateResponse.ok) {
+              throw new Error('Failed to update content');
+            }
+
+            showAlert('Video deleted successfully!', 'success');
+          } catch (error) {
+            console.error('Error updating content:', error);
+            showAlert('Failed to delete video. Please try again.', 'danger');
+          }
+        }
+      });
+
+      // Hide upload button
+      document.getElementById('add-video-btn').style.display = 'none';
+    };
+    
+    // Upload video to server
+    const uploadVideo = async (file) => {
+      if (!file) return null;
+      
+      // Create loading indicator
+      const loadingIndicator = document.createElement('div');
+      loadingIndicator.className = 'position-absolute bg-dark bg-opacity-75 w-100 h-100 d-flex align-items-center justify-content-center';
+      loadingIndicator.style.zIndex = '10';
+      loadingIndicator.style.borderRadius = '0.5rem';
+      loadingIndicator.innerHTML = `
+        <div class="text-center text-white p-3">
+          <div class="spinner-border text-light mb-3" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Uploading...</span>
+          </div>
+          <h6 class="mb-1">Uploading Video</h6>
+          <p class="small mb-0 text-light">Please wait while your video is being uploaded...</p>
+        </div>
+      `;
+      
+      // Add loading indicator
+      const videoContainer = videoPreviewContainer.querySelector('.video-preview-wrapper') || videoPreviewContainer;
+      if (videoContainer) {
+        videoContainer.style.position = 'relative';
+        videoContainer.appendChild(loadingIndicator);
+      }
+      
+      try {
+        const formData = new FormData();
+        formData.append('images', file);
+
+        // Upload to Cloudinary via your endpoint
+        const response = await fetch(`/api/images`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to upload video: ' + response.statusText);
+        }
+        
+        const data = await response.json();
+        
+        // Remove loading indicator
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+        
+        if (data && data.files && data.files.length > 0) {
+          uploadedVideo = {
+            url: data.files[0].url,
+            title: file.name,
+            type: 'video',
+            alt: "Uploaded video",
+            width: 1920,
+            height: 1080,
+            order: 1
+          };
+          
+          addVideoPreview(data.files[0].url);
+          return uploadedVideo;
+        }
+        
+        return null;
+      } catch (error) {
+        console.error('Error uploading video:', error);
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+        showAlert('Failed to upload video. Please try again.', 'danger');
+        return null;
+      }
+    };
+    
+    // Save changes
+    const saveChanges = async () => {
+      if (!contentId) {
+        console.error('No content ID available for update');
+        showAlert('Cannot save: Missing content ID.', 'warning');
+        return;
+      }
+      
+      const title = titleInput.value.trim();
+      const description = descriptionInput.value.trim();
+      
+      const updateData = {
+        title,
+        subtitle: description,
+        images: [{url: uploadedVideo.url}]
+      };
+      
+      
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      
+      try {
+        const response = await fetch(`/api/content/${contentId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(updateData)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to save changes: ' + response.statusText);
+        }
+        
+        const result = await response.json();
+        showAlert('Changes saved successfully!', 'success');
+      } catch (error) {
+        console.error('Error saving changes:', error);
+        showAlert('Failed to save changes. Please try again.', 'danger');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Save Changes';
+      }
+    };
+    
+    // Event Listeners
+    saveBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      if (contentId) {
+        saveChanges();
+      } else if (categoryId) {
+        createNewVideoSection();
+      } else {
+        showAlert('Cannot save: Missing content ID or category ID.', 'warning');
+      }
+    });
+    
+    // Video upload
+    addVideoBtn.addEventListener('click', () => videoUpload.click());
+    
+    videoUpload.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      
+      if (file) {
+        if (file.type.startsWith('video/')) {
+          if (file.size <= 100 * 1024 * 1024) { // 100MB limit
+            await uploadVideo(file);
+          } else {
+            showAlert('Video file size must be less than 100MB', 'warning');
+          }
+        } else {
+          showAlert('Please select a valid video file', 'warning');
+        }
+      }
+      
+      e.target.value = '';
+    });
+    
+    // Drag and drop functionality
+    addVideoBtn.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addVideoBtn.classList.add('bg-light');
+    });
+
+    addVideoBtn.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addVideoBtn.classList.remove('bg-light');
+    });
+
+    addVideoBtn.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addVideoBtn.classList.remove('bg-light');
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        if (file.type.startsWith('video/')) {
+          if (file.size <= 100 * 1024 * 1024) { // 100MB limit
+            await uploadVideo(file);
+          } else {
+            showAlert('Video file size must be less than 100MB', 'warning');
+          }
+        } else {
+          showAlert('Please drop a valid video file', 'warning');
+        }
+      }
+    });
+    
+    // Load data on page load if we have a contentId
+    if (contentId) {
+      fetchContent();
+    }
+  });
+</script> 

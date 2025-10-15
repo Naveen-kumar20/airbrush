@@ -1,0 +1,298 @@
+{{!-- Text to 3D Section Styles --}}
+<style>
+    .text-to-3d-section {
+        position: relative;
+        width: 80%;
+        height: 320px;
+        background: #1a103f;
+        border-radius: 16px;
+        margin-inline: auto;
+        margin-block: 12rem;
+    }
+
+    .text-to-3d-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 4rem;
+        padding-left: 4rem;
+        background: url('/images/boy-bg.png') repeat;
+        background-size: 150px 150px;
+        border-radius: 12px;
+    }
+
+    .black-overlay {
+        position: absolute;
+        background: linear-gradient(to right, #4526B1, #FF6154);
+        opacity: 90%;
+        border-radius: 12px;
+        z-index: 50;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .text-to-3d-content {
+        max-width: 500px;
+        z-index: 100;
+    }
+
+    .text-to-3d-title {
+        font-size: 4.5rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .text-to-3d-description {
+        font-size: 2.5rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        max-width: 500px;
+    }
+
+    .start-button {
+        background: white;
+        color: #4526B1;
+        width: fit-content;
+        font-weight: 8 00;
+        padding: 1.5rem 5rem;
+        border-radius: 6px;
+        font-size: 2rem;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .start-button:hover {
+        background: #553C9A;
+    }
+
+    .preview-container {
+        position: absolute;
+        top: 0%;
+        right: 5%;
+        z-index: 70;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-container-click {
+        position: absolute;
+        top: 15%;
+        right: 30%;
+        z-index: 90;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-image-click {
+        height: 230px;
+
+    }
+
+
+    .preview-image {
+        height: 300px;
+        object-fit: contain;
+    }
+
+    .character-image-3d {
+        position: absolute;
+        right: 0;
+        bottom: -20px;
+        width: 400px;
+        height: auto;
+        z-index: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .character-image-3d {
+            width: 350px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .text-to-3d-section {
+            height: auto;
+            min-height: 400px;
+        }
+
+        .text-to-3d-container {
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .text-to-3d-content {
+            max-width: 300px;
+            margin-bottom: 2rem;
+        }
+
+        .text-to-3d-title{
+            font-size: 3rem;
+        }
+
+        .text-to-3d-description {
+            margin: 1rem auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .preview-container {
+            position: relative;
+            transform: none;
+            left: 3%;
+            top: auto;
+            margin: 1rem auto;
+        }
+
+
+        .character-image-3d {
+            position: relative;
+            width: 250px;
+            right: auto;
+            bottom: auto;
+            margin: 2rem auto 0;
+        }
+    }
+</style>
+
+{{!-- Text to 3D Section Content --}}
+<section class="text-to-3d-section">
+    <div class="text-to-3d-container">
+        <div class="black-overlay"></div>
+        <div class="text-to-3d-content">
+            <h1 class="text-to-3d-title">Text to Ghibli Art</h1>
+            <p class="text-to-3d-description">
+                Transform your text descriptions into enchanting Ghibli-inspired artwork with our magical AI in seconds.
+            </p>
+            <button class="start-button">Create Magic</button>
+        </div>
+        <div class="preview-container">
+            <img src="/images/ghibli/ghibli13.png" alt="3D Model Preview" class="preview-image">
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to fetch text-to-ghibli content using category ID and slug
+    async function fetchTextToGhibliContent() {
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-([a-z])/g, (match, letter) => {
+                return letter.toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`] || window.airbrushghibli;
+            
+            // Dynamically determine the content slug based on the path
+            let slug;
+            if (pathSlug.includes('ghibli')) {
+                slug = 'text-to-ghibli-art';
+            } else if (pathSlug.includes('3d')) {
+                slug = '3d-text-to-anything';
+            } else {
+                // Extract the first part of the path for other cases
+                const basePath = pathSlug.split('-')[0];
+                slug = `text-to-${basePath}-art`;
+            }
+            
+            console.log(`Fetching text-to-ghibli content with categoryId: ${categoryId} and slug: ${slug}`);
+            
+            const response = await fetch(`http://localhost:4009/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch text-to-ghibli content: ${response.status} ${response.statusText}`);
+            }
+            
+            const content = await response.json();
+            console.log('Text to Ghibli content loaded:', content);
+            
+            // Update text-to-ghibli section with the content
+            updateTextToGhibliContent(content);
+        } catch (error) {
+            console.error('Error fetching text-to-ghibli content:', error);
+        }
+    }
+    
+    // Function to update the text-to-ghibli section with the fetched content
+    function updateTextToGhibliContent(content) {
+        console.log('Updating text-to-ghibli with content:', content);
+        
+        // Update title if available
+        if (content.title) {
+            const titleElement = document.querySelector('.text-to-3d-title');
+            if (titleElement) {
+                titleElement.textContent = content.title;
+            }
+        }
+        
+        // Update description if available
+        if (content.subtitle) {
+            const descriptionElement = document.querySelector('.text-to-3d-description');
+            if (descriptionElement) {
+                descriptionElement.textContent = content.subtitle;
+            }
+        }
+        
+        // Update button text if available
+        if (content.buttonText) {
+            const buttonElement = document.querySelector('.start-button');
+            if (buttonElement) {
+                console.log('Setting button text to:', content.buttonText);
+                buttonElement.textContent = content.buttonText;
+            }
+        }
+        
+        // Update images if available
+        if (content.images && Array.isArray(content.images) && content.images.length > 0) {
+            console.log('Found images to update:', content.images);
+            
+            const previewImage = document.querySelector('.preview-image');
+            if (previewImage && content.images[0].url) {
+                previewImage.src = content.images[0].url;
+                previewImage.alt = content.images[0].alt || 'Ghibli Art Preview';
+                
+                // Add onload handler to debug image loading
+                previewImage.onload = function() {
+                    console.log('Preview image loaded successfully:', content.images[0].url);
+                };
+                
+                previewImage.onerror = function() {
+                    console.error('Failed to load preview image:', content.images[0].url);
+                };
+            } else {
+                console.warn('Preview image element not found or no image URL in content');
+            }
+        }
+        
+        // Force a repaint to ensure everything is updated
+        setTimeout(() => {
+            const container = document.querySelector('.text-to-3d-container');
+            if (container) {
+                container.style.opacity = '0.99';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+    
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchTextToGhibliContent);
+</script>

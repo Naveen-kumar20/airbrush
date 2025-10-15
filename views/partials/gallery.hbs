@@ -1,0 +1,1111 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+        background-color: #000;
+        color: #fff;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .hero-container {
+        max-width: 100%;
+        margin: 0;
+        background: #000000;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 6rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeInUp 0.8s ease;
+        font-weight: 600;
+    }
+
+    .feature-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        white-space: nowrap;
+        margin-bottom: 1rem;
+        line-height: normal;
+        animation: fadeInUp 1s ease;
+    }
+
+    .text-slide {
+        transform: translateX(100px);
+        transition: all;
+    }
+
+
+    .feature-tab {
+        font-size: 40px;
+        color: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .feature-tab.active {
+        color: #fff;
+    }
+
+    .feature-tab.gradient {
+        background: linear-gradient(90deg, #7B5EE6 0%, #F06292 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .feature-tab:hover {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .feature-tab.gradient:hover {
+        background: linear-gradient(90deg, #8E6FF7 0%, #FF77A9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .feature-tab.purple {
+        color: #a78bfa;
+    }
+
+    .feature-tab.pink {
+        color: #f87171;
+    }
+
+    .features {
+        padding: 6rem 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .features-title {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 0.8s ease;
+        text-align: center;
+    }
+
+    .features-title span {
+        background: linear-gradient(90deg, #7B5EE6 0%, #F06292 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .features-description {
+        font-size: 2.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 1200px;
+        margin: 0 auto 5rem;
+        line-height: 1.6;
+        animation: fadeInUp 1s ease;
+        text-align: center;
+        font-weight: 400;
+        padding: 0 2rem;
+    }
+
+    .features-grid {
+        display: inline-grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: min-content;
+        gap: 15px;
+        animation: fadeInUp 1.2s ease;
+        border: 1px dashed gray;
+        padding: 15px;
+        border-radius: 20px;
+        max-height: calc(2 * 300px + 15px);  /* Height for 2 rows + gap */
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #555 #222;
+    }
+
+    .features-grid::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .features-grid::-webkit-scrollbar-track {
+        background: #222;
+        border-radius: 10px;
+    }
+
+    .features-grid::-webkit-scrollbar-thumb {
+        background: #555;
+        border-radius: 10px;
+    }
+
+    .features-grid::-webkit-scrollbar-thumb:hover {
+        background: #777;
+    }
+
+    .feature-card {
+        position: relative;
+        width: 270px;
+        height: 285px;
+        padding: 0px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        justify-content: flex-start;
+        display: flex;
+        flex-direction: column; 
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    .feature-card.animate {
+        animation: fadeInScale 0.6s ease forwards;
+    }
+
+    .feature-card .image-container {
+        width: 93%;
+        height: 200px;
+        margin: auto;
+        margin-bottom: 0;
+        margin-top: 8px;
+        overflow: hidden;
+        border-radius: 9px;
+        position: relative;
+    }
+
+    .use-prompt-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        color: #4526B1;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 5;
+        pointer-events: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .feature-card .image-container:hover .use-prompt-overlay {
+        opacity: 1;
+    }
+
+    .feature-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .feature-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .tag {
+        position: absolute;
+        top: 21px;
+        left: 9px;
+        color: white;
+        font-weight: bold;
+        padding: 1px 8px;
+        font-size: 15px;
+        border-radius: 0 8px 8px 0;
+        overflow: hidden;
+    }
+
+    .trending::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        transform: rotate(30deg);
+        animation: shine 3s infinite linear;
+    }
+
+    @keyframes shine {
+        0% {
+            transform: translateX(-100%) rotate(30deg);
+        }
+
+        100% {
+            transform: translateX(100%) rotate(30deg);
+        }
+    }
+
+    .trending {
+        background-color: #FF4C60;
+    }
+
+    .most-used {
+        background-color: #4B9EFF;
+    }
+
+    .latest {
+        background-color: #6E40FF;
+    }
+
+    .recent {
+        background-color: #00C48C;
+    }
+
+    .arrow-btn {
+        position: absolute;
+        bottom: 11px;
+        transform: rotate(323deg);
+        right: 9px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(7px);
+        -webkit-backdrop-filter: blur(5px);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+
+
+    .arrow-btn::before {
+        content: '➜';
+        font-size: 30px;
+        color: white;
+    }
+
+    .feature-title {
+        margin: 0;
+        font-size: 18px;
+        color: #000;
+        line-height: 1.5;
+    }
+
+    .feature-description {
+        font-size: 14px;
+        color: #555;
+        margin-top: 4px;
+        line-height: 1.2;
+    }
+
+    .feature-card .card-content {
+        padding: 7px;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1240px) {
+        .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            padding: 10px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            padding: 4rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .feature-tabs {
+            align-items: center;
+            gap: 1rem;
+            margin-left: 65px;
+        }
+
+        .features-title {
+            font-size: 3rem;
+        }
+
+        .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .feature-card {
+            width: 100%;
+            height: auto;
+            min-height: 220px;
+        }
+
+        .feature-card .image-container {
+            height: 140px;
+            margin-top: 5px;
+        }
+
+        .feature-card .card-content {
+            padding: 5px;
+        }
+
+        .feature-title {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .feature-description {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 1px 6px;
+            top: 15px;
+            left: 7px;
+        }
+
+        .arrow-btn {
+            width: 35px;
+            height: 35px;
+            bottom: 8px;
+            right: 8px;
+        }
+
+        .arrow-btn::before {
+            font-size: 22px;
+        }
+
+        .features-description {
+            margin-bottom: 3rem;
+            font-size: 1.8rem;
+            line-height: 1.2;
+            padding: 0 1rem;
+        }
+    }
+
+
+
+    /* Panoramic Slider */
+    .slider-container {
+        width: 100%;
+        height: 380px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(45deg, #000000, #1a1a1a);
+
+            {
+                {
+                !-- clip-path: polygon(50% 14%, 76% 9%, 100% 0, 100% 100%, 76% 93%, 50% 89%, 24% 92%, 0 100%, 0 0, 23% 10%);
+                --
+            }
+        }
+    }
+
+    .semi-ellipse {
+        height: 85px;
+        background-color: #000000;
+        position: relative;
+        z-index: 2;
+    }
+
+    .top-ellipse {
+        border-radius: 40% 20% 211% 228%;
+        margin-bottom: -3.2%;
+        left: -4%;
+        width: 107%;
+        height: 100px;
+    }
+
+    .bottom-ellipse {
+        border-radius: 76% 96% 0 0;
+        margin-top: -5.9%;
+        left: -10%;
+        height: 145px;
+        width: 130%;
+        margin-bottom: -139px;
+
+    }
+
+    .slider {
+        display: flex;
+        width: fit-content;
+        height: 100%;
+        animation: slide 20s linear infinite;
+    }
+
+    .slide {
+        min-width: 300px;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+  align-items: center;
+    }
+
+    .slide img {
+        height: 100%;
+  width: auto;
+  object-fit: cover;
+  border-radius: 10px;
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .slider-container:hover .slider {
+  animation-play-state: paused;
+}
+
+    /* Responsive Slider */
+    @media (max-width: 1024px) {
+        .slider-container {
+            height: 300px;
+        }
+
+        .top-ellipse {
+            border-radius: 40% 20% 211% 228%;
+            margin-bottom: -4.2%;
+            left: -4%;
+            width: 107%;
+            height: 100px;
+        }
+
+        .slide {
+            width: 280px;
+        }
+
+        .feature-tabs {
+            gap: 3rem;
+        }
+
+        .feature-tab {
+            font-size: 32px;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-350px * 5));
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .slider-container {
+            height: 250px;
+
+                {
+                    {
+                    !-- clip-path: polygon(50% 10%, 75% 6%, 100% 0, 100% 100%, 75% 95%, 50% 92%, 25% 95%, 0 100%, 0 0, 25% 6%);
+                    --
+                }
+            }
+        }
+
+        .slide{
+            min-width: 150px !important;
+        }
+
+        .top-ellipse {
+            border-radius: 40% 20% 211% 228%;
+            margin-bottom: -8.2%;
+            left: -7%;
+            width: 114%;
+            height: 100px;
+        }
+
+        .bottom-ellipse {
+            border-radius: 76% 96% 0 0;
+            margin-top: -12%;
+            left: -15%;
+            width: 135%;
+            height: 145px;
+        }
+
+        .slide {
+            width: 250px;
+        }
+
+        .feature-tabs {
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .feature-tab {
+            font-size: 28px;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-250px * 5));
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slider-container {
+            height: 200px;
+
+                {
+                    {
+                    !-- clip-path: polygon(50% 5%, 80% 3%, 100% 0, 100% 100%, 78% 97%, 50% 95%, 18% 97%, 0 100%, 0 0, 34% 5%) --
+                }
+            }
+        }
+
+        .top-ellipse {
+            border-radius: 40% 20% 211% 228%;
+            margin-bottom: -7.2%;
+            left: -15%;
+            width: 127%;
+            height: 100px;
+        }
+
+
+        .bottom-ellipse {
+            border-radius: 76% 96% 0 0;
+            margin-top: -7%;
+            left: -14%;
+            width: 135%;
+            height: 145px;
+        }
+
+
+        .slide {
+            width: 140px;
+        }
+
+        .feature-tabs {
+            gap: 1rem;
+        }
+
+        .feature-tab {
+            font-size: 22px;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-200px * 5));
+            }
+        }
+    }
+
+    @media (max-width: 360px) {
+        .bottom-ellipse {
+            border-radius: 76% 96% 0 0;
+            margin-top: -9%;
+            left: -15%;
+            width: 142%;
+            height: 145px;
+        }
+
+        .feature-tab {
+            font-size: 18px;
+        }
+
+        .feature-tabs {
+            gap: 0.7rem;
+        }
+    }
+
+    /* Add these animation styles */
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+</style>
+
+<div class="hero-container">
+    <section class="hero">
+        <h1>Experience the power of Airbush</h1>
+        <div class="feature-tabs">
+            <div class="feature-tab">Face Swapping</div>
+            <div class="feature-tab gradient">Character Design</div>
+            <div class="feature-tab">Realistic Human Gen</div>
+        </div>
+        <div class="semi-ellipse top-ellipse"></div>
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide">
+                    <img src="/images/slider1.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider3.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider2.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider4.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider1.png" alt="Character Design">
+                </div>
+                <!-- Duplicate slides for infinite loop effect -->
+                <div class="slide">
+                    <img src="/images/slider2.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider4.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider3.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider2.png" alt="Character Design">
+                </div>
+                <div class="slide">
+                    <img src="/images/slider4.png" alt="Character Design">
+                </div>
+            </div>
+        </div>
+        <div class="semi-ellipse bottom-ellipse"></div>
+    </section>
+
+    <section class="features">
+        <h2 class="features-title"><span>Airbush make Global</span></h2>
+        <p class="features-description">
+            Create Consistent assets for you and your team. Airbush makes it easier than ever to create, edit, and
+            share Image, art, and Illustration.
+        </p>
+        <div class="features-grid" id="dynamic-categories-grid">
+            <!-- Dynamic categories will be rendered here -->
+            <div class="loading-spinner">Loading categories...</div>
+        </div>
+    </section>
+</div>
+
+<!-- Add jQuery and Owl Carousel JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Feature tabs interaction
+         const tabsContainer = document.querySelector('.feature-tabs');
+        const tabs = document.querySelectorAll('.feature-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabsContainer.classList.add('text-slide')
+                tab.classList.add('active');
+            });
+        });
+
+        // Initialize Owl Carousel with enhanced auto-play settings
+        $(".owl_content").owlCarousel({
+            center: true,
+            items: 4,
+            loop: true,
+            margin: 20,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            autoplaySpeed: 500,
+            autoplayHoverPause: false,
+            smartSpeed: 250,
+            mouseDrag: false,
+            touchDrag: false,
+            pullDrag: false,
+            freeDrag: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 3
+                },
+                1024: {
+                    items: 3
+                }
+            }
+        });
+
+        // Add animation reset for infinite scroll
+        const slider = document.querySelector('.slider');
+
+        // Properly handle infinite loop
+        function resetSlider() {
+            slider.style.animation = 'none';
+            slider.offsetHeight; // Trigger reflow
+            slider.style.animation = 'slide 20s linear infinite';
+        }
+
+        slider.addEventListener('animationend', resetSlider);
+
+        // Initialize the slider immediately
+        resetSlider();
+        
+        // Fetch gallery content by category ID and slug
+        fetchGalleryContent();
+    });
+    
+    // Function to fetch gallery content using category ID and slug
+    async function fetchGalleryContent() {
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-([a-z])/g, (match, letter) => {
+                return letter.toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`] || '68054404386a5fc127d44b4a';
+            
+            // Dynamically determine the content slug based on the path
+            let slug;
+            if (pathSlug.includes('3d')) {
+                slug = '3d-image-gallery';
+            } else if (pathSlug.includes('ghibli')) {
+                slug = 'ghibli-image-gallery';
+            } else {
+                // Extract the first part of the path for other cases
+                const basePath = pathSlug.split('-')[0];
+                slug = `${basePath}-image-gallery`;
+            }
+            
+            const response = await fetch(`http://localhost:4009/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch gallery content by slug');
+            }
+            
+            const content = await response.json();
+            console.log('Gallery content loaded:', content);
+            
+            // Update gallery images with the fetched content
+            if (content && content.items && Array.isArray(content.items)) {
+                updateGalleryImages(content.items);
+            } else {
+                console.log('Gallery content does not contain items array');
+            }
+        } catch (error) {
+            console.error('Error fetching gallery content:', error);
+        }
+    }
+    
+    // Function to update gallery images with the fetched content
+    function updateGalleryImages(items) {
+        console.log('Updating gallery with items:', items);
+        if (!Array.isArray(items) || items.length === 0) {
+            console.log('No gallery items to display');
+            return;
+        }
+        
+        // Get all feature card images
+        const featureCards = document.querySelectorAll('.feature-card');
+        if (!featureCards.length) {
+            console.warn('Feature cards not found in the gallery');
+            return;
+        }
+        
+        console.log(`Found ${featureCards.length} feature cards to update`);
+        
+        // Extract image URLs from the content
+        const imageUrls = [];
+        
+        // Check if items have a direct images array or if the response is already an array of image objects
+        if (items[0] && items[0].url) {
+            // Response is directly an array of image objects
+            console.log('Processing direct image array format');
+            items.forEach((item, idx) => {
+                console.log(`Processing direct image ${idx}:`, item);
+                if (item.url) {
+                    imageUrls.push({
+                        url: item.url,
+                        alt: item.alt || '',
+                        title: item.title || ''
+                    });
+                }
+            });
+        } else {
+            // Standard format with items containing images array
+            console.log('Processing standard item format with nested images');
+            items.forEach((item, idx) => {
+                console.log(`Processing item ${idx}:`, item);
+                if (item.images && item.images.length > 0) {
+                    item.images.forEach((image, imgIdx) => {
+                        if (image.url) {
+                            imageUrls.push({
+                                url: image.url,
+                                alt: image.alt || item.title || '',
+                                title: item.title || ''
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        
+        console.log(`Found ${imageUrls.length} images to use in gallery:`, imageUrls);
+        
+        // Loop through each feature card and update its image
+        featureCards.forEach((card, index) => {
+            // Calculate which image to use, repeating if we run out
+            const imageIndex = index % imageUrls.length;
+            const imageData = imageUrls[imageIndex];
+            
+            if (imageData && imageData.url) {
+                console.log(`Updating card ${index} with image ${imageIndex}:`, imageData.url);
+                
+                // Update image source
+                const imgElement = card.querySelector('.image-container img');
+                if (imgElement) {
+                    console.log(`Setting src for card ${index} to:`, imageData.url);
+                    imgElement.src = imageData.url;
+                    imgElement.alt = imageData.alt || `Gallery Image ${index + 1}`;
+                    
+                    // Add onload handler to debug image loading
+                    imgElement.onload = function () {
+                        console.log(`Image for card ${index} loaded successfully:`, imageData.url);
+                    };
+                    
+                    imgElement.onerror = function () {
+                        console.error(`Failed to load image for card ${index}:`, imageData.url);
+                    };
+                } else {
+                    console.warn(`Image element not found for card ${index}`);
+                }
+                
+                // Update title if we have one and if the element exists
+                if (imageData.title) {
+                    const titleElement = card.querySelector('.feature-title');
+                    if (titleElement) {
+                        titleElement.textContent = imageData.title;
+                    }
+                }
+            }
+        });
+        
+        // Force a repaint to ensure images are updated
+        setTimeout(() => {
+            const galleryContainer = document.querySelector('.features-grid');
+            if (galleryContainer) {
+                galleryContainer.style.opacity = '0.99';
+                setTimeout(() => {
+                    galleryContainer.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // Fetch categories from API
+            const response = await fetch(`/api/categories`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch categories');
+            }
+            
+            const categories = await response.json();
+            
+            // Filter categories based on content count
+            const validCategories = [];
+            
+            // Create an array of promises for all content fetches
+            const contentPromises = categories.map(category => 
+                fetch(`/api/content/category/${category._id}`)
+                    .then(response => response.ok ? response.json() : null)
+                    .then(contents => ({
+                        category,
+                        contents
+                    }))
+                    .catch(error => {
+                        console.error(`Error fetching contents for category ${category._id}:`, error);
+                        return { category, contents: null };
+                    })
+            );
+
+            // Wait for all content fetches to complete
+            const results = await Promise.all(contentPromises);
+            
+            // Filter valid categories based on content length
+            results.forEach(result => {
+                if (result.contents && result.contents.length === 6) {
+                    validCategories.push(result.category);
+                }
+            });
+            
+            console.log('Valid categories:', validCategories);
+            renderCategories(validCategories);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            document.getElementById('dynamic-categories-grid').innerHTML = 
+                `<div class="error-message">Error loading categories. Please try again later.</div>`;
+        }
+    });
+
+    function renderCategories(categories) {
+        // Filter only active categories
+        const activeCategories = categories.filter(category => category.isActive);
+        
+        // Get the container
+        const container = document.getElementById('dynamic-categories-grid');
+        
+        // Clear loading message
+        container.innerHTML = '';
+        
+        // Sort categories - prioritize categories with tags first, then by name
+        const sortedCategories = [...activeCategories].sort((a, b) => {
+            // Check if either category has any tag
+            const aHasTag = a.trending || a.mostUsed || a.latest || a.recent;
+            const bHasTag = b.trending || b.mostUsed || b.latest || b.recent;
+            
+            // If one has a tag and the other doesn't, prioritize the one with tag
+            if (aHasTag && !bHasTag) return -1;
+            if (!aHasTag && bHasTag) return 1;
+            
+            // If both have tags or both don't have tags, sort by specific tag priority
+            if (aHasTag && bHasTag) {
+                // Define tag priority (trending > mostUsed > latest > recent)
+                if (a.trending && !b.trending) return -1;
+                if (!a.trending && b.trending) return 1;
+                
+                if (a.mostUsed && !b.mostUsed) return -1;
+                if (!a.mostUsed && b.mostUsed) return 1;
+                
+                if (a.latest && !b.latest) return -1;
+                if (!a.latest && b.latest) return 1;
+                
+                if (a.recent && !b.recent) return -1;
+                if (!a.recent && b.recent) return 1;
+            }
+            
+            // If we get here, sort alphabetically by name
+            return a.name.localeCompare(b.name);
+        });
+        
+        // Define tags based on properties
+        const tags = {
+            featured: 'trending',
+            popular: 'most-used',
+            new: 'latest',
+            recent: 'recent'
+        };
+        
+        // Create HTML for each category
+        sortedCategories.forEach((category, index) => {
+            // Determine which tag to use (if any)
+            let tagHTML = '';
+            if (category.trending) {
+                tagHTML = `<div class="tag trending">Trending</div>`;
+            } else if (category.mostUsed) {
+                tagHTML = `<div class="tag most-used">Most Used</div>`;
+            } else if (category.latest) {
+                tagHTML = `<div class="tag latest">Latest</div>`;
+            } else if (category.recent) {
+                tagHTML = `<div class="tag recent">Recent</div>`;
+            }
+            
+            // Create card HTML with data-index for animation
+            const categoryCard = `
+                <div class="feature-card" data-index="${index}">
+                    <div class="image-container">
+                        <img src="${category.image || '/images/default-category.png'}" alt="${category.name}">
+                        <a href="/${category.slug}" class="arrow-btn"></a>
+                    </div>
+                    ${tagHTML}
+                    <div class="card-content">
+                        <h3 class="feature-title">${category.name}</h3>
+                        <p class="feature-description">${category.description || 'Create amazing images with AI'}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add to container
+            container.innerHTML += categoryCard;
+        });
+
+        // Set up the Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const delay = parseInt(card.dataset.index) * 100; // 100ms delay between each card
+                    setTimeout(() => {
+                        card.classList.add('animate');
+                    }, delay);
+                    observer.unobserve(card);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        // Observe all feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Event listeners for cards
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const category = sortedCategories[index];
+                if (category && category.slug) {
+                    window.location.href = `/${category.slug}`;
+                }
+            });
+        });
+    }
+</script>

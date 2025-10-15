@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Initialize category IDs before any components load -->
+    <script>
+        // Flag to track if categories have been initialized
+        window.categoriesInitialized = false;
+        
+        // Function to initialize category IDs
+        function initializeCategoryIds() {
+            return fetch(`/api/categories`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch categories: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(categories => {
+                    
+                    // Process each category and add to window object
+                    categories.forEach(category => {
+                        if (category.slug && category._id) {
+                            // Convert slug to camelCase for window property name
+                            const camelCaseKey = category.slug.replace(/-./g, match => match[1].toUpperCase());
+                            const propertyName = `airbrush${camelCaseKey}`;
+                            
+                            // Set the property in window object
+                            window[propertyName] = category._id;
+                        }
+                    });
+                    
+                    // Set initialization flag
+                    window.categoriesInitialized = true;
+                    
+                    // Create event to notify components that categories are ready
+                    const event = new CustomEvent('categoriesReady');
+                    window.dispatchEvent(event);
+                    
+                    return categories;
+                })
+                .catch(error => {
+                    console.error('Error initializing categories:', error);
+                    // Still mark as initialized even with an error, using fallback values
+                    window.categoriesInitialized = true;
+                    window.dispatchEvent(new CustomEvent('categoriesReady'));
+                });
+        }
+        
+        // Start fetching categories immediately when page begins loading
+        const categoriesPromise = initializeCategoryIds();
+    </script>
+
+    <!-- Default meta tags (will be updated dynamically) -->
+    <meta name="description" content="Create amazing 3D images with Airbrush AI">
+    <meta property="og:title" content="Airbrush - Best AI Art, Image & Stock Photo Generator">
+    <meta property="og:type" content="website">
+
+    <!-- bootstrap min css -->
+    <link rel="stylesheet preload" href="/css/plugins/fontawesome-6.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/unicons.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/swiper.min.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/metismenu.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/bootstrap.min.css" as="style">
+    <!-- custom css style -->
+    <link rel="stylesheet preload" href="/css/style.css" as="style">
+    <style>
+        /* Floating Circles Animation */
+        .floating-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            background: rgba(240, 85, 13, 0.30);
+            border-radius: 50%;
+            animation: floatCircles linear infinite;
+        }
+
+        @keyframes floatCircles {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, -100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-version">
+
+    {{> desktop-menu}}
+
+    <!-- rts breadcrumb area start-->
+
+    {{> imagination}}
+
+    {{> character}}     
+
+    {{> characters}}
+
+    {{> video-section}}
+
+    {{> why-use-airbrush-3d}}
+
+    {{> text-to-3d}}
+
+    {{> headshot-generator}}
+
+    {{> counter}}
+
+    {{> gallery}}
+
+    {{> blog-section}}
+
+    {{> footer}}
+
+
+    <div id="anywhere-home" class="">
+    </div>
+
+    {{> mobile-menu}}
+
+
+    <!-- rts backto top start -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+                style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;">
+            </path>
+        </svg>
+    </div>
+    <!-- rts backto top end -->
+
+
+    <script src="/js/vendor/jquery.min.js" defer></script>
+    <script src="/js/vendor/metismenu.js" defer></script>
+    <script src="/js/plugins/bootstrap.min.js" defer></script>
+    <script src="/js/plugins/swiper.js" defer></script>
+    <script src="/js/plugins/contact.form.js" defer></script>
+    <script src="/js/main.js" defer></script>
+
+    <div class="floating-circles" id="floatingCircles"></div>
+
+    <!-- Content Fetch Script -->
+    <script>
+        // Create floating circles
+        function createFloatingCircles() {
+            const container = document.getElementById('floatingCircles');
+            const numCircles = 15;
+
+            for (let i = 0; i < numCircles; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                
+                // Random size between 10 and 30 pixels
+                const size = Math.random() * 20 + 10;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                
+                // Random horizontal position
+                const left = Math.random() * 100;
+                circle.style.left = `${left}%`;
+                
+                // Random animation duration between 20 and 40 seconds
+                const duration = Math.random() * 20 + 20;
+                circle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                const delay = Math.random() * 10;
+                circle.style.animationDelay = `-${delay}s`;
+                
+                container.appendChild(circle);
+            }
+        }
+
+        // Call the function when the document is loaded
+        document.addEventListener('DOMContentLoaded', createFloatingCircles);
+
+        // Function to fetch content by category ID
+        async function fetchContentByCategory(categoryId) {
+            try {
+                const response = await fetch(`/api/content/category/${categoryId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch content');
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching content by category:', error);
+                return null;
+            }
+        }
+        
+        // Example usage:
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Replace with your actual category ID
+            const categoryId = '6804931c39cff059c0655fd6'; 
+            
+            // Fetch content for this category
+            const categoryContent = await fetchContentByCategory(categoryId);
+            
+        });
+        
+        // Example function to update UI with category content
+        function updateUIWithCategoryContent(content) {
+            // This is a placeholder function
+            // Implement based on your specific UI needs and DOM structure
+            
+            if (Array.isArray(content)) {
+                // If the response is an array of content items
+                content.forEach(item => {
+                    // Process each content item                    
+                    // Add your DOM manipulation code here
+                    // For example:
+                    // createContentCard(item);
+                });
+            } else {
+                // If the response is a single content object                
+                // Add your DOM manipulation code here
+            }
+        }
+    </script>
+
+</body>
+
+
+
+</html>

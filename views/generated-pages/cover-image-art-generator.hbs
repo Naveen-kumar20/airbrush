@@ -1,0 +1,905 @@
+<html lang="en" data-qb-installed="true">
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="https://ai4chat-files.s3.amazonaws.com/images/airbrush/image-1737741097321.jpg">
+    <title>&quot;Creating Stunning Cover Images: A Guide on Using Art Generators for Your Web Content&quot;</title>
+
+    <!-- bootstrap min css -->
+    <link rel="stylesheet preload" href="/css/plugins/fontawesome-6.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/unicons.css" as="style">
+    <link rel="stylesheet preload" href="/css/plugins/swiper.min.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/metismenu.css" as="style">
+    <link rel="stylesheet preload" href="/css/vendor/bootstrap.min.css" as="style">
+    <!-- custom css style -->
+    <link rel="stylesheet preload" href="/css/style.css" as="style">
+  </head>
+
+    <!-- rts header area start -->
+    <style>
+      .dropdown-content { display: none !important; position: absolute; min-width:
+      130px; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); z-index: 1; border-radius:
+      10px; background-color: #1F253B; } .dropdown:hover .dropdown-content {
+      display: block !important; border-radius: 10px;} .dropdown-content a {
+      margin-block: 10px; #ffffff; padding: 7px 10px; text-decoration: none;
+      display: block; } .dropdown-content a:hover { background-color: #121524; }
+      .dropdown { position: relative; } .dropdown-content div {; }
+    
+    </style>
+    <header class="header-one">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-main-wrapper">
+              <a href="/" class="logo">
+                <img
+                  src="../images/logo/airbrush-logo.png"
+                  alt="logo"
+                  style="max-width: 200px"
+                />
+              </a>
+              <!-- nav -->
+              <div
+                class="nav-area-main d-xl-block d-lg-block d-md-none d-sm-none d-none"
+              >
+                <nav>
+                  <ul>
+    
+                    <li><a class="links-main" href="pricing">Pricing</a></li>
+                    <li><a class="links-main" href="free-tool">Free Tools</a></li>
+                    <li><a class="links-main" href="blog">Blog</a></li>
+                  </ul>
+                </nav>
+              </div>
+              <!-- nav end -->
+              <div class="button-area">
+                <a
+                  target="_blank"
+                  href="https://app.airbrush.ai/login"
+                  class="rts-btn btn-lonly mr--30"
+                >Sign in</a>
+                <a
+                  target="_blank"
+                  href="https://app.airbrush.ai/signup"
+                  class="rts-btn btn-blur"
+                >Get Started</a>
+              </div>
+    
+                <div
+                  class="menu-btn d-xl-none d-lg-none"
+                  id="menu-btn"
+                  style="display: flex; align-items: center; justify-content: space-between;"
+                >
+                  <div style="margin: 5px 20px 5px auto; font-size: 12px;">
+                    <a
+                      id="GetStartedTop"
+                      href="https://app.ai4chat.co/signup?ref=GetStartedTop"
+                      class="rts-btn btn-primary btn-free"
+                      style="color: white; background-color: #007bff; padding: 7px 10px; border-radius: 5px; text-decoration: none;"
+                    >Get Started For Free</a>
+                  </div>
+                  <svg
+                    width="20"
+                    height="16"
+                    style="align-self: center;"
+                    viewBox="0 0 20 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect y="14" width="20" height="2" fill="#1F1F25"></rect>
+                    <rect y="7" width="20" height="2" fill="#1F1F25"></rect>
+                    <rect width="20" height="2" fill="#1F1F25"></rect>
+                  </svg>
+                </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- rts header area end -->    
+    <body class="dark-version">
+        <div class="uniqueContainer" style="width: 100%;">
+            <div class="unique-left-column">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Generate an Image</h2>
+
+                    <select id="aspectRatioDropdown">
+                        <option disabled selected>Select Aspect Ratio</option>
+                        <option value="1:1">1:1 (Square) - Best for Instagram posts</option>
+                        <option value="16:9">16:9 (Wide) - Ideal for YouTube thumbnails and landscape images
+                        </option>
+                        <option value="2:3">2:3 (Portrait) - Common for photos and print media</option>
+                        <option value="3:2">3:2 (Landscape) - Suitable for landscape photography</option>
+                        <option value="4:5">4:5 (Portrait) - Good for social media like Instagram stories</option>
+                        <option value="5:4">5:4 (Portrait) - Useful for high-quality print photos</option>
+                        <option value="9:16">9:16 (Vertical) - Perfect for TikTok and Instagram Reels</option>
+                        <option value="21:9">21:9 (Cinematic) - Ideal for wide screen displays and cinematic content
+                        </option>
+                        <option value="9:21">9:21 (Vertical Cinema) - For vertical cinematic content</option>
+                    </select>
+                </div>
+
+                <textarea id="promptText" placeholder="Enter your image prompt here"></textarea>
+
+                <div class="instructions-tooltip">
+                    <button class="tooltip-trigger">
+                        <i class="fas fa-question-circle"></i>
+                        <span>How To Use</span>
+                    </button>
+                    
+                    <div class="tooltip-content">
+                        <h4>Quick Guide</h4>
+                        <p>Start your prompt with <strong>"Generate ai-generated images from text prompts"</strong> followed by the details of what you want to create. Here is example of a good image prompt:</p>
+                        
+                        <div class="tooltip-example">
+                            Generate a surreal landscape with floating islands and crystal waterfalls
+                        </div>
+                        
+                        <p>Check out the inspiration ideas below to get started!</p>
+                    </div>
+                </div>
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Show Prompts For Inspiration
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body" style="background:#151f39">
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div class="hover-box">
+                                        <p>A futuristic city skyline at night with bioluminescent trees and flying vehicles navigating between towering skyscrapers.</p>
+                                    </div>
+                                    <div class="hover-box">
+                                        <p>A whimsical steampunk airship festival with colorful balloons, clockwork machinery, and people dressed in Victorian-era attire.</p>
+                                    </div>
+                                    <div class="hover-box">
+                                        <p>A serene, underwater scene depicting a coral reef garden inhabited by both real and mythical sea creatures lit by shafts of sunlight.</p>
+                                    </div>
+                                    <div class="hover-box">
+                                        <p>A quiet winter wonderland where a magical snowman village comes to life under the northern lights, complete with tiny igloos and snow sculptures.</p>
+                                    </div>
+                                    <div class="hover-box">
+                                        <p>A bustling alien marketplace on a distant planet, filled with diverse extraterrestrial species, vibrant stalls, and cosmic goods under a pink sky.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <button class="uniqueCSS" id="generateOutput">Generate Image</button>
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Loading...
+                    </div>
+                </div>
+
+                <div class="registration-message">
+                    You have reached the free generation limit. <br>
+                    <a href="https://app.writecream.com/" target="_blank">Register here</a> to continue generating
+                    images.
+                </div>
+
+                <div class="outputBoxes"></div>
+            </div>
+        </div>
+
+                <script>
+                    const hoverBoxes = document.querySelectorAll('.hover-box');
+
+                    const promptText = document.getElementById('promptText');
+
+                    hoverBoxes.forEach((hoverBox) => {
+                        hoverBox.addEventListener('click', () => {
+                            const text = hoverBox.querySelector('p').textContent;
+                            promptText.value = text;
+                        });
+                    });
+                    
+                    function getUserId() {
+                        let userId = document.cookie.split('; ').find(row => row.startsWith('userid='));
+                        if (!userId) {
+                            userId = 'user' + Math.random().toString(36).substring(2, 12);
+                            document.cookie = 'userid=' + userId + ';path=/';
+                        }
+                        return userId.split('=')[1];
+                    }
+
+                    function getFileNameFromPrompt(prompt) {
+                        const keywords = prompt.split(' ').slice(0, 3);
+                        return keywords.join('-').toLowerCase() || 'generated_image';
+                    }
+
+                    function checkGenerationLimit() {
+                        const userId = getUserId();
+                        let generationCount = localStorage.getItem(userId) || 0;
+                        return parseInt(generationCount, 10);
+                    }
+
+                    function incrementGenerationCount() {
+                        const userId = getUserId();
+                        let generationCount = localStorage.getItem(userId) || 0;
+                        generationCount = parseInt(generationCount, 10) + 1;
+                        localStorage.setItem(userId, generationCount);
+                        return generationCount;
+                    }
+
+                    function showRegistrationMessage() {
+                        document.querySelector('.registration-message').style.display = 'block';
+                    }
+
+                    async function generateImage(event) {
+                        const prompt = document.getElementById('promptText').value.trim();
+                        let aspectRatio = document.getElementById('aspectRatioDropdown').value;
+                        const outputContainer = document.querySelector('.outputBoxes');
+                        const spinner = document.querySelector('.loading-spinner');
+                        const registrationMessage = document.querySelector('.registration-message');
+
+                        if (!prompt) {
+                            alert("Please enter a Sprompt")
+                            return;
+                        }
+                        if (!aspectRatio || aspectRatio == "Select Aspect Ratio") {
+                            alert("Please Select an Aspect Ratio")
+                            return;
+                        }
+
+                        // Check generation count
+                        const generationCount = checkGenerationLimit();
+                        if (generationCount >= 5) {
+                            showRegistrationMessage();
+                            return;
+                        }
+
+                        // Increment generation count
+                        incrementGenerationCount();
+
+                        // Hide registration message
+                        registrationMessage.style.display = 'none';
+
+                        // Show loading spinner
+                        spinner.style.display = 'block';
+                        // disable the generate btn
+                        event.target.disabled = true;
+
+                        const apiUrl = `${window.location.origin}/api/image/generate?prompt=${encodeURIComponent(prompt)}&aspect_ratio=${aspectRatio}`;
+
+                        try {
+                            const response = await fetch(apiUrl);
+                            const data = await response.json();
+
+                            if (data.status != "success") {
+                                alert("Something went wrong")
+                                // Hide spinner
+                                spinner.style.display = 'none';
+                                //enableing the generate btn
+                                event.target.disabled = false;
+                                return;
+                            }
+
+                            const imageUrl = data.image_link;
+
+                            // Hide spinner
+                            spinner.style.display = 'none';
+                            //enableing the generate btn
+                            event.target.disabled = false;
+
+                            const imgElement = document.createElement('img');
+                            imgElement.src = imageUrl;
+                            imgElement.alt = "Generated Image";
+                            imgElement.style.maxWidth = '100%';
+
+                            const downloadButton = document.createElement('button');
+                            downloadButton.id = 'downloadImage';
+                            downloadButton.textContent = 'Download Image';
+                            downloadButton.classList.add('uniqueCSS');
+
+                            downloadButton.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                downloadImage(imageUrl, prompt);
+                            });
+
+                            const imageContainer = document.createElement('div');
+                            imageContainer.appendChild(imgElement);
+                            imageContainer.appendChild(downloadButton);
+
+                            outputContainer.innerHTML = '';
+                            outputContainer.appendChild(imageContainer);
+
+                        } catch (error) {
+                            spinner.style.display = 'none';
+                            //enableing the generate btn
+                            event.target.disabled = false;
+                            alert('Error generating image: ' + error.message);
+                        }
+                    }
+
+
+                    function downloadImage(url, filename) {
+                        fetch(url)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.download = getFileNameFromPrompt(filename) + '.png';
+                                link.click();
+                            })
+                            .catch(error => console.error('Error downloading image:', error));
+                    }
+
+                    document.getElementById('generateOutput').addEventListener('click', generateImage);
+                </script>
+
+
+            <div class="row" style="margin-top: 100px;">
+                <div class="col-lg-12">
+                    <div class="title-conter-area">
+                        <h2 class="title">
+                            Generate AI-Powered Images from Text <br>Descriptions
+                        </h2>
+                        <p class="disc">
+                            Turn your text into visually stunning, AI-generated images with ease. Describe your vision,
+                            and our advanced AI model brings it to life. Explore endless possibilities by generating
+                            unique images directly from your words!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt--50">
+                <div class="col-lg-12">
+                        <!-- single openup feature area start -->
+                        <div class="single-feature-area-start index-feature">
+                            <div class="image-area">
+                                <img src="/images/feature/1.png" alt="feature_image" loading="lazy" style="border-radius: 2rem; min-width: 100%;">
+                            </div>
+                            <div class="featue-content-area">
+                                <span class="pre">01</span>
+                                <h2 class="title">Airbrush Text to Image Tool
+                                </h2>
+                                <p class="disc">
+                                    Login to Airbrush and transform your text descriptions into captivating AI-generated
+                                    images. Explore creativity with our advanced text-to-image tool today!
+                                </p>
+                                <a href="https://app.airbrush.ai/create-art" class="rts-btn btn-primary" ref="cover-art-maker-generator-Desktop">Get Started For
+                                    Free</a>
+                            </div>
+                        </div>
+                        <!-- single openup feature area end -->
+                        <!-- single openup feature area start -->
+                        <div class="single-feature-area-start index-feature bg-red-l">
+
+                            <div class="featue-content-area">
+                                <span class="pre">02</span>
+                                <h2 class="title">Open the Airbrush Text to Image Tool
+                                </h2>
+                                Enter the details of what you want to generate. Select your preferred model from a range of
+                                available options, and choose the desired resolution for your image. Create stunning
+                                AI-generated visuals with ease!
+                                <p></p>
+                                <a href="https://app.airbrush.ai/create-art" class="rts-btn btn-primary" ref="cover-art-maker-generator-Desktop">Get Started For
+                                    Free</a>
+                            </div>
+                            <div class="image-area">
+                                <img src="/images/feature/template-image-1.png" alt="feature_image" loading="lazy" style="border-radius: 2rem; min-width: 100%;">
+                            </div>
+                        </div>
+                        <!-- single openup feature area end -->
+                        <!-- single openup feature area start -->
+                        <div class="single-feature-area-start index-feature bg-blue-l">
+                            <div class="image-area">
+                                <img src="/images/feature/Template-image-2.png" alt="feature_image" loading="lazy" style="border-radius: 2rem; min-width: 100%;">
+                            </div>
+                            <div class="featue-content-area">
+                                <span class="pre">03</span>
+                                <h2 class="title">Download, Edit, or Regenerate Your Image
+                                </h2>
+                                <p class="disc">
+                                    Once your image is generated, download it or use the available editing tools to make
+                                    adjustments. If the image doesn’t meet your expectations, you can regenerate it for a
+                                    new version.
+                                </p>
+                                <a href="https://app.airbrush.ai/create-art" class="rts-btn btn-primary" ref="cover-art-maker-generator-Desktop">Get Started For
+                                    Free</a>
+                            </div>
+                        </div>
+                        <!-- single openup feature area end -->
+                        <!-- single openup feature area start -->
+                        <div class="single-feature-area-start index-feature bg-red-l">
+
+                            <div class="featue-content-area">
+                                <span class="pre">04</span>
+                                <h2 class="title">Manage Your Image History
+                                </h2>
+                                <p class="disc">
+                                    You can also manage your history of generated images and review the prompts used to
+                                    create them. Keep track of your creative process and revisit past designs with ease.
+                                </p>
+                                <a href="https://app.airbrush.ai/create-art" class="rts-btn btn-primary" ref="cover-art-maker-generator-Desktop">Get Started For
+                                    Free</a>
+                            </div>
+                            <div class="image-area">
+                                <img src="/images/feature/Template-image-3.png" alt="feature_image" loading="lazy" style="border-radius: 2rem; min-width: 100%;">
+                            </div>
+                        </div>
+                        <!-- single openup feature area end -->
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- rts feature area end -->
+        
+        <!-- rts case details bottom area start -->
+        <div class="rts-case-details-bottom-area rts-section-gap plr_sm--15">
+            <div class="container-use-case-d">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="case-details-title-area-d">			 
+                          <h2 class="title">&quot;Creating Stunning Cover Images: A Guide on Using Art Generators for Your Web Content&quot;</h2>
+
+                          <section class="disc">
+                          <p>Whether you&#x27;re an author, a musician, or a business owner, your work needs an amazing cover art that captures attention. Enter the Cover Image Art Generator - a remarkable tool that brings your vision to life. This user-friendly platform allows you to experiment with different designs, color schemes, and typography, culminating in a stunning cover image that perfectly represents your unique brand. With the Cover Image Art Generator, ensuring your work stands out has never been easier or more accessible. Create stunning visuals without the demand for professional design skills, and let your creativity shine.</p>
+                          </section>
+
+                          <h3 style="margin-top: 20px;">Features</h3>
+                          <section class="disc">
+                          <p>The Cover Image Art Generator is a highly advanced digital tool that simplifies artistic processes. This remarkable generator allows users to create stunning cover images for books, albums, magazines, and other forms of media. Featuring an easy-to-navigate interface, an extraordinary range of style options, and convenient customization settings, it caters to both expert designers and beginners. The generator also highlights a user-friendly operation, offering a high-resolution output and quick design times, making it an efficient tool for creating striking cover images.</p>
+                          </section>
+
+                          <h3 style="margin-top: 20px;">How to Use</h3>
+                          <section class="disc">
+                          <p>Using the Cover Image Art Generator is an easy and intuitive task. First, enter the desired topic, title, or keywords into the search bar. The AI-infused generator then uses these details to produce a set of cover image designs. With options to customize color schemes, fonts, and graphics, the tool allows you to adjust the results to your liking. Once satisfied with the design, simply click to download the cover image, which will be optimized for various platforms. It&#x27;s an excellent tool for creating distinctive and eye-catching art for ebooks, albums, podcasts, or social media posts.</p>
+                          </section>
+
+                          <h3 style="margin-top: 20px;">Best Practices</h3>
+                          <section class="disc">
+                          <p>Cover Image Art Generator is an ideal tool for individuals looking to produce engaging visuals for marketing or personal use. The key to getting the most from this tool is to first decide the purpose of the image and keep it clear and simple. Content should be easily read without too much clutter, using contrasting colors for maximum visibility. To avoid any copyright issues, ensure to use only royalty-free images or your own original ones. Also, consistency in style and theme for business or branding-related images helps build identity and recognition. Lastly, remember to keep experimenting with different styles and layouts to find the one that fits your specific needs best.</p>
+                          </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- rts faq area stat -->
+        <div class="rts-faq-area rts-section-gap bg_faq">
+        <div class="container">
+           <div class="row">
+              <div class="col-lg-12">
+                 <div class="title-conter-area">
+                    <h2 class="title">
+                       FAQS
+                    </h2>
+                    <p style="font-size: 2.5rem; font-weight: 600; text-align: center; margin-top: 2rem;">
+                       Frequently Asked Questions
+                    </p>
+                    <p class="disc">
+                       For any inquiries, drop us an email at <a href="mailto:support@ai4chat.co">support@ai4chat.co</a>. We’re always eager to assist and provide more information.
+                    </p>
+                 </div>
+              </div>
+           </div>
+           <div class="row mt--60">
+              <div class="col-lg-12">
+                 <div class="accordion-area-one">
+                    <div class="accordion" id="accordionExample">
+                       <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingOne">
+                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                             Can I use the generated images for commercial purposes?
+                             </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                             <div class="accordion-body">
+                                Yes, users get full usage rights to commercialize the images they create with Airbrush.ai, including the right to reprint, sell, and merchandise. Users can use the AI images for commercial projects, such as illustrations for children's books, art for newsletters, concept art and characters for games, mood boards for design consulting, graphics for websites, storyboards for movies, and much more.
+        					</div>
+                          </div>
+                       </div>
+                       <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingNine">
+                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                             What AI engines are supported by Airbrush for image generation?
+                             </button>
+                          </h2>
+                          <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                             <div class="accordion-body">
+                                Airbrush supports multiple AI engines for image generation, including Stable Diffusion, Stable Diffusion XL, DALLE-2, Anything, Wifu, Redshift, Analog, Protogen, Realistic Vision, Disney Pixar, Pixel Art, Anime Diffusion, T-shirt Diffusion, Inkpunk, Oscavatar, GraffityMidjourney, Edge of Realism, Double Exposure, Manga, Coloring Pages, All-In-One-Pixel-Model, and more. We are constantly adding new AI models!
+                             </div>
+                          </div>
+                       </div>
+                       <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingTwo">
+                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                             What image sizes are supported by Airbrush?
+                             </button>
+                          </h2>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                             <div class="accordion-body">
+                                You can generate images in the following resolutions: 256x256px, 512x512px and 1024x1024px. You can upscale any image up to 4x, which gives a maximum size of 4096x4096px.
+                             </div>
+                          </div>
+                       </div>
+                       <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingThree">
+                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                             Does Airbrush have a mobile app?
+                             </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                             <div class="accordion-body">
+                                Yes, we have an app for Android devices on the Google Play Store. We are currently working on an app for Apple iPhone and iPad devices.
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <!-- rts faq area end -->
+          <!-- cta area start -->
+          <div class="rts-cta-area rts-section-gapBottom">
+            <div class="container">
+              <div class="row">
+                <div class="">
+                  <div class="cta-main-wrapper bg_image col-lg-12">
+                    <div class="left col-lg-6 pr--20">
+                      <h3 class="title">
+                        Join AirBrush
+                      </h3>
+                      <p class="" style="font-size: 18px;">
+                        Embark on an inspiring journey into the artistic future with
+                        AirBrush! Discover how easy it is to bring your creative visions
+                        to life in just 4 simple steps—where innovation meets
+                        imagination.
+                      </p>
+                      <a
+                        target="_blank"
+                        href="https://app.airbrush.ai/signup"
+                        class="rts-btn btn-primary"
+                      >Get Started Now
+                      </a>
+                    </div>
+                    <div class="right row">
+                      <div class="col-lg-6">
+                        <div
+                          class="cta-box"
+                          style="margin-block: 10px; border: 1px solid #4526b1; border-radius: 10px; transition: 0.3s; text-align: center; background-color: #4526b1"
+                        >
+                          <div class="d-flex justify-content-start pl--20 pt--10">
+                            <p> Step 1</p>
+                          </div>
+                          <div class="icon">
+                            <img src="../images/use-case/wallet.png" />
+                          </div>
+                          <div style="padding: 20px;">
+                            <h6 class="title">Create your account</h6>
+                            <p class="disc">
+                              Register your account to get started
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="cta-box"
+                          style="margin-block: 10px; border: 1px solid #4526b1; border-radius: 10px; transition: 0.3s; text-align: center; background-color: #4526b1"
+                        >
+                          <div class="d-flex justify-content-start pl--20 pt--10">
+                            <p> Step 3</p>
+                          </div>
+                          <div class="icon">
+                            <img src="../images/use-case/folder.png" />
+                          </div>
+                          <div style="padding: 20px;">
+                            <h6 class="title">Provide short description</h6>
+                            <p class="disc">
+                              Provide description of the type of the image you want to
+                              generate
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div
+                          class="cta-box"
+                          style="margin-block: 10px; border: 1px solid #4526b1; border-radius: 10px; transition: 0.3s; text-align: center; background-color: #4526b1"
+                        >
+                          <div class="d-flex justify-content-start pl--20 pt--10">
+                            <p> Step 2</p>
+                          </div>
+                          <div class="icon">
+                            <img src="../images/use-case/shopping-cart.png" />
+                          </div>
+                          <div style="padding: 20px;">
+                            <h6 class="title">Choose your use-case</h6>
+                            <p class="disc">
+                              Choose one of the available use-cases to generate your
+                              image
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="cta-box"
+                          style="margin-block: 10px; border: 1px solid #4526b1; border-radius: 10px; transition: 0.3s; text-align: center; background-color: #4526b1 "
+                        >
+                          <div class="d-flex justify-content-start pl--20 pt--10">
+                            <p> Step 4</p>
+                          </div>
+                          <div class="icon">
+                            <img src="../images/use-case/money-bag.png" />
+                          </div>
+                          <div style="padding: 20px;">
+                            <h6 class="title">Download your image</h6>
+                            <p class="disc">
+                              Download the images to your device for further use
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- cta area start -->
+          <div class="rts-cta-area rts-section-gapBottom">
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div
+                      class="cta-main-wrapper bg_image"
+                      style="background-color: #4c22e1; padding-inline: 40px; border-radius: 40px;"
+                    >
+                      <div class="left">
+                        <h3 class="title">
+                          Generate AI-powered images - in 1 click
+                        </h3>
+                        <p style="font-size: 18px;">
+                          Create original stock photos, NFTs, art, and more - in just
+                          seconds
+                        </p>
+                        <a
+                          target="_blank"
+                          href="https://app.airbrush.ai/signup"
+                          class="rts-btn btn-primary"
+                        >Join Now</a>
+                      </div>
+                      <div class="cta-right" style="">
+                        <div class="d-flex">
+                          <div class="cta-card" id="c1">
+                            <img src="../images/cta/1.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c2">
+                            <img src="../images/cta/2.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c3">
+                            <img src="../images/cta/3.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c4">
+                            <img src="../images/cta/4.png" class="cta-img" />
+                          </div>
+                        </div>
+                        <div class="d-flex">
+                          <div class="cta-card" id="c5">
+                            <img src="../images/cta/5.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c6">
+                            <img src="../images/cta/6.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c7">
+                            <img src="../images/cta/7.png" class="cta-img" />
+                          </div>
+                          <div class="cta-card" id="c8">
+                            <img src="../images/cta/8.png" class="cta-img" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <script>
+            document.addEventListener("DOMContentLoaded", () => { const cards =
+            document.querySelectorAll(".cta-box"); const observer = new
+            IntersectionObserver( (entries) => { entries.forEach((entry) => { if
+            (entry.isIntersecting) { entry.target.classList.add("in-view"); } else {
+            entry.target.classList.remove("in-view"); } }); }, { threshold: 0.1 } );
+            cards.forEach((card) => observer.observe(card)); });
+          </script>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => { const cards =
+            document.querySelectorAll(".cta-card"); let currentIndex = 0; const
+            totalCards = cards.length; const shuffleInterval = 3000; const cardDelay =
+            1000; const resetCards = () => { cards.forEach(card => {
+            card.classList.remove("card-visible", "card-hidden", "card-up",
+            "card-down"); card.classList.add("card-hidden"); }); }; const showCard =
+            (index) => { const card = cards[index];
+            card.classList.remove("card-hidden"); card.classList.add("card-visible"); };
+            const animateCards = () => { resetCards(); showCard(currentIndex);
+            setTimeout(() => { cards[currentIndex].classList.add("card-hidden");
+            currentIndex = (currentIndex + 1) % totalCards; showCard(currentIndex); },
+            shuffleInterval); setInterval(() => {
+            cards[currentIndex].classList.add("card-hidden"); currentIndex =
+            (currentIndex + 1) % totalCards; showCard(currentIndex); }, shuffleInterval
+            + cardDelay); }; animateCards(); });
+        
+          </script>
+          <!-- cta area end -->
+
+        <!-- rts footer area start -->
+        <div class="rts-footer-area bg-footer footer-one">
+          <div class="container rts-section-gapTop pb--100 pb_sm--30">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- footer main wrapper -->
+                <div class="footer-one-main-wrapper">
+                  <!-- single sized  footer  -->
+                  <div class="footer-singl-wized left-logo">
+                    <div class="head">
+                      <a href="https://www.airbrush.ai/">
+                        <img
+                          src="/images/logo/airbrush-logo.png"
+                          alt="logo"
+                          style="max-width: 200px"
+                        />
+                      </a>
+                    </div>
+                    <div class="body">
+                      <p class="dsic">
+                        Airbrush, Your ultimate AI-powered image generation and editing
+                        platform. Transform and create stunning visuals effortlessly
+                        from any device, anywhere. Perfect your creativity with Airbrush
+                        today!
+                      </p>
+                        <div
+                          class="button-area"
+                          style="margin: 25px auto 30px auto; font-size: 20px;"
+                        >
+                          <a
+                            target="_blank"
+                            href="https://www.producthunt.com/products/e-g-snapchat?utm_source=badge-top-post-badge&utm_medium=badge#airbrush-ai"
+                          >
+                            <img src="../images/svg/product-hunt.svg" />
+                          </a>
+        
+                          <a class="app-btn-1 blu-1 flex-app-1 vert-1" href="#">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                              Get it on
+                              <br />
+                              <span class="big-txt">Google Play</span>
+                            </div>
+                          </a>
+                        </div>
+                    </div>
+                  </div>
+                  <!-- single sized  footer end -->
+                  <!-- single sized  footer  -->
+                  <div class="d-flex footer-content">
+                    <div class="footer-singl-wized">
+                      <div class="head">
+                        <h6 class="title">Info</h6>
+                      </div>
+                      <div class="body">
+                        <ul class="menu">
+                          <li><a href="/free-tool">Free-Tools</a></li>
+                          <li><a href="/use-cases">Use-Cases</a></li>
+                          <li><a href="/pricing">Pricing</a></li>
+                          <li><a href="/blog">Blogs</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- single sized  footer end -->
+                    <!-- single sized  footer  -->
+                    <div class="footer-singl-wized">
+                      <div class="head">
+                        <h6 class="title">Account</h6>
+                      </div>
+                      <div class="body">
+                        <ul class="menu">
+                          <li><a href="https://app.airbrush.ai/login">Login</a></li>
+                          <li><a href="https://app.airbrush.ai/">Register</a></li>
+                          <li><a href="mailto:support@ai4chat.co">Support</a></li>
+                          <li><a href="faq">FAQ</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- single sized  footer end -->
+                    <!-- single sized  footer  -->
+                    <div class="footer-singl-wized input-area">
+                      <div class="head">
+                        <h6 class="title">Apps</h6>
+                      </div>
+                      <div class="body">
+                        <ul class="menu">
+                          <li><a href="#">Android</a></li>
+                          <li><a href="#">iPhone</a></li>
+                          <li><a href="#">iPad</a></li>
+                          <li><a href="/blog">Blog</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- single sized  footer end -->
+                </div>
+                <!-- footer main wrapper end -->
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- footer-copyright-area start -->
+                <div class="copy-right-start-two">
+                  <p><a href="https://www.Airbrush.co" target="_blank">Airbrush ©</a>
+                    2024. All Rights Reserved.</p>
+                  <ul>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+                <!-- footer-copyright-area end -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- rts footer area end -->
+        
+        <!-- sticky bottom bar start -->
+        <style>
+          #stickyBottomBar { position: fixed; left: 0; right: 0; bottom: 0; text-align:
+          center; padding: 15px 0; z-index: 1000; font-size: 16px; font-family: Arial,
+          sans-serif; color: white; background: linear-gradient(-45deg,
+          #f86635,#548bd6,#391d70, #482162 ); background-size: 400% 400%; animation:
+          gradientShift 15s ease infinite; font-weight: bold; } #stickyBottomBar a,
+          #GetStartedMobileTop, #header-button-1, #footer-button-2 { color: white;
+          text-decoration: none; display: block; width: 100%; height: 100%; } .arrow {
+          padding-left: 10px; transition: transform 0.3s ease-in-out; } #stickyBottomBar
+          a:hover .arrow { transform: translateX(5px); } @keyframes gradientShift { 0% {
+          background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% {
+          background-position: 0% 50%; } }
+        </style>
+        
+        <div id="stickyBottomBar">
+          <a href="#" id="bottomBarLink">Get Started For Free
+            <span class="arrow">&#x2192;</span></a>
+        </div>
+        
+        <script>
+          document.addEventListener('DOMContentLoaded', function () { var baseUrl =
+          'https://app.ai4chat.co/register?ref='; var path =
+          window.location.pathname.split('/').filter(part => part).pop() || 'homepage';
+          var deviceType = window.innerWidth > 768 ? 'Desktop' : 'Mobile'; function
+          updateLink(id, refSuffix) { var element = document.getElementById(id); if
+          (element) { element.href = baseUrl + path + '-GetStarted-' + deviceType +
+          refSuffix; } } updateLink('bottomBarLink', '-BottomBar');
+          updateLink('GetStartedTop', '-Top'); updateLink('GetStartedBottom',
+          '-Bottom'); updateLink('GetStartedMobileMenu', '-MobileMenu');
+          //updateLink('footer-button-2', '-Bottom2'); // Update all <a> tags linking to
+          app.ai4chat.co without a ref attribute var ai4chatLinks =
+          document.querySelectorAll('a[href*="app.ai4chat.co"]:not([ref])');
+          ai4chatLinks.forEach(function (link) { link.setAttribute('ref', path + '-' +
+          deviceType); }); });
+        </script>
+        <!-- sticky bottom bar end -->
+        <!-- rts case details bottom area end -->
+
+         <script src="/js/vendor/jquery.min.js" defer></script>
+        <script src="/js/vendor/metismenu.js" defer></script>
+        <script src="/js/plugins/bootstrap.min.js" defer></script>
+        <script src="/js/plugins/swiper.js" defer></script>
+        <script src="/js/plugins/contact.form.js" defer></script>
+        <script src="/js/main.js" defer></script>
+        </body>
+    </html>

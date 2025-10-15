@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Disallow access to admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /backend/
+
+# Allow access to public content
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /fonts/
+Allow: /videos/
+
+# Sitemap location
+Sitemap: https://airbrush.ai/sitemap.xml

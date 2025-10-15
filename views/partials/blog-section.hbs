@@ -1,0 +1,489 @@
+{{!-- Blog Section Styles --}}
+<style>
+    .blog-section {
+        position: relative;
+        width: 100%;
+        background: #130930;
+        padding: 5rem 2rem;
+        color: white;
+        overflow: hidden;
+        display: none; /* Hide by default, will show when content is loaded */
+    }
+
+    .blog-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .blog-title {
+        text-align: center;
+        font-size: 4rem;
+        font-weight: bold;
+        margin-bottom: 3rem;
+    }
+
+    .blog-text {
+        background: linear-gradient(to bottom, #4526B1, #FF6154);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .featured-blog {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .featured-blog:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .featured-blog img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .featured-blog-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 2rem;
+        width: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+        border-radius: 0 0 20px 20px;
+    }
+
+    .blog-date {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.4);
+        padding: 0.5rem 2rem;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .lead-blog-overlay{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        opacity: 0.2;
+        filter: blur(20px);
+        background: linear-gradient(to top, #4526B1 0%, #000000 100%);
+        z-index: 1;
+    }
+
+    .blog-post-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .featured-blog .blog-post-title {
+        font-size: 4rem;
+    }
+
+    .read-more {
+        width: fit-content;
+        background: white;
+        white-space: nowrap;
+        color: #4526B1;
+        padding: 0.75rem 2.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .read-more.lead{
+        margin-left: 88%;
+         font-size: 1.5rem;
+    }
+
+    .read-more:after {
+        content: '';
+        display: none;
+    }
+
+    .read-more:hover {
+        background: #f2f2f2;
+    }
+
+    .blog-posts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .blog-post {
+        position: relative;
+        height: 330px;
+        border-radius: 12px;
+        padding: 1rem;
+        background-color: white;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .blog-post:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-post img {
+        width: 100%;
+        height: 65%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .blog-post-content {
+        position: absolute;
+        left: 0;
+        padding: 1.5rem;
+        width: 100%;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .blog-post .blog-post-title {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        color: black;
+        line-height: 1.4;
+    }
+
+    .blog-post .read-more {
+        padding: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .blog-posts-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .featured-blog {
+            height: 300px;
+        }
+
+        .blog-post .blog-post-title{
+            font-size: 1.4rem;
+        }
+
+        .featured-blog .blog-post-title {
+            font-size: 1.4rem;
+        }
+
+        .blog-post {
+            height: 300px;
+        }
+
+        .read-more.lead{
+            margin-left: 60%;
+        }
+    }
+</style>
+
+{{!-- Blog Section Content --}}
+<section class="blog-section">
+    <div class="blog-container">
+        <h2 class="blog-title">Our <span class="blog-text">Blog</span></h2>
+
+        <!-- Featured Blog Post -->
+        <div class="featured-blog" onclick="navigateToBlog(this.dataset.blogId, this.dataset.contentId)" style="cursor: pointer;">
+            <div class="lead-blog-overlay"></div>
+            <img src="/images/flower.png" alt="Featured Blog Post">
+            <div class="featured-blog-content">
+                <span class="blog-date">10 Feb 2023</span>
+                <h3 class="blog-post-title">Loading...</h3>
+                <button class="read-more lead">Read more &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Blog Posts Grid -->
+        <div class="blog-posts-grid">
+            <!-- Blog posts will be dynamically populated -->
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to wait for categories to be initialized if needed
+    function ensureCategoriesInitialized() {
+        // If categories are already initialized, return resolved promise
+        if (window.categoriesInitialized) {
+            return Promise.resolve();
+        }
+        
+        // Otherwise, return a promise that resolves when the categories are ready
+        return new Promise(resolve => {
+            window.addEventListener('categoriesReady', () => {
+                console.log('Categories ready event received in blog-section component');
+                resolve();
+            });
+        });
+    }
+    
+    // Function to fetch blog content using category ID and slug
+    async function fetchBlogContent() {
+        console.log('Blog-section component initializing');
+        
+        // Wait for categories to be initialized
+        await ensureCategoriesInitialized();
+        console.log('Categories are ready, proceeding with blog-section fetch');
+        
+        try {
+            // Extract the slug from the URL path
+            const urlPath = window.location.pathname;
+            const pathSlug = urlPath.substring(1); // Remove the leading slash
+            
+            // Convert slug to camelCase for window key lookup
+            const camelCaseKey = pathSlug.replace(/-./g, (match) => {
+                return match[1].toUpperCase();
+            });
+            
+            // Try to get the category ID from the window object
+            const categoryId = window[`airbrush${camelCaseKey}`];
+            
+            // Use the specific slug for this section
+            let slug = 'blogs'
+            
+            const response = await fetch(`/api/content/category/${categoryId}/slug/${slug}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch blog content: ${response.status} ${response.statusText}`);
+            }
+            
+            const content = await response.json();
+            
+            // Only show and update the section if valid content is received
+            if (content && content.fields && content.fields.length > 0) {
+                // Show the section since we have content
+                const section = document.querySelector('.blog-section');
+                if (section) {
+                    section.style.display = 'block';
+                }
+            
+            // Update blog section with the content
+            updateBlogContent(content);
+            } else {
+                console.log('No valid content received for blog section, keeping it hidden');
+            }
+        } catch (error) {
+            console.error('Error fetching blog content:', error);
+            // Keep the section hidden when there's an error
+        }
+    }
+    
+    // Function to update the blog section with the fetched content
+    function updateBlogContent(content) {
+        
+        // Update section title if available
+        if (content.title) {
+            const titleElement = document.querySelector('.blog-title');
+            if (titleElement) {
+                // Process title to highlight words in square brackets
+                let processedTitle = content.title;
+                
+                // Replace words in square brackets with highlighted spans
+                processedTitle = processedTitle.replace(/\[([^\]]+)\]/g, '<span class="blog-text">$1</span>');
+                
+                // If no square brackets were found, default to highlighting "Blog"
+                if (!processedTitle.includes('<span class="blog-text">')) {
+                    processedTitle = processedTitle.replace(/Blogs/i, '<span class="blog-text">Blogs</span>');
+                }
+                
+                titleElement.innerHTML = `Our ${processedTitle}`;
+            }
+        }
+        
+        // Process the fields array for blog posts
+        if (content.fields && Array.isArray(content.fields)) {            
+            // Organize blog posts from the new structure
+            const blogPosts = [];
+            
+            // Process each blog post from the new fields structure
+            content.fields.forEach(field => {
+                if (field.value && typeof field.value === 'object') {
+                    blogPosts.push({
+                        id: field._id,
+                        title: field.value.title,
+                        url: field.value.url,
+                        date: field.value.date || '', // Use date if available
+                        lead: field.value.lead === true,
+                        content: field.value.content
+                    });
+                }
+            });            
+            // Find the featured blog (marked as lead)
+            const featuredBlog = blogPosts.find(post => post.lead === true);
+            if (featuredBlog) {
+                updateFeaturedBlog(featuredBlog, content);
+            } else if (blogPosts.length > 0) {
+                // If no lead blog is specified, use the first one
+                updateFeaturedBlog(blogPosts[0], content);
+                // Remove the first blog from regular blogs if it's now the featured one
+                blogPosts.shift();
+            }
+            
+            // Update regular blog posts (non-featured blogs)
+            const regularBlogs = featuredBlog 
+                ? blogPosts.filter(post => post.lead !== true) 
+                : blogPosts;
+                
+            updateBlogGrid(regularBlogs, content);
+        }
+        
+        // Force a repaint to ensure everything is updated
+        setTimeout(() => {
+            const container = document.querySelector('.blog-container');
+            if (container) {
+                container.style.opacity = '0.99';
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                }, 50);
+            }
+        }, 100);
+    }
+    
+    function slugify(text) {
+        return text
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')        // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')    // Remove all non-word chars
+            .replace(/\-\-+/g, '-')      // Replace multiple - with single -
+            .replace(/^-+/, '')          // Trim - from start of text
+            .replace(/-+$/, '');         // Trim - from end of text
+    }
+
+    function navigateToBlog(blogId, contentId, title) {
+        if (contentId && blogId) {
+            // Store IDs in localStorage before navigation
+            localStorage.setItem('blogId', blogId);
+            localStorage.setItem('contentId', contentId);
+            // Remove special characters, replace spaces with hyphens and make URL friendly
+            const urlFriendlyTitle = title.toLowerCase()
+                .replace(/[#%&*+=\[\]\\/]/g, '') // Remove special characters
+                .replace(/\s+/g, '-') // Replace spaces with hyphens
+                .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+                .replace(/^-+|-+$/g, ''); // Remove hyphens from start and end
+            window.location.href = `/blogs/${urlFriendlyTitle}`;
+        }
+    }
+
+    // Function to update the featured blog
+    function updateFeaturedBlog(featuredBlog, content) {
+        const featuredElement = document.querySelector('.featured-blog');
+        if (!featuredElement) {
+            console.warn('Featured blog element not found');
+            return;
+        }
+        
+        // Set content ID and title for navigation
+        featuredElement.dataset.blogId = featuredBlog._id || featuredBlog.id;
+        featuredElement.dataset.contentId = content._id;
+        
+        // Add click handler for navigation
+        featuredElement.onclick = () => navigateToBlog(featuredBlog._id || featuredBlog.id, content._id, featuredBlog.title);
+        
+        // Update featured blog image
+        const featuredImage = featuredElement.querySelector('img');
+        if (featuredImage && featuredBlog.url) {
+            featuredImage.src = featuredBlog.url;
+            featuredImage.alt = featuredBlog.title || 'Featured Blog';
+        }
+        
+        // Update featured blog title
+        const featuredTitle = featuredElement.querySelector('.blog-post-title');
+        if (featuredTitle && featuredBlog.title) {
+            let displayTitle = featuredBlog.title;
+            if (displayTitle.length > 40) {
+                displayTitle = displayTitle.substring(0, 40) + '...';
+            }
+            featuredTitle.textContent = displayTitle.replace(/[\*\#]/g, '');
+        }
+        
+        // Update featured blog date
+        const featuredDate = featuredElement.querySelector('.blog-date');
+        if (featuredDate) {
+            let dateToShow = featuredBlog.date || new Date().toISOString().split('T')[0];
+            let formattedDate = formatDate(dateToShow);
+            featuredDate.textContent = formattedDate;
+        }
+    }
+    
+    // Function to update the blog grid
+    function updateBlogGrid(blogs, content) {
+        const blogGrid = document.querySelector('.blog-posts-grid');
+        if (!blogGrid) {
+            console.warn('Blog grid not found');
+            return;
+        }
+
+        // Clear existing blog posts
+        blogGrid.innerHTML = '';
+        
+        // Create new blog posts
+        blogs.forEach((blog, index) => {
+            let displayTitle = blog.title.replace(/[\*\#\:\-]/g, ' ').replace(/\s+/g, ' ').trim();
+            if (displayTitle.length > 30) {
+                displayTitle = displayTitle.substring(0, 30) + '...';
+            }
+
+            const blogPost = document.createElement('div');
+            blogPost.className = 'blog-post';
+            blogPost.dataset.blogId = blog._id || blog.id;
+            blogPost.dataset.contentId = content._id;
+            blogPost.onclick = () => navigateToBlog(blog._id || blog.id, content._id, blog.title);
+            
+
+            blogPost.innerHTML = `
+                <img src="${blog.url || '/images/placeholder.png'}" alt="${blog.title}">
+                <div class="blog-post-content">
+                    <h3 class="blog-post-title">${displayTitle}</h3>
+                    <a class="read-more">Read more &rarr;</a>
+                </div>
+            `;
+            
+            blogGrid.appendChild(blogPost);
+        });
+    }
+
+    // Helper function to format dates
+    function formatDate(dateString) {
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        } catch (e) {
+            console.warn('Error formatting date:', e);
+            return new Date().toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+    }
+
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchBlogContent);
+</script>

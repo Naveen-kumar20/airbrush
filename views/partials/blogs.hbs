@@ -1,0 +1,1130 @@
+<div class="section-content">
+  <h2 class="h4 mb-3">Blog Management</h2>
+
+  <div class="card border-0 shadow-sm overflow-hidden">
+    <div class="card-body p-3">
+      <!-- Header with subtle accent -->
+      <div class="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="fw-semibold mb-0 text-primary">Blog Posts</h5>
+          <p class="small text-muted mb-0">Manage your blog content</p>
+        </div>
+      </div>
+
+      <form class="blog-needs-validation" novalidate id="blogForm">
+        <div class="row g-3" id="blog-cards-container">
+          <!-- Blog Card 1 -->
+          <div class="col-md-6 blog-card" data-index="0">
+            <div class="card h-100 border-0 shadow-sm hover-shadow-sm transition-all">
+              <div class="position-relative">
+                <div class="ratio ratio-4x3 bg-light rounded-top overflow-hidden">
+                  <img src="https://res.cloudinary.com/dlzk6nqyg/image/upload/v1745907984/airbrush-media/njmpgswg4pdlaso3sgca.png" class="card-img-top object-fit-cover blog-image" alt="Blog image">
+                  <div class="position-absolute top-0 end-0 m-2">
+                    <button type="button" class="btn btn-sm btn-primary ai-generate-btn" data-bs-toggle="modal" data-bs-target="#aiPromptModal" data-card-index="0">
+                      <i class="fas fa-magic"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success gemini-btn" data-bs-toggle="modal" data-bs-target="#geminiPromptModal" data-card-index="0">
+                      <i class="fas fa-robot"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="replace-image-btn btn btn-sm btn-primary position-absolute bottom-0 start-0 m-2 rounded-pill px-2 py-1" style="font-size: 0.75rem;">
+                  <i class="bi bi-image me-1"></i> Replace
+                </button>
+                <input type="file" class="d-none image-upload" accept="image/*">
+              </div>
+              <div class="card-body p-2">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Title</label>
+                  <input type="text" class="form-control form-control-sm blog-title" placeholder="Enter title" required>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Content</label>
+                  <div class="blog-editor-container">
+                    <div class="document-editor__toolbar-container"></div>
+                    <div class="blog-content-editor"></div>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input blog-is-lead" type="checkbox" value="" id="isLead0">
+                  <label class="form-check-label small text-muted" for="isLead0">
+                    Lead Blog
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 2 -->
+          <div class="col-md-6 blog-card" data-index="1">
+            <div class="card h-100 border-0 shadow-sm hover-shadow-sm transition-all">
+              <div class="position-relative">
+                <div class="ratio ratio-4x3 bg-light rounded-top overflow-hidden">
+                  <img src="https://res.cloudinary.com/dlzk6nqyg/image/upload/v1745907984/airbrush-media/njmpgswg4pdlaso3sgca.png" class="card-img-top object-fit-cover blog-image" alt="Blog image">
+                  <div class="position-absolute top-0 end-0 m-2">
+                    <button type="button" class="btn btn-sm btn-primary ai-generate-btn" data-bs-toggle="modal" data-bs-target="#aiPromptModal" data-card-index="1">
+                      <i class="fas fa-magic"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success gemini-btn" data-bs-toggle="modal" data-bs-target="#geminiPromptModal" data-card-index="1">
+                      <i class="fas fa-robot"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="replace-image-btn btn btn-sm btn-primary position-absolute bottom-0 start-0 m-2 rounded-pill px-2 py-1" style="font-size: 0.75rem;">
+                  <i class="bi bi-image me-1"></i> Replace
+                </button>
+                <input type="file" class="d-none image-upload" accept="image/*">
+              </div>
+              <div class="card-body p-2">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Title</label>
+                  <input type="text" class="form-control form-control-sm blog-title" placeholder="Enter title" required>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Content</label>
+                  <div class="blog-editor-container">
+                    <div class="document-editor__toolbar-container"></div>
+                    <div class="blog-content-editor"></div>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input blog-is-lead" type="checkbox" value="" id="isLead1">
+                  <label class="form-check-label small text-muted" for="isLead1">
+                    Lead Blog
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 3 -->
+          <div class="col-md-6 blog-card" data-index="2">
+            <div class="card h-100 border-0 shadow-sm hover-shadow-sm transition-all">
+              <div class="position-relative">
+                <div class="ratio ratio-4x3 bg-light rounded-top overflow-hidden">
+                  <img src="https://res.cloudinary.com/dlzk6nqyg/image/upload/v1745907984/airbrush-media/njmpgswg4pdlaso3sgca.png" class="card-img-top object-fit-cover blog-image" alt="Blog image">
+                  <div class="position-absolute top-0 end-0 m-2">
+                    <button type="button" class="btn btn-sm btn-primary ai-generate-btn" data-bs-toggle="modal" data-bs-target="#aiPromptModal" data-card-index="2">
+                      <i class="fas fa-magic"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success gemini-btn" data-bs-toggle="modal" data-bs-target="#geminiPromptModal" data-card-index="2">
+                      <i class="fas fa-robot"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="replace-image-btn btn btn-sm btn-primary position-absolute bottom-0 start-0 m-2 rounded-pill px-2 py-1" style="font-size: 0.75rem;">
+                  <i class="bi bi-image me-1"></i> Replace
+                </button>
+                <input type="file" class="d-none image-upload" accept="image/*">
+              </div>
+              <div class="card-body p-2">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Title</label>
+                  <input type="text" class="form-control form-control-sm blog-title" placeholder="Enter title" required>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Content</label>
+                  <div class="blog-editor-container">
+                    <div class="document-editor__toolbar-container"></div>
+                    <div class="blog-content-editor"></div>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input blog-is-lead" type="checkbox" value="" id="isLead2">
+                  <label class="form-check-label small text-muted" for="isLead2">
+                    Lead Blog
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 4 -->
+          <div class="col-md-6 blog-card" data-index="3">
+            <div class="card h-100 border-0 shadow-sm hover-shadow-sm transition-all">
+              <div class="position-relative">
+                <div class="ratio ratio-4x3 bg-light rounded-top overflow-hidden">
+                  <img src="https://res.cloudinary.com/dlzk6nqyg/image/upload/v1745907984/airbrush-media/njmpgswg4pdlaso3sgca.png" class="card-img-top object-fit-cover blog-image" alt="Blog image">
+                  <div class="position-absolute top-0 end-0 m-2">
+                    <button type="button" class="btn btn-sm btn-primary ai-generate-btn" data-bs-toggle="modal" data-bs-target="#aiPromptModal" data-card-index="3">
+                      <i class="fas fa-magic"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success gemini-btn" data-bs-toggle="modal" data-bs-target="#geminiPromptModal" data-card-index="3">
+                      <i class="fas fa-robot"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="replace-image-btn btn btn-sm btn-primary position-absolute bottom-0 start-0 m-2 rounded-pill px-2 py-1" style="font-size: 0.75rem;">
+                  <i class="bi bi-image me-1"></i> Replace
+                </button>
+                <input type="file" class="d-none image-upload" accept="image/*">
+              </div>
+              <div class="card-body p-2">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Title</label>
+                  <input type="text" class="form-control form-control-sm blog-title" placeholder="Enter title" required>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Content</label>
+                  <div class="blog-editor-container">
+                    <div class="document-editor__toolbar-container"></div>
+                    <div class="blog-content-editor"></div>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input blog-is-lead" type="checkbox" value="" id="isLead3">
+                  <label class="form-check-label small text-muted" for="isLead3">
+                    Lead Blog
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-3 mt-3 border-top">
+          <div class="d-flex justify-content-end">
+            <button type="submit" id="save-btn" class="btn btn-primary px-3 py-1 rounded-pill shadow-sm" style="font-size: 0.875rem;">
+              <i class="bi bi-check-lg me-1"></i>Save Changes
+            </button>
+            <button type="button" id="saveChangesBtn" class="d-none">Hidden Backward Compatibility Button</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- AI Prompt Modal -->
+<div class="modal fade" id="aiPromptModal" tabindex="-1" aria-labelledby="aiPromptModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aiPromptModalLabel">Generate AI Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="aiPromptInput" class="form-label">Enter your prompt</label>
+          <textarea class="form-control" id="aiPromptInput" rows="3" placeholder="Describe the image you want to generate..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="generateImageBtn">
+          <i class="fas fa-magic me-2"></i>Generate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Gemini Prompt Modal -->
+<div class="modal fade" id="geminiPromptModal" tabindex="-1" aria-labelledby="geminiPromptModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="geminiPromptModalLabel">Generate Content with Gemini AI</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <div class="mb-3">
+          <label for="geminiPromptInput" class="form-label">Enter your prompt</label>
+          <textarea class="form-control" id="geminiPromptInput" rows="3" placeholder="Describe the content you want to generate..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" id="generateContentBtn">
+          <i class="fas fa-robot me-2"></i>Generate Content
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hover-shadow-sm:hover {
+    box-shadow: 0 .25rem .5rem rgba(0,0,0,.09) !important;
+    transform: translateY(-2px);
+  }
+  .transition-all {
+    transition: all 0.2s ease-in-out;
+  }
+  .object-fit-cover {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .btn-delete-image {
+    opacity: 0.85;
+    transition: all 0.15s ease;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  .btn-delete-image img {
+    display: block;
+    margin: auto;
+    transition: all 0.15s ease;
+  }
+  .btn-delete-image:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  .btn-delete-image:hover img {
+    transform: rotate(5deg);
+  }
+  .loading-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    border-radius: 0.25rem;
+  }
+  .blog-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* CKEditor Styles */
+  .blog-editor-container {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  .document-editor__toolbar-container {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    border-bottom: 1px solid #ced4da;
+    padding: 0.25rem;
+  }
+  
+  .blog-content-editor {
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  
+  .ck-toolbar {
+    border: none !important;
+  }
+  
+  .ck-editor__editable {
+    border: none !important;
+  }
+
+  /* Alert Styles */
+  .alert-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 350px;
+  }
+
+  .alert {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .alert.fade {
+    animation: slideOut 0.3s ease-in;
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  /* AI Generation Button Styles */
+  .ai-generate-btn {
+    background-color: rgba(13, 110, 253, 0.8);
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+  }
+
+  .ai-generate-btn:hover {
+    background-color: rgba(13, 110, 253, 1);
+    transform: scale(1.1);
+  }
+
+  .ai-generate-btn i {
+    font-size: 0.875rem;
+  }
+
+  /* Modal Styles */
+  .modal-content {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+
+  /* Gemini Button Styles */
+  .gemini-btn {
+    background-color: rgba(25, 135, 84, 0.8);
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+    margin-left: 0.25rem;
+  }
+
+  .gemini-btn:hover {
+    background-color: rgba(25, 135, 84, 1);
+    transform: scale(1.1);
+  }
+
+  .gemini-btn i {
+    font-size: 0.875rem;
+  }
+</style>
+
+<!-- Blog Section Script -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/decoupled-document/ckeditor.js"></script>
+<!-- Add marked library for markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  // Helper function to show alerts
+      const showAlert = (message, type = 'success') => {
+        // Create alert container if it doesn't exist
+        let alertContainer = document.querySelector('.alert-container');
+        if (!alertContainer) {
+          alertContainer = document.createElement('div');
+          alertContainer.className = 'alert-container';
+          document.body.appendChild(alertContainer);
+        }
+
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show py-2 px-3 mb-2`;
+        alertDiv.style.fontSize = '0.875rem';
+        alertDiv.innerHTML = `
+          <strong>${type === 'success' ? 'Success!' : type === 'danger' ? 'Error!' : 'Note:'}</strong> ${message}
+          <button type="button" class="btn-close btn-close-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        // Add alert to the container
+        alertContainer.appendChild(alertDiv);
+        
+        // Remove alert after 4 seconds
+        setTimeout(() => {
+          alertDiv.classList.add('fade');
+          setTimeout(() => {
+            alertDiv.remove();
+            // Remove container if it's empty
+            if (alertContainer.children.length === 0) {
+              alertContainer.remove();
+            }
+          }, 300);
+        }, 4000);
+      };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize blog data array with default values
+    let blogData = [
+      { title: '', content: '', image: { url: '' }, isLead: false },
+      { title: '', content: '', image: { url: '' }, isLead: false },
+      { title: '', content: '', image: { url: '' }, isLead: false },
+      { title: '', content: '', image: { url: '' }, isLead: false }
+    ];
+
+    // Initialize CKEditor for each blog card
+    document.querySelectorAll('.blog-card').forEach(card => {
+      const editorContainer = card.querySelector('.blog-content-editor');
+      const toolbarContainer = card.querySelector('.document-editor__toolbar-container');
+      
+      DecoupledEditor
+        .create(editorContainer, {
+          toolbar: {
+            items: [
+              'undo', 'redo',
+              '|',
+              'heading',
+              '|',
+              'bold', 'italic', 'underline', 'strikethrough',
+              '|',
+              'link',
+              '|',
+              'bulletedList', 'numberedList',
+              '|',
+              'alignment',
+              '|',
+              'blockQuote',
+              '|',
+              'removeFormat'
+            ],
+            shouldNotGroupWhenFull: true
+          },
+          placeholder: 'Write your blog content here...'
+        })
+        .then(editor => {
+          // Store editor instance in the card's dataset
+          card.editor = editor;
+          
+          // Add the toolbar to the container
+          toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          
+          // Add event listener for content changes
+          editor.model.document.on('change:data', () => {
+            // Update the blog data when content changes
+            const cardIndex = parseInt(card.dataset.index);
+            blogData[cardIndex].content = editor.getData();
+          });
+        })
+        .catch(error => {
+          console.error('CKEditor initialization failed:', error);
+        });
+    });
+
+    // Check if we're on the blogs page
+    if (window.location.pathname.includes('blogs')) {
+      const blogForm = document.getElementById('blogForm');
+      const saveBtn = document.getElementById('save-btn');
+      const cardsContainer = document.getElementById('blog-cards-container');
+      const blogCards = document.querySelectorAll('.blog-card');
+      
+      // Data storage
+      let contentId = new URLSearchParams(window.location.search).get('id');
+      let categoryId = new URLSearchParams(window.location.search).get('categoryId');
+      
+      // JWT Token for authorization
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTIyNTEyMSwiZXhwIjoxNzQ1MzExNTIxfQ.O1xfunWURBxt7tqcgXH_yWEyq-7VOA61LX6qrmEHXoA';
+      
+      // Helper function to save changes to database
+      const saveChangesToDatabase = async () => {
+        if (!contentId) {
+          console.error('No content ID available for update');
+          return false;
+        }
+        
+        // Update blog data from form inputs
+        blogCards.forEach((card, index) => {
+          const titleInput = card.querySelector('.blog-title');
+          const isLeadCheckbox = card.querySelector('.blog-is-lead');
+          
+          blogData[index].title = titleInput.value.trim();
+          blogData[index].content = card.editor ? card.editor.getData() : '';
+          blogData[index].isLead = isLeadCheckbox ? isLeadCheckbox.checked : false;
+        });
+        
+        // Prepare fields array according to the expected format with nested value objects
+        const fields = [];
+        
+        for (let i = 0; i < 4; i++) {
+          fields.push({
+            value: {
+              title: blogData[i].title,
+              content: blogData[i].content,
+              url: blogData[i].image.url,
+              lead: blogData[i].isLead
+            },
+            order: 0
+          });
+        }
+        
+        // Prepare data for API
+        const updateData = {
+          fields: fields,
+          isActive: true
+        };
+                
+        try {
+          // Send update request
+          const response = await fetch(`/api/content/${contentId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updateData)
+          });
+          
+          if (!response.ok) {
+            // Try to get the error details
+            const errorText = await response.text();
+            console.error('Server response:', errorText);
+            throw new Error('Failed to save changes: ' + response.statusText);
+          }
+          
+          const result = await response.json();
+          return true;
+        } catch (error) {
+          console.error('Error saving blog data to database:', error);
+          return false;
+        }
+      };
+      
+      // Upload image function
+      const uploadImage = async (file, cardIndex) => {
+        const card = document.querySelector(`.blog-card[data-index="${cardIndex}"]`);
+        const imageElement = card.querySelector('.blog-image');
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'loading-indicator';
+        loadingIndicator.innerHTML = '<div class="spinner-border text-light" role="status"></div>';
+        
+        try {
+          // Show loading indicator
+          card.querySelector('.position-relative').appendChild(loadingIndicator);
+          
+          // Create form data
+          const formData = new FormData();
+          formData.append('images', file);
+          
+          // Upload to backend API
+          const response = await fetch(`/api/images`, {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (!response.ok) {
+            throw new Error('Upload failed');
+          }
+          
+          const data = await response.json();
+          
+          if (data.files && data.files.length > 0) {
+            // Update the image source with the first uploaded file's URL
+            imageElement.src = data.files[0].url;
+            
+            // Update the blog data
+            blogData[cardIndex].image.url = data.files[0].url;
+            
+            // Save changes to database immediately
+            await saveChangesToDatabase();
+            
+            // Show success message
+            showAlert('Image uploaded successfully', 'success');
+          } else {
+            throw new Error('No files were uploaded');
+          }
+        } catch (error) {
+          console.error('Error uploading image:', error);
+          showAlert('Failed to upload image. Please try again.', 'danger');
+        } finally {
+          // Remove loading indicator
+          loadingIndicator.remove();
+        }
+      };
+      
+      // AI image generation function
+      const generateAIImage = async (prompt, cardIndex) => {
+        if (!prompt) {
+          showAlert('Please enter a prompt for image generation', 'warning');
+          return;
+        }
+
+        const generateButton = document.getElementById('generateImageBtn');
+        const originalButtonText = generateButton.innerHTML;
+        generateButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+        generateButton.disabled = true;
+
+        try {
+          const response = await fetch('/api/images/generate-image', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              prompt: prompt
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('AI image generation failed');
+          }
+
+          const data = await response.json();
+          
+          if (data.imageData) {
+            // Extract the base64 data - remove the prefix if it exists
+            const base64Data = data.imageData.replace(/^data:image\/\w+;base64,/, '');
+            
+            // Convert base64 to blob
+            const byteCharacters = atob(base64Data);
+            const byteArrays = [];
+            
+            for (let i = 0; i < byteCharacters.length; i++) {
+              byteArrays.push(byteCharacters.charCodeAt(i));
+            }
+            
+            const byteArray = new Uint8Array(byteArrays);
+            const blob = new Blob([byteArray], { type: 'image/png' });
+            
+            // Create a file from the blob
+            const file = new File([blob], 'ai-generated-image.png', { type: 'image/png' });
+            
+            // Get the card and image element
+            const card = document.querySelector(`.blog-card[data-index="${cardIndex}"]`);
+            const imageElement = card.querySelector('.blog-image');
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.className = 'loading-indicator';
+            loadingIndicator.innerHTML = '<div class="spinner-border text-light" role="status"></div>';
+            
+            try {
+              // Show loading indicator
+              card.querySelector('.position-relative').appendChild(loadingIndicator);
+              
+              // Create form data
+              const formData = new FormData();
+              formData.append('images', file);
+              
+              // Upload to backend API
+              const uploadResponse = await fetch(`/api/images`, {
+                method: 'POST',
+                body: formData
+              });
+              
+              if (!uploadResponse.ok) {
+                throw new Error('Upload failed');
+              }
+              
+              const uploadData = await uploadResponse.json();
+              
+              if (uploadData.files && uploadData.files.length > 0) {
+                // Update the image source with the first uploaded file's URL
+                imageElement.src = uploadData.files[0].url;
+                
+                // Update the blog data
+                blogData[cardIndex].image.url = uploadData.files[0].url;
+
+                // Save changes to database immediately
+                await saveChangesToDatabase();
+                
+                showAlert('AI image generated and uploaded successfully!', 'success');
+                // Close the modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('aiPromptModal'));
+                modal.hide();
+              } else {
+                throw new Error('No files were uploaded');
+              }
+            } catch (error) {
+              console.error('Error uploading image:', error);
+              showAlert('Failed to upload image. Please try again.', 'danger');
+            } finally {
+              // Remove loading indicator
+              loadingIndicator.remove();
+            }
+          } else {
+            throw new Error('No image data in response');
+          }
+        } catch (error) {
+          console.error('Error generating AI image:', error);
+          showAlert('Failed to generate AI image. Please try again.', 'danger');
+        } finally {
+          generateButton.innerHTML = originalButtonText;
+          generateButton.disabled = false;
+        }
+      };
+      
+      // Gemini content generation function
+      const generateGeminiContent = async (prompt, cardIndex) => {
+        if (!prompt) {
+          showAlert('Please enter a prompt for content generation', 'warning');
+          return;
+        }
+
+        const generateButton = document.getElementById('generateContentBtn');
+        const originalButtonText = generateButton.innerHTML;
+        generateButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+        generateButton.disabled = true;
+
+        try {
+          const response = await fetch(`/api/images/generate-prompt`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              categoryName: prompt,
+              type: 'content'
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('Content generation failed');
+          }
+
+          const data = await response.json();
+          
+          if (data) {
+            const generatedContent = data;
+            
+            // Get the card and editor
+            const card = document.querySelector(`.blog-card[data-index="${cardIndex}"]`);
+            if (card && card.editor) {
+              // Parse the content using marked to convert markdown to HTML
+              try {
+                // Configure marked to allow HTML
+                marked.setOptions({
+                  sanitize: false,  // Allow HTML in the input
+                  gfm: true,        // GitHub Flavored Markdown
+                  breaks: true      // Convert line breaks to <br>
+                });
+                
+                // Parse the generated content to HTML
+                const parsedContent = marked.parse(generatedContent);
+                
+                // Set the parsed HTML content in the editor
+                card.editor.setData(parsedContent);
+                
+                // Update the blog data with the editor content
+                blogData[cardIndex].content = card.editor.getData();
+              } catch (parseError) {
+                console.error('Error parsing content with marked:', parseError);
+                // Fallback to setting the raw content
+                card.editor.setData(generatedContent);
+                blogData[cardIndex].content = card.editor.getData();
+              }
+              
+              // Save changes to database immediately
+              await saveChangesToDatabase();
+              
+              showAlert('Content generated successfully!', 'success');
+              // Close the modal
+              const modal = bootstrap.Modal.getInstance(document.getElementById('geminiPromptModal'));
+              modal.hide();
+            }
+          } else {
+            throw new Error('No content generated');
+          }
+        } catch (error) {
+          console.error('Error generating content:', error);
+          showAlert('Failed to generate content. Please try again.', 'danger');
+        } finally {
+          generateButton.innerHTML = originalButtonText;
+          generateButton.disabled = false;
+        }
+      };
+      
+      // Save all blog data - update to use the shared function
+      const saveChanges = async () => {
+        if (!contentId) {
+          console.error('No content ID available for update');
+          showAlert('Cannot save changes: Missing content ID.', 'warning');
+          return;
+        }
+        
+        // Show loading state
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+        
+        try {
+          const success = await saveChangesToDatabase();
+          
+          if (success) {
+            // Show success message
+            showAlert('Your blog posts have been saved successfully.', 'success');
+          } else {
+            throw new Error('Failed to save changes');
+          }
+        } catch (error) {
+          console.error('Error saving blog data:', error);
+          showAlert('Failed to save changes. Please try again.', 'danger');
+        } finally {
+          // Reset button
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Save Changes';
+        }
+      };
+
+      // Add event listeners for AI generation buttons
+      document.querySelectorAll('.ai-generate-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const cardIndex = this.getAttribute('data-card-index');
+          // Store the card index in the modal for later use
+          document.getElementById('aiPromptModal').setAttribute('data-card-index', cardIndex);
+        });
+      });
+
+      // Add event listener for the generate button in the modal
+      document.getElementById('generateImageBtn').addEventListener('click', function() {
+        const cardIndex = document.getElementById('aiPromptModal').getAttribute('data-card-index');
+        const prompt = document.getElementById('aiPromptInput').value.trim();
+        generateAIImage(prompt, cardIndex);
+      });
+
+      // Clear the prompt input when the modal is closed
+      document.getElementById('aiPromptModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('aiPromptInput').value = '';
+      });
+
+      // Add event listeners for Gemini buttons
+      document.querySelectorAll('.gemini-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const cardIndex = this.getAttribute('data-card-index');
+          // Store the card index in the modal for later use
+          document.getElementById('geminiPromptModal').setAttribute('data-card-index', cardIndex);
+        });
+      });
+
+      // Add event listener for the generate content button in the modal
+      document.getElementById('generateContentBtn').addEventListener('click', function() {
+        const cardIndex = document.getElementById('geminiPromptModal').getAttribute('data-card-index');
+        const prompt = document.getElementById('geminiPromptInput').value.trim();
+        generateGeminiContent(prompt, cardIndex);
+      });
+
+      // Clear the prompt input when the modal is closed
+      document.getElementById('geminiPromptModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('geminiPromptInput').value = '';
+      });
+
+      // Create new section and content if categoryId is present
+      const createNewBlogSection = async () => {
+        if (!categoryId) return;
+  
+        const sectionData = {
+          name: 'Blogs',
+          slug: 'blogs',
+          description: 'Blogs section',
+          category: categoryId,
+          isFolder: false,
+          order: 0,
+          isActive: true
+        };
+
+        try {
+          // First create a new section
+          const sectionResponse = await fetch(`/api/sections`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(sectionData)
+          });
+
+          if (!sectionResponse.ok) {
+            throw new Error('Failed to create section');
+          }
+
+          const sectionResult = await sectionResponse.json();
+
+          // Get all blog cards from the UI
+          const blogCards = document.querySelectorAll('.blog-card');
+          const fields = [];
+
+          // Process each blog card
+          blogCards.forEach((card, index) => {
+            const titleInput = card.querySelector('.blog-title');
+            const imageElement = card.querySelector('.blog-image');
+            const isLeadCheckbox = card.querySelector('.blog-is-lead');
+
+            fields.push({
+              value: {
+                title: titleInput ? titleInput.value.trim() : '',
+                content: card.editor ? card.editor.getData() : '',
+                url: imageElement ? imageElement.src : '',
+                isLead: isLeadCheckbox ? isLeadCheckbox.checked : false
+              },
+              order: index
+            });
+          });
+
+          let contentData = {
+            section: sectionResult._id,
+            slug: 'blogs',
+            title: 'Blogs',
+            subtitle: 'Blog posts',
+            images: [],
+            fields: fields,
+            isActive: true
+          };
+
+          // Then create new content for the section
+          const contentResponse = await fetch(`/api/content`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(contentData)
+          });
+
+          if (!contentResponse.ok) {
+            throw new Error('Failed to create content');
+          }
+
+          const contentResult = await contentResponse.json();
+          
+          // Update the contentId and reload the page
+          contentId = contentResult._id;
+          window.location.href = `/blogs?id=${contentId}&categoryId=${categoryId}`;
+          
+        } catch (error) {
+          console.error('Error creating new blog section:', error);
+          showAlert('Failed to create new blog section. Please try again.', 'danger');
+        }
+      };
+      
+      // Fetch content data from API
+      const fetchContent = async () => {
+        if (!contentId) {
+          console.error('No content ID available');
+          return;
+        }
+        
+        try {
+          const response = await fetch(`/api/content/id/${contentId}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          // Process fields from API response - using the new structure
+          if (data.fields && Array.isArray(data.fields)) {
+            data.fields.forEach((field, index) => {
+              if (index < 4 && field.value) {
+                // Set blog data from the field.value object
+                blogData[index] = {
+                  title: field.value.title || '',
+                  content: field.value.content || '',
+                  image: {
+                    url: field.value.url || '',
+                    alt: `Blog image ${index + 1}`
+                  },
+                  isLead: field.value.lead || false
+                };
+              }
+            });
+          }
+          
+          // Update UI with fetched data
+          updateBlogCards();
+        } catch (error) {
+          console.error('Error fetching content:', error);
+          showAlert('Failed to load blog data. Please try again.', 'danger');
+        }
+      };
+      
+      // Update UI with blog data
+      const updateBlogCards = () => {
+        blogCards.forEach((card, index) => {
+          const data = blogData[index];
+          if (!data) return;
+          
+          const titleInput = card.querySelector('.blog-title');
+          const imageElement = card.querySelector('.blog-image');
+          const isLeadCheckbox = card.querySelector('.blog-is-lead');
+          
+          titleInput.value = data.title || '';
+          if (card.editor) {
+            card.editor.setData(data.content || '');
+          }
+          
+          if (isLeadCheckbox) {
+            isLeadCheckbox.checked = data.isLead || false;
+          }
+          
+          if (data.image && data.image.url) {
+            imageElement.src = data.image.url;
+            imageElement.alt = data.image.alt || `Blog image ${index + 1}`;
+          }
+        });
+      };
+      
+      // Form submission
+      blogForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (contentId) {
+          // If we have a contentId, update the existing content
+          saveChanges();
+        } else if (categoryId) {
+          // If we have a categoryId but no contentId, create new section and content
+          createNewBlogSection();
+        } else {
+          showAlert('Cannot save: Missing content ID or category ID.', 'warning');
+        }
+      });
+      
+      // Replace image buttons
+      document.querySelectorAll('.replace-image-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const card = this.closest('.blog-card');
+          const fileInput = card.querySelector('.image-upload');
+          fileInput.click();
+        });
+      });
+      
+      // Image upload event
+      document.querySelectorAll('.image-upload').forEach(input => {
+        input.addEventListener('change', function(e) {
+          if (e.target.files && e.target.files[0]) {
+            const card = this.closest('.blog-card');
+            const cardIndex = parseInt(card.dataset.index);
+            uploadImage(e.target.files[0], cardIndex);
+          }
+        });
+      });
+      
+      // Set up event listeners for isLead checkboxes - allow only one to be selected
+      document.querySelectorAll('.blog-is-lead').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Uncheck all other checkboxes
+            document.querySelectorAll('.blog-is-lead').forEach(cb => {
+              if (cb !== this) {
+                cb.checked = false;
+              }
+            });
+          }
+        });
+      });
+      
+      // Call fetchContent when the page loads
+      if(contentId) {
+        fetchContent();
+      }
+    }
+  });
+</script>

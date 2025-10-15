@@ -1,0 +1,540 @@
+<!-- Edit Category Form -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-white py-3">
+    <h5 class="card-title mb-0 fw-semibold">Edit Category</h5>
+  </div>
+  
+  <!-- Filter Toggles (UI only - no functionality) -->
+  <div class="p-3">
+    <div class="btn-group" role="group" aria-label="Content filters">
+      <input type="radio" class="btn-check" name="filter-options" id="most-used">
+      <label class="btn btn-outline-primary btn-sm" for="most-used">Most Used</label>
+      
+      <input type="radio" class="btn-check" name="filter-options" id="trending">
+      <label class="btn btn-outline-primary btn-sm" for="trending">Trending</label>
+      
+      <input type="radio" class="btn-check" name="filter-options" id="latest">
+      <label class="btn btn-outline-primary btn-sm" for="latest">Latest</label>
+      
+      <input type="radio" class="btn-check" name="filter-options" id="recent">
+      <label class="btn btn-outline-primary btn-sm" for="recent">Recent</label>
+    </div>
+  </div>
+  
+  <div class="edit-category-card-body">
+    <form id="editCategoryForm" class="needs-validation" novalidate>
+      <div class="edit-row">
+      <div style="width: 30%;" class="mb-3">
+        <label for="categoryName" class="form-label">Category Name</label>
+        <input style="width: 100%;" type="text" class="form-control" id="categoryName" name="categoryName" 
+               placeholder="Enter category name" required>
+        <div class="invalid-feedback">
+          Please provide a category name.
+        </div>
+      </div>
+      
+      <div style="width: 30%;" class="mb-3">
+        <label for="categorySlug" class="form-label">Category Slug</label>
+        <input style="width: 100%;" type="text" class="form-control" id="categorySlug" name="categorySlug" 
+               placeholder="Enter category slug" required>
+        <div class="invalid-feedback">
+          Please provide a category slug.
+        </div>
+      </div>
+      
+      <div style="width: 30%;" class="mb-3">
+        <label for="categoryDescription" class="form-label">Description</label>
+        <textarea style="width: 100%;" class="form-control" id="categoryDescription" name="categoryDescription" 
+                  rows="3" placeholder="Enter category description"></textarea>
+        <div class="invalid-feedback">
+          Please provide a category description.
+        </div>
+      </div>
+
+      <div style="width: 30%;" class="mb-3">
+        <label for="categoryType" class="form-label">Category Type</label>
+        <select style="width: 100%;" class="form-select" id="categoryType" name="categoryType" required>
+          <option value="">Select category type</option>
+          <option value="image">Image</option>
+          <option value="prompt">Prompt</option>
+        </select>
+        <div class="invalid-feedback">
+          Please select a category type.
+        </div>
+      </div>
+
+      <div style="width: 100%;" class="mb-3">
+        <label for="categoryMetaTags" class="form-label">Meta Tags</label>
+        <textarea style="width: 100%;" class="form-control" id="categoryMetaTags" name="categoryMetaTags" 
+                  rows="8" placeholder="Enter meta tags (HTML format)" required></textarea>
+        <div class="form-text">
+          Enter meta tags in HTML format (e.g., &lt;title&gt;, &lt;meta&gt; tags)
+        </div>
+        <div class="invalid-feedback">
+          Please provide meta tags.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="categoryImage" class="form-label">Category Image</label>
+        <input type="file" class="form-control" id="categoryImage" name="categoryImage" 
+               accept="image/*">
+        <div class="form-text">
+          Recommended size: 1200x600px. Max file size: 2MB.
+        </div>
+        <div class="image-preview-container mt-2">
+          <div class="image-preview ratio ratio-16x9 bg-light rounded overflow-hidden" style="max-width: 300px;">
+            <div class="d-flex align-items-center justify-content-center text-muted">
+              <i class="bi bi-image me-2"></i> No image selected
+            </div>
+          </div>
+          <div class="mt-2 image-actions d-none">
+            <button type="button" class="btn btn-sm btn-outline-danger me-2" id="removeImageBtn">
+              <i class="bi bi-trash me-1"></i> Remove
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary" id="replaceImageBtn">
+              <i class="bi bi-arrow-repeat me-1"></i> Replace
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-save me-2"></i> Update Category
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add alert container at the end of the body -->
+<div class="alert-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+  <div id="categorySuccessAlert" class="alert alert-success d-flex align-items-center mb-0 d-none">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <div>
+      <strong>Category updated successfully!</strong>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const editCategoryForm = document.getElementById('editCategoryForm');
+    const categoryNameInput = document.getElementById('categoryName');
+    const categorySlugInput = document.getElementById('categorySlug');
+    const categoryDescriptionInput = document.getElementById('categoryDescription');
+    const categoryTypeSelect = document.getElementById('categoryType');
+    const categoryMetaTagsInput = document.getElementById('categoryMetaTags');
+    const categoryImageInput = document.getElementById('categoryImage');
+    const imagePreviewContainer = document.querySelector('.image-preview-container');
+    
+    // Get content ID from URL or fallback
+    const getContentId = () => {
+      // Get from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('id')) {
+        return urlParams.get('id');
+      }
+      
+      // Fallback: check for data-content-id attribute (for backward compatibility)
+      if (document.referrer.includes('/edit-category')) {
+        const sidebarLink = document.querySelector('a[href="/edit-category"]');
+        if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
+          return sidebarLink.getAttribute('data-content-id');
+        }
+      }
+      
+      return null;
+    };
+    
+    const categoryId = getContentId();
+    console.log('Category ID:', categoryId);
+    
+    if (!categoryId) {
+      alert('No category ID provided');
+      return;
+    }
+    
+    // Fetch category data
+    async function fetchCategory() {
+      try {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI5ODM4MCwiZXhwIjoxNzQ1Mzg0NzgwfQ._XjN76nKvPZcxOT8TLWvfdfA-0KzqGjHwnZWX5YdntA";
+        
+        const response = await fetch(`/api/categories/id/${categoryId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch category');
+        }
+        
+        const category = await response.json();
+        
+        // Populate form fields
+        categoryNameInput.value = category.name || '';
+        categorySlugInput.value = category.slug || '';
+        categoryDescriptionInput.value = category.description || '';
+        
+        // Set category type with logging for debugging
+        const categoryTypeValue = category.categoryType || '';
+        categoryTypeSelect.value = categoryTypeValue;
+        
+        // Ensure the value is set properly with a small delay if needed
+        setTimeout(() => {
+          if (categoryTypeSelect.value !== categoryTypeValue && categoryTypeValue) {
+            console.log('Retrying to set category type value');
+            categoryTypeSelect.value = categoryTypeValue;
+          }
+        }, 100);
+        
+        categoryMetaTagsInput.value = category.metaTags || '';
+        
+        // Set toggle button states from database
+        const mostUsedToggle = document.getElementById('most-used');
+        const trendingToggle = document.getElementById('trending');
+        const latestToggle = document.getElementById('latest');
+        const recentToggle = document.getElementById('recent');
+        
+        // Set toggle states (default to false if not present in database)
+        mostUsedToggle.checked = category.mostUsed || false;
+        trendingToggle.checked = category.trending || false;
+        latestToggle.checked = category.latest || false;
+        recentToggle.checked = category.recent || false;
+        
+        // Store the current image URL in a data attribute
+        let currentImageUrl = null;
+        
+        // Show existing image if available
+        if (category.image) {
+          currentImageUrl = category.image;
+          displayImage(category.image);
+        } else if (category.imageUrl) {
+          // Some API responses might have imageUrl instead of image
+          currentImageUrl = category.imageUrl;
+          displayImage(category.imageUrl);
+        } else {
+          // No image found
+          displayNoImage();
+        }
+        
+        // Store the current image URL for reference
+        if (currentImageUrl) {
+          imagePreviewContainer.dataset.currentImage = currentImageUrl;
+          document.querySelector('.image-actions').classList.remove('d-none');
+        }
+        
+      } catch (error) {
+        console.error('Error fetching category:', error);
+        alert('Error: ' + error.message);
+      }
+    }
+    
+    // Function to display an image
+    function displayImage(imageUrl) {
+      const imagePreview = document.querySelector('.image-preview');
+      imagePreview.innerHTML = `
+        <img src="${imageUrl}" class="w-100 h-100 object-fit-contain" alt="Category Preview">
+      `;
+      document.querySelector('.image-actions').classList.remove('d-none');
+    }
+    
+    // Function to display no image placeholder
+    function displayNoImage() {
+      const imagePreview = document.querySelector('.image-preview');
+      imagePreview.innerHTML = `
+        <div class="d-flex align-items-center justify-content-center text-muted">
+          <i class="bi bi-image me-2"></i> No image available
+        </div>
+      `;
+      document.querySelector('.image-actions').classList.add('d-none');
+    }
+    
+    // Initialize image preview and buttons
+    if (categoryImageInput) {
+      const removeImageBtn = document.getElementById('removeImageBtn');
+      const replaceImageBtn = document.getElementById('replaceImageBtn');
+      const imagePreview = document.querySelector('.image-preview');
+      
+      // Handle file selection
+      categoryImageInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const objectUrl = URL.createObjectURL(file);
+          displayImage(objectUrl);
+        } else {
+          displayNoImage();
+        }
+      });
+      
+      // Handle remove button click
+      if (removeImageBtn) {
+        removeImageBtn.addEventListener('click', function() {
+          // Clear the file input
+          categoryImageInput.value = '';
+          displayNoImage();
+          
+          // Add a flag to indicate image removal
+          document.querySelector('.image-preview-container').dataset.removeImage = 'true';
+        });
+      }
+      
+      // Handle replace button click
+      if (replaceImageBtn) {
+        replaceImageBtn.addEventListener('click', function() {
+          // Trigger file input click
+          categoryImageInput.click();
+        });
+      }
+    }
+    
+    // Handle form submission
+    if (editCategoryForm) {
+      editCategoryForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        if (!editCategoryForm.checkValidity()) {
+          event.stopPropagation();
+          editCategoryForm.classList.add('was-validated');
+          return;
+        }
+        
+        // Show loading state
+        const submitBtn = editCategoryForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...';
+        submitBtn.disabled = true;
+        
+        try {
+          const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDQ5MWRmMzljZmYwNTljMDY1NWZkMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI5ODM4MCwiZXhwIjoxNzQ1Mzg0NzgwfQ._XjN76nKvPZcxOT8TLWvfdfA-0KzqGjHwnZWX5YdntA";
+          
+          // Get form data
+          const categoryName = categoryNameInput.value;
+          const categorySlug = categorySlugInput.value.toLowerCase().replace(/\s+/g, '-').trim();
+          const categoryDescription = categoryDescriptionInput.value;
+          const categoryType = categoryTypeSelect.value;
+          const categoryMetaTags = document.getElementById('categoryMetaTags').value;
+          const categoryImage = categoryImageInput.files[0];
+          const imagePreviewContainer = document.querySelector('.image-preview-container');
+          const shouldRemoveImage = imagePreviewContainer.dataset.removeImage === 'true';
+          
+          // Get filter states
+          const mostUsedChecked = document.getElementById('most-used').checked;
+          const trendingChecked = document.getElementById('trending').checked;
+          const latestChecked = document.getElementById('latest').checked;
+          const recentChecked = document.getElementById('recent').checked;
+          
+          // Create update data
+          const updateData = {
+            name: categoryName,
+            slug: categorySlug,
+            description: categoryDescription,
+            categoryType: categoryType,
+            metaTags: categoryMetaTags,
+            isFolder: true,
+            parent: null,
+            mostUsed: mostUsedChecked,
+            trending: trendingChecked,
+            latest: latestChecked,
+            recent: recentChecked
+          };
+          
+          
+          // Upload new image if provided
+          if (categoryImage) {
+            console.log('Uploading new image...');
+            const imageUrl = await uploadImage(categoryImage, token);
+            console.log('Image upload result:', imageUrl);
+            
+            if (imageUrl) {
+              // Set image field for the database
+              updateData.image = imageUrl;
+            }
+          } else if (shouldRemoveImage) {
+            // If user clicked remove button, set image to null
+            updateData.image = null;
+            updateData.imageUrl = null;
+            console.log('Removing image...');
+          } else {
+            // Keep the existing image if there is one
+            const currentImage = imagePreviewContainer.dataset.currentImage;
+            if (currentImage) {
+              console.log('Keeping existing image:', currentImage);
+              updateData.image = currentImage;
+            } else {
+              console.log('No image to keep or update');
+            }
+          }
+          
+          console.log('Final update data2:', updateData);
+          
+          // Update category - TRY BOTH ENDPOINTS
+          let updateResponse;
+          let responseText;
+          
+          try {
+            // First try with /id/ path
+            updateResponse = await fetch(`/api/categories/${categoryId}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify(updateData)
+            });
+            
+            responseText = await updateResponse.text();
+            console.log('Response from id endpoint:', responseText);
+            
+            if (!updateResponse.ok) {
+              throw new Error(`Failed with id endpoint: ${responseText}`);
+            }
+          } catch (idEndpointError) {
+            console.warn('First endpoint failed:', idEndpointError.message);
+            
+            // Try alternate endpoint format
+            updateResponse = await fetch(`/api/categories/${categoryId}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify(updateData)
+            });
+            
+            responseText = await updateResponse.text();
+            console.log('Response from alternate endpoint:', responseText);
+            
+            if (!updateResponse.ok) {
+              throw new Error(`Both endpoints failed. Last error: ${responseText}`);
+            }
+          }
+          
+          
+          let updatedCategory;
+          try {
+            updatedCategory = JSON.parse(responseText);
+            
+            // Update the image preview with the new image from the response
+            if (updatedCategory.image || updatedCategory.imageUrl) {
+              const newImageUrl = updatedCategory.image || updatedCategory.imageUrl;
+              displayImage(newImageUrl);
+              imagePreviewContainer.dataset.currentImage = newImageUrl;
+              document.querySelector('.image-actions').classList.remove('d-none');
+            } else {
+              displayNoImage();
+              imagePreviewContainer.dataset.currentImage = '';
+              imagePreviewContainer.dataset.removeImage = 'false';
+            }
+          } catch (e) {
+            console.warn('Response is not valid JSON:', responseText);
+            // If not valid JSON, continue anyway
+          }
+          
+          // Show success message
+          const successAlert = document.getElementById('categorySuccessAlert');
+          if (successAlert) {
+            successAlert.classList.remove('d-none');
+            setTimeout(() => {
+              successAlert.classList.add('d-none');
+            }, 3000);
+          }
+          
+        } catch (error) {
+          console.log(error, 'error');
+          console.error('Error updating category:', error);
+          alert('Error: ' + error.message);
+        } finally {
+          // Restore button state
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+    }
+    
+    // Helper function to upload image
+    async function uploadImage(file, token) {
+      if (!file) return null;
+      
+      try {
+        console.log('Starting image upload...');
+        const formData = new FormData();
+        formData.append('images', file);
+        
+        const response = await fetch(`/api/images`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        const responseText = await response.text();
+        console.log('Image upload raw response:', responseText);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to upload image: ${responseText}`);
+        }
+        
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (e) {
+          throw new Error('Invalid JSON response from server');
+        }
+        
+        console.log('Image upload response:', result);
+        
+        if (result && result.files && result.files.length > 0 && result.files[0].url) {
+          return result.files[0].url;
+        } else {
+          throw new Error('No image URL in response');
+        }
+        
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        throw error;
+      }
+    }
+    
+    // Fetch category data on page load
+    fetchCategory();
+  });
+</script>
+
+<style>
+  .alert-container {
+    min-width: 300px;
+    max-width: 500px;
+  }
+
+  .alert-container .alert {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: none;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Basic styles for the filter toggle buttons */
+  .btn-check:checked + .btn-outline-primary {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  .btn-group .btn {
+    margin-right: 2px;
+  }
+</style>

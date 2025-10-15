@@ -1,0 +1,647 @@
+{{!-- Character Showcase Styles --}}
+<style>
+    .character-section {
+        min-height: 100vh;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .character-nav {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .filterSectionContainer {
+        width: fit-content;
+        /* Slightly adjusted width to account for the divider */
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-direction: column;
+        gap: 1rem;
+        flex-shrink: 0;
+    }
+
+    .filter-section {
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.2);
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 1.2rem 1.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .filter-section .filters {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .filter-section p {
+        color: black;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .filter-dropdown {
+        background-color: #4a2a8a;
+        border: none;
+        width: 150px;
+        border-radius: 0.5rem;
+        padding: 0.8rem 1.2rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        justify-content: space-between;
+    }
+
+    .filter-dropdown-delete {
+        background-color: #FF0000;
+    }
+
+    .clear-history {
+        background-color: #ff3b30;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        cursor: pointer;
+    }
+
+
+    .nav-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .nav-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .grid-item:hover .hover-overlay {
+        opacity: 1;
+    }
+
+    /* Hover content styles */
+    .hover-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .grid-item:hover .hover-content {
+        opacity: 1;
+    }
+
+    .text-content {
+        margin-top: auto;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 1.5rem;
+    }
+
+    .hover-content h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        height: 30px;
+        margin-bottom: 1.2rem;
+    }
+
+    .hover-content p {
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+
+    .hover-buttons {
+        display: flex;
+        gap: 0.75rem;
+        padding: 1rem;
+        align-self: flex-end;
+    }
+
+    .hover-buttons button {
+        background-color: rgba(0, 0, 0, 0.4);
+        border: none;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .hover-buttons button:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hover-buttons img {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .expand-btn,
+    .download-btn {
+        padding: 0rem;
+    }
+
+    .character-main {
+        background: linear-gradient(180deg, #6248E2 22.26%, #FF6154 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 40%;
+        position: relative;
+        margin-inline: auto;
+    }
+
+    .character-image {
+        padding-block: 1rem;
+        border-radius: 30px;
+        height: 100%;
+        width: 50%;
+        object-fit: contain;
+    }
+
+    .character-thumbnails {
+        background: linear-gradient(180deg, #6248E2 22.26%, #FF6154 100%);
+        border-radius: 12px;
+        padding: 1rem;
+        width: 90%;
+        margin-inline: auto;
+    }
+
+    .thumbnail-container {
+        padding: 1rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .character-model-preview {
+        background-color: #fff;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-radius: 12px;
+        padding: 2rem;
+        gap: 1.8rem;
+    }
+
+    .thumbnail-wrapper {
+        position: relative;
+    }
+
+    .thumbnail-actions {
+        position: absolute;
+        left: 0.5rem;
+        top: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        z-index: 2;
+    }
+
+    .character-prompt-container {
+        background-color: #12033B;
+        border-radius: 1rem;
+        width: 85%;
+        height: 150px;
+        margin-inline: auto;
+        margin-top: 1.5rem;
+        padding: 1.4rem;
+        margin-bottom: 1.5rem;
+        position: relative border: 1px solid #555454;
+    }
+
+    .prompt-input {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem
+    }
+
+    .ai-icon {
+        width: 32px;
+        height: 32px;
+        background-color: #333;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ffcc;
+        font-weight: bold;
+        font-size: 14px
+    }
+
+    .edit-icon {
+        width: 25px;
+        height: 25px;
+        display: block;
+    }
+
+    .prompt-input textarea {
+        flex: 1;
+        resize: none;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        outline: none;
+        min-height: 2.5rem;
+        max-height: 6rem;
+        overflow-y: auto;
+        width: 100%;
+        line-height: 1.4;
+    }
+
+    .prompt-input textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .generate-btn {
+        position: absolute;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        background: linear-gradient(90deg, #1E0A69 0%, #000000 100%);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 2rem;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        width: auto;
+        transition: all 0.2s ease
+    }
+
+    .generate-btn:hover {
+        background-color: #3a1a6a
+    }
+
+    .generate-btn .icon {
+        font-size: 1.2rem
+    }
+
+    .character-options {
+        display: flex;
+        gap: 1rem;
+        width: 85%;
+        margin-inline: auto;
+        margin-bottom: 2rem;
+        justify-content: space-between;
+    }
+
+    .options-left {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem
+    }
+
+    .option-btn {
+        background-color: white;
+        color: #4526B1;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem 2.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        font-weight: 500;
+    }
+
+    .option-btn .icon {
+        font-size: 1.2rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+    }
+
+    .option-btn .svg-icon {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+    }
+
+    .option-btn.active .svg-icon {
+        fill: white;
+    }
+
+    .option-btn:not(.active) .svg-icon {
+        fill: #4526B1;
+    }
+
+    .option-btn1 {
+        background-color: #4733c1;
+        color: #ffffff;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: auto;
+        font-weight: 500;
+    }
+
+    .option-btn1 .icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .action-button {
+        background: #ff3b3b;
+        color: white;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .download-button {
+        background: #4a90e2;
+    }
+
+    .thumbnail {
+        height: 100%;
+        border-radius: 8px;
+        object-fit: contain;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail.active {
+        box-shadow: 0 0 0 2px #6b46c1;
+    }
+
+    @media (max-width: 380px){
+        .filter-dropdown {
+            width: 130px;
+        }
+
+        .filter-dropdown-delete {
+            width: 130px;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .character-section {
+            padding: 0.5rem;
+        }
+        
+
+        .hide-in-phone {
+            display: none;
+        }
+
+        .character-model-preview {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); !important
+        }
+
+        .character-model-preview video {
+            height: 300px;
+        }
+
+        .character-image {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        .thumbnail-container {
+            flex-direction: column;
+        }
+
+        .imagination-content {
+            margin-block: 3rem;
+            bottom: 0;
+            left: 0;
+        }
+
+        .frog-content {
+            width: 90% !important;
+            margin-inline: auto;
+        }
+
+        .filterSectionContainer {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 1.5rem;
+            align-items: ;
+        }
+
+        .character-main {
+            aspect-ratio: 4/3;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+        }
+
+        .thumbnail-wrapper {
+            width: 100%;
+        }
+    }
+</style>
+
+{{!-- Character Showcase Content --}}
+<section class="character-section">
+    <div class="character-prompt-container">
+        <div class="prompt-input">
+            <div class="ai-icon"><img src="/images/svg/AIIcon.svg" alt="AI" width="32" height="32"></div>
+            <textarea
+                placeholder="A modern and sleek banner design for UX/UI design, featuring a minimalist layout with ample negative space........."
+                rows="5"></textarea>
+        </div>
+        <button class="generate-btn">
+            <img src="/images/svg/generateIcon.svg" alt="AI" width="32" height="32">
+            Generate
+        </button>
+    </div>
+
+    <div class="character-options">
+        <div class="options-left">
+            <button class="option-btn">
+                <span class="icon"><img src="/images/svg/threeDIconBlue.svg" alt="3D Image" class="svg-icon"></span>
+                3D Image
+            </button>
+            <button class="option-btn">
+                <span class="icon"><img src="/images/svg/screenSizeBlue.svg" alt="Screen Size" class="svg-icon"></span>
+                1:1
+            </button>
+        </div>
+    </div>
+    <main class="character-main">
+        <img src="/images/ghibli/ghibli5.webp" alt="3D Character Boy" class="character-image">
+        <div class="hover-overlay">
+            <div class="hover-content">
+                <div class="hover-buttons">
+                    <button class="download-btn">
+                        <img src="/images/download.svg" alt="Download">
+                    </button>
+                    <button class="expand-btn">
+                        <img src="/images/delete.svg" alt="Expand">
+                    </button>
+                </div>
+                <div class="text-content">
+                    <h3>Lorem ipsum</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                        ultrices
+                        ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="character-thumbnails">
+        <div class="thumbnail-container">
+            <div class="filterSectionContainer">
+                <div class="filter-section">
+                    <div class="filters">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="filter-dropdown">
+                                All Styles &nbsp;&nbsp;<span>▼</span>
+                            </button>
+                            <button class="filter-dropdown filter-dropdown-delete">
+                                <p style="color: white; font-size: 1.4rem;">Clear History</p>&nbsp;
+                                <img style="width: 1.8rem; height: 1.8rem;" src="/images/download.svg" alt="Download">
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="character-model-preview">
+                <div class="thumbnail-wrapper grid-item">
+                    <img src="/images/ghibli/ghibli5.webp" alt="Thumbnail 2" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Expand">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="thumbnail-wrapper grid-item hide-in-phone">
+                    <img src="/images/ghibli/ghibli5.webp" alt="Thumbnail 2" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Expand">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="thumbnail-wrapper grid-item">
+                    <img src="/images/ghibli/ghibli5.webp" alt="Thumbnail 3" class="thumbnail">
+                    <div class="hover-overlay">
+                        <div class="hover-content">
+                            <div class="hover-buttons">
+                                <button class="upsacle-btn">
+                                    <img src="/images/expand.svg" alt="Download">
+                                </button>
+                                <button class="download-btn">
+                                    <img src="/images/download.svg" alt="Download">
+                                </button>
+                                <button class="expand-btn">
+                                    <img src="/images/delete.svg" alt="Delete">
+                                </button>
+                            </div>
+                            <div class="text-content">
+                                <h3>Lorem ipsum</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur. Morbi urna id cursus enim placerat est
+                                    ultrices
+                                    ornare duis. Molestie eget maecenas gravida aliquam nunc nibh suscipit risus nisi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,296 @@
+{{!-- <div class="rts-bread-crumb-area bg_image">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-inne">
+                    <div class="title-area">
+                        <h1 class="bread-title">Use Cases</h1>
+                        <div class="inner-wrapper">
+                            <a href="/">Home</a>/
+                            <a href="#" class="active">Use Cases</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<style>
+    .flex-app {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .app-btn {
+        width: 45%;
+        max-width: 220px;
+        color: #fff;
+        margin: 20px 10px;
+        text-align: left;
+        border-radius: 5px;
+        text-decoration: none;
+        font-family: "Lucida Grande", sans-serif;
+        font-size: 15px;
+        text-transform: uppercase;
+        border: 1px #3996fb solid;
+        padding: 10px 10px;
+    }
+
+    .app-btn.blu {
+        background-color: #101010;
+        transition: background-color 0.25s linear;
+    }
+
+    .app-btn.blu:hover {
+        background-color: #454545;
+    }
+
+    .app-btn i {
+        width: 20%;
+        text-align: center;
+        font-size: 36px;
+        margin-right: 7px;
+    }
+
+    .app-btn .big-txt {
+        font-size: 25px;
+        text-transform: capitalize;
+    }
+
+    @media screen and (max-width: 768px) {
+        .flex-app {
+            flex-direction: column;
+        }
+
+        .app-btn {
+            width: 90%;
+            margin: 7px auto;
+        }
+
+        .app-btn i {
+            margin-bottom: 7px;
+        }
+
+        .app-btn span {
+            margin-top: 7px;
+        }
+    }
+
+    .img-grid-container {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .img-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-bottom: 25px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-container {
+        aspect-ratio: 9/10;
+        overflow: hidden;
+        border-radius: 15px;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .img-grid {
+            display: flex;
+            gap: 10px;
+        }
+
+        .img-grid-box{
+            height: 100% !important;
+            margin-left: 0px !important;
+        }
+
+        .slide-from-right{
+            transform: translateY(0px) !important;
+        }
+
+        .slide-from-left{
+            transform: translateY(0px) !important;
+        }
+
+        .img-container{
+            height: 120px !important;
+            width: 100% !important;
+        }
+
+        .img-grid-container{
+            padding: 0px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .img-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Animation styles */
+    .slide-from-left {
+        opacity: 0;
+        transform: translateX(-100px);
+        transition: all 1s ease;
+    }
+
+    .slide-from-right {
+        opacity: 0;
+        transform: translateX(100px);
+        transition: all 1s ease;
+    }
+
+    .slide-from-top {
+        opacity: 0;
+        transform: translateY(-100px);
+        transition: all 1s ease;
+    }
+
+    .slide-from-bottom {
+        opacity: 0;
+        transform: translateY(100px);
+        transition: all 1s ease;
+    }
+
+    .slide-from-left.animate,
+    .slide-from-right.animate,
+    .slide-from-top.animate,
+    .slide-from-bottom.animate {
+        opacity: 1;
+        transform: translate(0);
+    }
+
+    /* Add transition delay classes */
+    .delay-1 { transition-delay: 0.2s; }
+    .delay-2 { transition-delay: 0.4s; }
+    .delay-3 { transition-delay: 0.6s; }
+</style>
+
+<div class="rts-case-area bg-smooth-2">
+    <div class="container" style="margin-top: 50px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center mb-4" style="background: transparent;">
+                <div style="
+    width: 190px; 
+                     height: 56px; 
+    border-radius: 28px; 
+    border: 1px solid #FFFFFF;
+    padding: 8px 18px 8px 6px;
+    margin: 0 auto 11px auto;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+">
+                    <div style="
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4526B1 0%, #F86635 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+                        <img src="/images/inspirations/Star.png" alt="star" style="width: 24px; height: 24px;" />
+                    </div>
+                    <span style="
+        color: #000000; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 22px;
+        letter-spacing: 0;
+        display: flex;
+        align-items: center;
+    ">Inspirations</span>
+                </div>
+
+                <h2 class="" style="font-size: 2.5rem; font-weight: 600; color: white;">
+                    Find your inspiration in a sea of creativity
+                </h2>
+            </div>
+            <div class="col-12">
+                <div class="img-grid-container">
+                    <div class="img-grid">
+                        <div class="img-grid-box"
+                            style="height: 810px; width: 357px; display: flex; margin-left: 70px; flex-direction: column; justify-content: flex-end; gap: 10px;">
+                            <div class="img-container slide-from-left delay-1" style="background-color: #4c22e1; height: 410px; width: 357px;">
+                                <img src="/images/inspirations/robots.webp" />
+                            </div>
+                            <div class="img-container slide-from-bottom delay-2" style="background-color: #4c22e1; height: 290px; width: 357px;">
+                                <img src="/images/inspirations/butterfly.webp" />
+                            </div>
+                        </div>
+                        <div class="img-grid-box"
+                            style="height: 810px; width: 357px; display: flex; flex-direction: column; margin-left: 20px; justify-content: flex-end; gap: 10px;">
+                            <div class="img-container slide-from-top delay-1" style="background-color: #4526b1; height: 404px; width: 357px;">
+                                <img src="/images/inspirations/alien.webp" alt="Use Case Image" />
+                            </div>
+                            <div class="img-container slide-from-bottom delay-2" style="background-color: #4526b1; height: 382px; width: 357px;">
+                                <img src="/images/inspirations/family.webp" />
+                            </div>
+                        </div>
+                        <div class="img-grid-box"
+                            style="height: 810px; width: 357px; display: flex; flex-direction: column; gap: 10px; justify-content: flex-end;">
+                            <div class="img-container slide-from-top delay-2" style="background-color: #7153d9; height: 395px; width: 357px;">
+                                <img src="/images/inspirations/alien2.webp" />
+                            </div>
+                            <div class="img-container slide-from-right delay-3" style="background-color: #7153d9; height: 370px; width: 357px;">
+                                <img src="/images/inspirations/man.webp" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+<script>
+    function setupImageAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '50px'
+        });
+
+        // Observe all image containers
+        document.querySelectorAll('.img-container').forEach(img => {
+            observer.observe(img);
+        });
+    }
+
+    // Run animation setup when DOM is loaded
+    document.addEventListener('DOMContentLoaded', setupImageAnimations);
+</script>
