@@ -22,7 +22,7 @@
       <div class="nav-link px-3 py-2 rounded-3 d-flex align-items-center active text-decoration-none">
         <i class="bi bi-house-door me-3 text-primary"></i>
         <i class="fas fa-home me-3 text-primary"></i>
-        <a style="display: flex;" href="/dashboard">Dashboard</a>
+        <a style="display: flex;" href="/admin/dashboard">Dashboard</a>
       </div>
     </li>
 
@@ -54,13 +54,13 @@
 
     <!-- New Category -->
     <li class="nav-item mb-2">
-      <a href="/new-category" class="nav-link px-2 py-2 rounded-3 d-flex align-items-center text-decoration-none">
+      <a href="/admin/new-category" class="nav-link px-2 py-2 rounded-3 d-flex align-items-center text-decoration-none">
         {{!-- <i class="bi bi-plus-circle me-3 text-primary"></i> --}}
         <span>New Category</span>
       </a>
     </li>
     <li class="nav-item mb-2">
-      <a href="/all-blogs" class="nav-link px-2 py-2 rounded-3 text-decoration-none">
+      <a href="/admin/all-blogs" class="nav-link px-2 py-2 rounded-3 text-decoration-none">
         <span>All Blogs</span>
       </a>
     </li>
@@ -381,7 +381,7 @@
       });
       
       // Special handling for New Category link - don't save/restore state
-      const newCategoryLink = document.querySelector('a[href="/new-category"]');
+      const newCategoryLink = document.querySelector('a[href="/admin/new-category"]');
       if (newCategoryLink) {
         newCategoryLink.addEventListener('click', function(e) {
           // Clear the active category when clicking on New Category

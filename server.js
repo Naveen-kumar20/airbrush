@@ -17,7 +17,7 @@ import { CronJob } from 'cron';
 import backendRouter from './backend/src/index.js';
 import categoryRoutes from './backend/src/routes/categoryRoutes.js';
 import generatorRoutes from './backend/src/routes/generatorRoutes.js';
-import {verifyToken} from './backend/src/middlewares/authMiddleware.js';
+import {verifyToken, adminOnly} from './backend/src/middlewares/authMiddleware.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -612,7 +612,7 @@ app.get("/blogs/:title", async (req, res) => {
 // Authentication middleware - move before routes
 const checkAuth = (req, res, next) => {
   // Check if path is a protected route
-  if (req.path === '/dashboard' || req.path === '/new-category') {
+  if (req.path === '/admin/dashboard' || req.path === '/admin/new-category') {
     // Check for token in cookies
     const token = req.cookies.authToken;
     if (!token) {
@@ -630,7 +630,7 @@ app.get('/admin/login/secret', (req, res) => {
   res.render('auth', { layout: false });
 });
 
-app.get('/dashboard',(req, res) => {
+app.get('/admin/dashboard',(req, res) => {
   res.render('adminIndex', { 
     layout: 'adminMain',
     partialName: 'placeholder',
@@ -689,7 +689,7 @@ app.get('/transform-grid', (req, res) => {
   });
 });
 
-app.get('/new-category', (req, res) => {
+app.get('/admin/new-category', (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'new-category',
@@ -722,7 +722,7 @@ app.get('/category-video', (req, res) => {
   });
 });
 
-app.get('/all-blogs', verifyToken, (req, res) => {
+app.get('/admin/all-blogs', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'all-blogs',

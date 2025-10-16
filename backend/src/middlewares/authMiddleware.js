@@ -4,19 +4,26 @@ import User from '../models/User.js';
 // Verify token middleware
 export const verifyToken = async (req, res, next) => {
   try {
+    let token = null;
+    
+    // Check Authorization header first (for API calls)
     const authHeader = req.headers.authorization;
-    console.log("req.headers.authorization--->>>>", req.headers.authorization);
-    
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      // return res.status(401).json({ message: 'Authentication required' });
-      return res.redirect('/admin/login/secret');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
     }
     
-    const token = authHeader.split(' ')[1];
+    // If no header token, check cookies (for web page requests)
+    if (!token && req.cookies && req.cookies.authToken) {
+      token = req.cookies.authToken;
+    }
     
     if (!token) {
-      return res.status(401).json({ message: 'Authentication required' });
+      // For API requests, return JSON error
+      if (req.path.startsWith('/api/')) {
+        return res.status(401).json({ message: 'Authentication required' });
+      }
+      // For web requests, redirect to login
+      return res.redirect('/admin/login/secret');
     }
     
     try {
@@ -26,11 +33,17 @@ export const verifyToken = async (req, res, next) => {
       const user = await User.findById(decoded.id).select('-password');
       
       if (!user) {
-        return res.status(401).json({ message: 'User not found' });
+        if (req.path.startsWith('/api/')) {
+          return res.status(401).json({ message: 'User not found' });
+        }
+        return res.redirect('/admin/login/secret');
       }
       
       if (!user.isActive) {
-        return res.status(403).json({ message: 'Account is deactivated' });
+        if (req.path.startsWith('/api/')) {
+          return res.status(403).json({ message: 'Account is deactivated' });
+        }
+        return res.redirect('/admin/login/secret');
       }
       
       // Attach user to request
@@ -43,10 +56,16 @@ export const verifyToken = async (req, res, next) => {
       
       next();
     } catch (error) {
-      return res.status(401).json({ message: 'Invalid token' });
+      if (req.path.startsWith('/api/')) {
+        return res.status(401).json({ message: 'Invalid token' });
+      }
+      return res.redirect('/admin/login/secret');
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (req.path.startsWith('/api/')) {
+      return res.status(500).json({ message: error.message });
+    }
+    return res.redirect('/admin/login/secret');
   }
 };
 
