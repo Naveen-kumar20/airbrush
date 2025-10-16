@@ -139,8 +139,8 @@
       }
       
       // Fallback: check for data-content-id attribute (for backward compatibility)
-      if (document.referrer.includes('/edit-category')) {
-        const sidebarLink = document.querySelector('a[href="/edit-category"]');
+      if (document.referrer.includes('/admin/edit-category')) {
+        const sidebarLink = document.querySelector('a[href="/admin/edit-category"]');
         if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
           return sidebarLink.getAttribute('data-content-id');
         }

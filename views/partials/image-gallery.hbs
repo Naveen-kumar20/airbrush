@@ -77,7 +77,7 @@
       }
       
       // Check for referrer with URL parameters
-      if (document.referrer.includes('/images-gallery')) {
+      if (document.referrer.includes('/admin/images-gallery')) {
         const referrerUrl = new URL(document.referrer);
         const referrerParams = new URLSearchParams(referrerUrl.search);
         if (referrerParams.has('id')) {
@@ -86,7 +86,7 @@
       }
       
       // Then check for the sidebar link
-      const sidebarLink = document.querySelector('a[href="/images-gallery"]');
+      const sidebarLink = document.querySelector('a[href="/admin/images-gallery"]');
       if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
         return sidebarLink.getAttribute('data-content-id');
       }
@@ -200,7 +200,7 @@
           
           // Update the contentId and reload the page
           contentId = contentResult._id;
-          window.location.href = `/images-gallery?id=${contentId}&categoryId=${categoryId}`;
+          window.location.href = `/admin/images-gallery?id=${contentId}&categoryId=${categoryId}`;
           
         } else if (contentId) {
           // Update existing content

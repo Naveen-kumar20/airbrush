@@ -992,7 +992,7 @@
           
           // Update the contentId and reload the page
           contentId = contentResult._id;
-          window.location.href = `/blogs?id=${contentId}&categoryId=${categoryId}`;
+          window.location.href = `/admin/blogs?id=${contentId}&categoryId=${categoryId}`;
           
         } catch (error) {
           console.error('Error creating new blog section:', error);

@@ -175,7 +175,7 @@
         }
         
         // Check for referrer with URL parameters
-        if (document.referrer.includes('/why-use-tool') || document.referrer.includes('/Why-Use-Tool')) {
+        if (document.referrer.includes('/admin/why-use-tool') || document.referrer.includes('/admin/Why-Use-Tool')) {
           const referrerUrl = new URL(document.referrer);
           const referrerParams = new URLSearchParams(referrerUrl.search);
           if (referrerParams.has('id')) {
@@ -188,7 +188,7 @@
         const sidebarLinks = document.querySelectorAll('a[href]');
         for (let link of sidebarLinks) {
           const href = link.getAttribute('href');
-          if (href && (href.toLowerCase() === '/why-use-tool')) {
+          if (href && (href.toLowerCase() === '/admin/why-use-tool')) {
             if (link.getAttribute('data-content-id')) {
               console.log('Found contentId in data attribute:', link.getAttribute('data-content-id'));
               return link.getAttribute('data-content-id');
@@ -709,7 +709,7 @@
           const contentResult = await contentResponse.json();
           
           // Update the contentId and reload the page
-          window.location.href = `/why-use-tool?id=${contentResult._id}&categoryId=${categoryId}`;
+          window.location.href = `/admin/why-use-tool?id=${contentResult._id}&categoryId=${categoryId}`;
           
         } catch (error) {
           console.error('Error creating new why use tool section:', error);

@@ -258,29 +258,30 @@
                   }
                   
                   // Add the content ID as a query parameter
-                  const href = `/${sectionSlug}?id=${section.contentId}&category=${category.name.toLowerCase().replace(/\s+/g, '-')}`;
+                  const adminSlugs = ['hero-section','images-gallery','text-to-anything','why-use-tool','blogs','transform-grid','category-video','edit-category'];
+                  const href = `${adminSlugs.includes(sectionSlug) ? '/admin' : ''}/${sectionSlug}?id=${section.contentId}&category=${category.name.toLowerCase().replace(/\s+/g, '-')}`;
                   
                   return `<li><a href="${href}" class="d-block px-3 py-1 rounded-3 text-decoration-none">${section.name}</a></li>`;
                 }).join('')}
                 ${!category.sections.some(section => section.name.includes('Hero Section')) ? 
-                  `<li><a href="/hero-section?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Hero Section</a></li>` 
+                  `<li><a href="/admin/hero-section?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Hero Section</a></li>` 
                   : ''}
                 ${!category.sections.some(section => section.name.includes('Images Gallery')) ? 
-                  `<li><a href="/images-gallery?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Images Gallery</a></li>` 
+                  `<li><a href="/admin/images-gallery?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Images Gallery</a></li>` 
                   : ''}
                 ${!category.sections.some(section => section.name.includes('Text to')) ? 
-                  `<li><a href="/text-to-anything?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Text to anything</a></li>` 
+                  `<li><a href="/admin/text-to-anything?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Text to anything</a></li>` 
                   : ''}
                 ${!category.sections.some(section => section.name.includes('Why Use')) ? 
-                  `<li><a href="/why-use-tool?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Why use tool</a></li>` 
+                  `<li><a href="/admin/why-use-tool?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Why use tool</a></li>` 
                   : ''}
                 ${!category.sections.some(section => section.name.includes('Blog')) ? 
-                  `<li><a href="/blogs?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Blogs</a></li>` 
+                  `<li><a href="/admin/blogs?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Blogs</a></li>` 
                   : ''}
                 ${!category.sections.some(section => section.name.includes('Video')) ? 
-                  `<li><a href="/category-video?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Category Video</a></li>` 
+                  `<li><a href="/admin/category-video?categoryId=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Category Video</a></li>` 
                   : ''}
-                <li><a href="/edit-category?id=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Edit Category</a></li>
+                <li><a href="/admin/edit-category?id=${category.id}" class="d-block px-3 py-1 rounded-3 text-decoration-none">Edit Category</a></li>
               </ul>
             </div>
           </div>

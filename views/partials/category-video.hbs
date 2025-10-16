@@ -268,7 +268,7 @@
         const contentResult = await contentResponse.json();
         
         contentId = contentResult._id;
-        window.location.href = `/category-video?id=${contentId}&categoryId=${categoryId}`;
+        window.location.href = `/admin/category-video?id=${contentId}&categoryId=${categoryId}`;
         
       } catch (error) {
         console.error('Error creating new video section:', error);

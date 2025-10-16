@@ -251,8 +251,8 @@
         }
         
         // Fallback: check for data-content-id attribute (for backward compatibility)
-        if (document.referrer.includes('/hero-section')) {
-          const sidebarLink = document.querySelector('a[href="/hero-section"]');
+        if (document.referrer.includes('/admin/hero-section')) {
+          const sidebarLink = document.querySelector('a[href="/admin/hero-section"]');
           if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
             return sidebarLink.getAttribute('data-content-id');
           }
@@ -407,7 +407,7 @@
           const contentResult = await contentResponse.json();
           
           // Update the contentId and reload the page
-          window.location.href = `/hero-section?id=${contentResult._id}&categoryId=${categoryId}`;
+          window.location.href = `/admin/hero-section?id=${contentResult._id}&categoryId=${categoryId}`;
           
         } catch (error) {
           console.error('Error creating new hero section:', error);
@@ -694,8 +694,8 @@
         return urlParams.get('id');
       }
       
-      if (document.referrer.includes('/hero-section')) {
-        const sidebarLink = document.querySelector('a[href="/hero-section"]');
+      if (document.referrer.includes('/admin/hero-section')) {
+        const sidebarLink = document.querySelector('a[href="/admin/hero-section"]');
         if (sidebarLink && sidebarLink.getAttribute('data-content-id')) {
           return sidebarLink.getAttribute('data-content-id');
         }

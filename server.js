@@ -643,7 +643,7 @@ app.get('/admin/dashboard',(req, res) => {
   });
 });
 
-app.get('/hero-section', (req, res) => {
+app.get('/admin/hero-section', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'hero-section',
@@ -653,7 +653,7 @@ app.get('/hero-section', (req, res) => {
   });
 });
 
-app.get('/edit-category', (req, res) => {
+app.get('/admin/edit-category', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'edit-category',
@@ -662,7 +662,7 @@ app.get('/edit-category', (req, res) => {
   });
 });
 
-app.get('/text-to-anything', (req, res) => {
+app.get('/admin/text-to-anything', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'text-to-anything',
@@ -671,7 +671,7 @@ app.get('/text-to-anything', (req, res) => {
   });
 });
 
-app.get('/blogs', verifyToken,  (req, res) => {
+app.get('/admin/blogs', verifyToken,  (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'blogs',
@@ -680,7 +680,7 @@ app.get('/blogs', verifyToken,  (req, res) => {
   });
 });
 
-app.get('/transform-grid', (req, res) => {
+app.get('/admin/transform-grid', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'transform-grid',
@@ -698,7 +698,7 @@ app.get('/admin/new-category', (req, res) => {
   });
 });
 
-app.get('/why-use-tool', (req, res) => {
+app.get('/admin/why-use-tool', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'why-use-tool',
@@ -706,7 +706,7 @@ app.get('/why-use-tool', (req, res) => {
   });
 });
 
-app.get('/images-gallery', (req, res) => {
+app.get('/admin/images-gallery', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'image-gallery',
@@ -714,7 +714,7 @@ app.get('/images-gallery', (req, res) => {
   });
 });
 
-app.get('/category-video', (req, res) => {
+app.get('/admin/category-video', verifyToken, (req, res) => {
   res.render('adminIndex', {
     layout: 'adminMain',
     partialName: 'category-video',

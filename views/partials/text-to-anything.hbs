@@ -248,7 +248,7 @@
         
         // Update the contentId and reload the page
         contentId = contentResult._id;
-        window.location.href = `/text-to-anything?id=${contentId}&categoryId=${categoryId}`;
+        window.location.href = `/admin/text-to-anything?id=${contentId}&categoryId=${categoryId}`;
         
       } catch (error) {
         console.error('Error creating new text to image section:', error);
