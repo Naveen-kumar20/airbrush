@@ -123,8 +123,8 @@ async function updateSitemapWithApi() {
       console.log('No blogs found for sitemap');
     }
 
-    // Split URLs into chunks of 100
-    const maxUrlsPerFile = 100;
+    // Split URLs into chunks of 200
+    const maxUrlsPerFile = 200;
     const sitemapFiles = [];
     let currentChunk = [];
     let fileIndex = 1;

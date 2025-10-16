@@ -343,7 +343,7 @@ async function updateSitemap() {
     }
 
     // Split URLs into chunks of 100
-    const maxUrlsPerFile = 100;
+    const maxUrlsPerFile = 200;
     const sitemapFiles = [];
     let currentChunk = [];
     let fileIndex = 1;
